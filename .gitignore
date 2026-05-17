@@ -141,3 +141,13 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# MahalleLig project additions
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+.env*.local
+coverage/
+*.tsbuildinfo

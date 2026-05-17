@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "MahalleLig",
+    "slug": "mahallelig",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "mahallelig",
+    "newArchEnabled": false,
+    "splash": {
+      "backgroundColor": "#0F172A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mahallelig.app",
+      "infoPlist": {
+        "NSMotionUsageDescription": "MahalleLig adımlarını sayar ve puana çevirir.",
+        "NSLocationWhenInUseUsageDescription": "Aktif ulaşım rotanı kaydetmek için konuma ihtiyacımız var."
+      }
+    },
+    "android": {
+      "package": "com.mahallelig.app",
+      "permissions": ["ACTIVITY_RECOGNITION", "ACCESS_FINE_LOCATION"]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-location",
+      "expo-notifications"
+    ],
+    "experiments": { "typedRoutes": true }
+  }
+}
