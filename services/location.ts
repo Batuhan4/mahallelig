@@ -1,11 +1,28 @@
 import * as Location from "expo-location";
+import { Platform } from "react-native";
+
+export type GeoPoint = { lat: number; lon: number; t: number };
+export type Route = { points: GeoPoint[]; distanceKm: number };
 
 export async function requestLocationPermission(): Promise<boolean> {
-  const { status } = await Location.requestForegroundPermissionsAsync();
-  return status === "granted";
+  if (Platform.OS === "web") return false;
+  try {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    return status === "granted";
+  } catch {
+    return false;
+  }
 }
 
-export type Route = { points: { lat: number; lon: number; t: number }[]; distanceKm: number };
+export async function hasLocationPermission(): Promise<boolean> {
+  if (Platform.OS === "web") return false;
+  try {
+    const { status } = await Location.getForegroundPermissionsAsync();
+    return status === "granted";
+  } catch {
+    return false;
+  }
+}
 
 export function emptyRoute(): Route {
   return { points: [], distanceKm: 0 };
@@ -25,4 +42,44 @@ export function appendRoutePoint(route: Route, lat: number, lon: number, t = Dat
   const last = route.points[route.points.length - 1];
   const seg = last ? haversineKm(last, { lat, lon }) : 0;
   return { points: [...route.points, { lat, lon, t }], distanceKm: route.distanceKm + seg };
+}
+
+export type LocationSubscription = { remove: () => void };
+
+// Watch GPS during a live activity. Emits the delta distance (km) for each new
+// segment plus the new point. Drops jitter (segments < ~3m).
+// Returns null on web or when permission isn't granted.
+export async function watchPosition(
+  onSegment: (deltaKm: number, point: GeoPoint) => void
+): Promise<LocationSubscription | null> {
+  if (Platform.OS === "web") return null;
+  const granted = await hasLocationPermission();
+  if (!granted) {
+    const ok = await requestLocationPermission();
+    if (!ok) return null;
+  }
+  let last: GeoPoint | null = null;
+  try {
+    const sub = await Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.Balanced,
+        timeInterval: 2000,
+        distanceInterval: 5
+      },
+      (loc) => {
+        const p: GeoPoint = {
+          lat: loc.coords.latitude,
+          lon: loc.coords.longitude,
+          t: loc.timestamp ?? Date.now()
+        };
+        const delta = last ? haversineKm(last, p) : 0;
+        last = p;
+        // Drop GPS jitter below ~3m
+        if (delta > 0.003) onSegment(delta, p);
+      }
+    );
+    return { remove: () => sub.remove() };
+  } catch {
+    return null;
+  }
 }

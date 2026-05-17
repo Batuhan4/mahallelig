@@ -12,7 +12,7 @@ type State = {
 export const useSettingsStore = create<State>()(
   persist(
     (set, get) => ({
-      demoMode: true,
+      demoMode: false,
       notificationsEnabled: false,
       toggleDemoMode: () => set({ demoMode: !get().demoMode }),
       setNotificationsEnabled: (v) => set({ notificationsEnabled: v })

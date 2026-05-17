@@ -5,6 +5,7 @@ import { Button } from "@/components/Button";
 import { tr } from "@/constants/i18n";
 import { useUserStore, makeNewUser } from "@/store/useUserStore";
 import { requestLocationPermission } from "@/services/location";
+import { requestPermissions as requestMotionPermission } from "@/services/pedometer";
 import { requestNotificationPermission } from "@/services/notifications";
 import { useState } from "react";
 import { useSettingsStore } from "@/store/useSettingsStore";
@@ -61,6 +62,7 @@ function PermissionRow({
 export default function Permissions() {
   const { name, nid } = useLocalSearchParams<{ name: string; nid: string }>();
   const [loc, setLoc] = useState(false);
+  const [motion, setMotion] = useState(false);
   const [notif, setNotif] = useState(false);
   const setUser = useUserStore((s) => s.setUser);
   const setOnboarded = useUserStore((s) => s.setOnboarded);
@@ -100,14 +102,20 @@ export default function Permissions() {
       </View>
 
       <PermissionRow
+        label="Adım sayımı"
+        desc="Yürüyüş ve koşu adımlarını saymak için Hareket & Fitness."
+        granted={motion}
+        onPress={async () => setMotion(await requestMotionPermission())}
+      />
+      <PermissionRow
         label={tr.onboarding.grantLocation}
-        desc="Mahalle sınırını ve aktivite mesafesini doğrulamak için."
+        desc="Aktivite mesafesini ve mahalle sınırını doğrulamak için."
         granted={loc}
         onPress={async () => setLoc(await requestLocationPermission())}
       />
       <PermissionRow
         label={tr.onboarding.grantNotifications}
-        desc="Bildirim ve mahalle görevleri için."
+        desc="Mahalle görevleri ve sıralama uyarıları için."
         granted={notif}
         onPress={async () => {
           const ok = await requestNotificationPermission();

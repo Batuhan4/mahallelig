@@ -8,6 +8,7 @@ type State = {
   todayPoints: number;
   history: ActivityRecord[];
   liveActivity: { type: ActivityRecord["type"]; startedAt: number; steps: number; distanceKm: number } | null;
+  setTodaySteps: (n: number) => void;
   addTodaySteps: (n: number) => void;
   addTodayPoints: (n: number) => void;
   startLive: (type: ActivityRecord["type"]) => void;
@@ -25,6 +26,7 @@ export const useActivityStore = create<State>()(
       todayPoints: 0,
       history: [],
       liveActivity: null,
+      setTodaySteps: (n) => set({ todaySteps: Math.max(0, Math.round(n)) }),
       addTodaySteps: (n) => set({ todaySteps: get().todaySteps + n }),
       addTodayPoints: (n) => set({ todayPoints: get().todayPoints + n }),
       startLive: (type) => set({ liveActivity: { type, startedAt: Date.now(), steps: 0, distanceKm: 0 } }),

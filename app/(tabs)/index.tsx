@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { AppState, Text, View } from "react-native";
 import { Screen, LargeTitle, SectionTitle } from "@/components/Screen";
 import { PointCounter } from "@/components/PointCounter";
 import { ActivityCard } from "@/components/ActivityCard";
@@ -11,23 +11,27 @@ import { useActivityStore } from "@/store/useActivityStore";
 import { useLeagueStore } from "@/store/useLeagueStore";
 import { useSettingsStore } from "@/store/useSettingsStore";
 import { findNeighborhood } from "@/services/league";
-import { isAvailable, watchSteps } from "@/services/pedometer";
+import { isAvailable, watchSteps, getStepsToday, requestPermissions as requestMotion } from "@/services/pedometer";
+import { hasLocationPermission, watchPosition } from "@/services/location";
 import { startDemoStepStream } from "@/services/demoMode";
 import { pointsForActivity, applyDailyCap } from "@/services/points";
 import { backend } from "@/services/backend";
 
 const DAY_LABELS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+const TODAY_REFRESH_MS = 30_000;
 
 export default function Today() {
   const user = useUserStore((s) => s.user);
   const addPoints = useUserStore((s) => s.addPoints);
   const todaySteps = useActivityStore((s) => s.todaySteps);
   const todayPoints = useActivityStore((s) => s.todayPoints);
+  const setTodaySteps = useActivityStore((s) => s.setTodaySteps);
   const addTodaySteps = useActivityStore((s) => s.addTodaySteps);
   const addTodayPoints = useActivityStore((s) => s.addTodayPoints);
   const live = useActivityStore((s) => s.liveActivity);
   const startLive = useActivityStore((s) => s.startLive);
   const pushLiveSteps = useActivityStore((s) => s.pushLiveSteps);
+  const pushLiveDistance = useActivityStore((s) => s.pushLiveDistance);
   const endLive = useActivityStore((s) => s.endLive);
   const pushHistory = useActivityStore((s) => s.pushHistory);
   const demoMode = useSettingsStore((s) => s.demoMode);
@@ -35,32 +39,89 @@ export default function Today() {
 
   const [type, setType] = useState<"walk" | "run" | "bike">("walk");
   const [trend] = useState<number[]>([3200, 4800, 6100, 2900, 8400, 5500, 7700]);
+  const [pedometerReady, setPedometerReady] = useState(false);
+  const [gpsActive, setGpsActive] = useState(false);
 
+  // === Today total: refresh from native pedometer + live deltas while open ===
   useEffect(() => {
-    let sub: { remove: () => void } | null = null;
+    if (demoMode) return;
+    let alive = true;
+    let interval: ReturnType<typeof setInterval> | null = null;
+    let stepSub: { remove: () => void } | null = null;
+    let appStateSub: { remove: () => void } | null = null;
+
+    async function refresh() {
+      if (!alive) return;
+      const total = await getStepsToday();
+      if (alive && total >= 0) setTodaySteps(total);
+    }
+
     (async () => {
-      if (demoMode) return;
-      if (await isAvailable()) sub = watchSteps((n) => addTodaySteps(n));
+      const ok = await isAvailable();
+      if (!alive || !ok) return;
+      await requestMotion();
+      setPedometerReady(true);
+      await refresh();
+      // Periodic refresh from Health/HealthConnect — covers steps that came in
+      // while the app was backgrounded.
+      interval = setInterval(refresh, TODAY_REFRESH_MS);
+      // Realtime deltas while screen is open
+      stepSub = watchSteps((delta) => addTodaySteps(delta));
+      // Re-pull total when returning from background
+      const handle = AppState.addEventListener("change", (s) => {
+        if (s === "active") refresh();
+      });
+      appStateSub = { remove: () => handle.remove() };
     })();
-    return () => sub?.remove();
-  }, [demoMode]);
 
+    return () => {
+      alive = false;
+      if (interval) clearInterval(interval);
+      stepSub?.remove();
+      appStateSub?.remove();
+    };
+  }, [demoMode, setTodaySteps, addTodaySteps]);
+
+  // === Live activity: pedometer + GPS ===
   useEffect(() => {
-    if (!live) return;
-    let sub: { remove: () => void } | null = null;
+    if (!live) {
+      setGpsActive(false);
+      return;
+    }
+    let stepSub: { remove: () => void } | null = null;
+    let geoSub: { remove: () => void } | null = null;
+
     if (demoMode) {
-      sub = startDemoStepStream((n) => {
-        pushLiveSteps(n);
-        addTodaySteps(n);
+      stepSub = startDemoStepStream((delta) => {
+        pushLiveSteps(delta);
+        addTodaySteps(delta);
       });
     } else {
-      sub = watchSteps((n) => {
-        pushLiveSteps(n);
-        addTodaySteps(n);
+      // Live step deltas
+      stepSub = watchSteps((delta) => {
+        pushLiveSteps(delta);
+        addTodaySteps(delta);
       });
+      // Live GPS distance — only if user granted location
+      (async () => {
+        const granted = await hasLocationPermission();
+        if (!granted) return;
+        const sub = await watchPosition((deltaKm) => {
+          pushLiveDistance(deltaKm);
+        });
+        if (sub) {
+          geoSub = sub;
+          setGpsActive(true);
+        }
+      })();
     }
-    return () => sub?.remove();
-  }, [live, demoMode]);
+
+    return () => {
+      stepSub?.remove();
+      geoSub?.remove();
+      setGpsActive(false);
+    };
+  }, [live, demoMode, pushLiveSteps, pushLiveDistance, addTodaySteps]);
 
   function onStart() {
     startLive(type);
@@ -69,7 +130,10 @@ export default function Today() {
   async function onStop() {
     const ended = endLive();
     if (!ended || !user) return;
-    const distanceKm = ended.type === "bike" ? ended.distanceKm : Math.max(ended.distanceKm, ended.steps / 1300);
+    // For walk/run: real GPS distance preferred; fall back to step estimate.
+    // For bike: GPS only (steps ≈ 0).
+    const fromSteps = ended.steps / 1300;
+    const distanceKm = ended.type === "bike" ? ended.distanceKm : Math.max(ended.distanceKm, fromSteps);
     const earned = pointsForActivity({ type: ended.type, steps: ended.steps, distanceKm });
     const capped = applyDailyCap(todayPoints, earned);
     addTodayPoints(capped);
@@ -102,6 +166,13 @@ export default function Today() {
 
   const nhood = user ? findNeighborhood(user.neighborhoodId) : undefined;
   const lvl = levelOfUser(user);
+  const sourceLabel = demoMode
+    ? `DEMO ${10}X`
+    : pedometerReady
+      ? gpsActive
+        ? "PEDOMETRE + GPS"
+        : "PEDOMETRE"
+      : "BAĞLANIYOR…";
 
   return (
     <Screen>
@@ -114,14 +185,14 @@ export default function Today() {
 
       <PointCounter steps={todaySteps} points={todayPoints} />
 
-      <SectionTitle sub={demoMode ? "DEMO MODE" : "CANLI SENSÖR"}>Aktivite</SectionTitle>
+      <SectionTitle sub={sourceLabel}>Aktivite</SectionTitle>
       <ActivityCard
         active={!!live}
         type={type}
         onSelectType={setType}
         onStart={onStart}
         onStop={onStop}
-        source={demoMode ? tr.today.sourceDemo : tr.today.sourcePedometer}
+        source={demoMode ? tr.today.sourceDemo : gpsActive ? "Pedometre + GPS" : "Pedometre"}
         liveSteps={live?.steps ?? 0}
         liveDistanceKm={live?.distanceKm ?? 0}
       />
