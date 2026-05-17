@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MahalleLig — Belediye & Kurumsal Sunum</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* Sistem font yığınları — iOS/Mac'te San Francisco Pro, Windows'ta Segoe UI, vs. */
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       --navy: #0C2340;
       --navy-700: #1B3A5C;
       --navy-500: #314F75;
@@ -31,7 +31,7 @@
     * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     html, body { margin: 0; padding: 0; background: var(--ivory); color: var(--navy); }
     body {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: var(--font-sans);
       font-size: 16px;
       line-height: 1.55;
       scroll-behavior: smooth;
@@ -39,9 +39,9 @@
     }
 
     /* Typography */
-    .display { font-family: 'Fraunces', Georgia, serif; font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
-    .display-italic { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 400; }
-    .mono { font-family: 'IBM Plex Mono', Menlo, monospace; }
+    .display { font-family: var(--font-sans); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
+    .display-italic { font-family: var(--font-sans); font-style: italic; font-weight: 400; }
+    .mono { font-family: var(--font-mono); }
     .eyebrow {
       font-size: 10px; letter-spacing: 1.6px; font-weight: 600;
       text-transform: uppercase; color: var(--steel-500);
@@ -62,7 +62,7 @@
       padding: 12px 24px;
     }
     nav.deck-nav .row { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    nav.deck-nav .brand { font-family: 'Fraunces'; font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
+    nav.deck-nav .brand { font-family: var(--font-sans); font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
     nav.deck-nav .brand .dot { color: var(--terra); }
     nav.deck-nav .links { display: flex; gap: 6px; flex-wrap: wrap; }
     nav.deck-nav .links a {
@@ -98,19 +98,19 @@
     }
     .hero .stamp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     .hero .serial {
-      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: .8px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: .8px;
       color: var(--steel-500);
     }
     .hero .badge {
       border: 1px solid rgba(12,35,64,.3); padding: 4px 10px; border-radius: 3px;
-      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.4px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.4px;
     }
     .hero h1 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(72px, 11vw, 168px);
+      font-family: var(--font-sans); font-weight: 700; font-size: clamp(72px, 11vw, 168px);
       letter-spacing: -.06em; line-height: .94; margin: 0;
     }
     .hero h1 .dot { color: var(--terra); }
-    .hero h1 .italic { font-family: 'Fraunces'; font-style: italic; font-weight: 400; display: block; font-size: .42em; line-height: 1.1; margin-top: 8px; color: var(--navy-700); letter-spacing: -.02em; }
+    .hero h1 .italic { font-family: var(--font-sans); font-style: italic; font-weight: 400; display: block; font-size: .42em; line-height: 1.1; margin-top: 8px; color: var(--navy-700); letter-spacing: -.02em; }
     .hero .lead {
       max-width: 720px; margin-top: 32px;
       font-size: 19px; line-height: 1.55; color: var(--steel-700);
@@ -132,24 +132,24 @@
     .ornament { display: flex; align-items: center; gap: 8px; margin: 24px 0; }
     .ornament .line { height: 1px; background: rgba(12,35,64,.10); flex: 1; }
     .ornament .text {
-      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.6px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.6px;
       color: var(--steel-400);
     }
 
     /* Section header */
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
     .section-header h2 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(36px, 5vw, 56px);
+      font-family: var(--font-sans); font-weight: 700; font-size: clamp(36px, 5vw, 56px);
       letter-spacing: -.03em; line-height: 1; margin: 8px 0 0;
     }
     .section-header h2 .accent { color: var(--terra); font-style: italic; font-weight: 400; }
     .section-header .meta { text-align: right; }
     .section-header .meta .num {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 40px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 40px;
       color: var(--terra); letter-spacing: -.02em; line-height: 1;
     }
     .section-header .meta .num-sub {
-      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px;
       color: var(--steel-500); margin-top: 4px;
     }
 
@@ -172,18 +172,18 @@
       border-radius: 24px 24px 0 0;
     }
     .pill-card .stat {
-      font-family: 'Fraunces'; font-weight: 700;
+      font-family: var(--font-sans); font-weight: 700;
       font-size: 64px; line-height: 1; letter-spacing: -.04em;
       color: var(--navy);
     }
-    .pill-card .stat .unit { font-size: 24px; color: var(--steel-500); font-weight: 400; font-family: 'Inter'; }
+    .pill-card .stat .unit { font-size: 24px; color: var(--steel-500); font-weight: 400; font-family: var(--font-sans); }
     .pill-card h3 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 22px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 22px;
       letter-spacing: -.02em; margin: 12px 0 8px;
     }
     .pill-card p { color: var(--steel-700); font-size: 14px; margin: 0; }
     .pill-card .src {
-      margin-top: 16px; font-family: 'IBM Plex Mono'; font-size: 10px;
+      margin-top: 16px; font-family: var(--font-mono); font-size: 10px;
       letter-spacing: .6px; color: var(--steel-400);
     }
 
@@ -219,7 +219,7 @@
     }
     .iphone-caption .eyebrow { font-size: 9px; }
     .iphone-caption .title {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 17px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 17px;
       margin-top: 6px; letter-spacing: -.01em; color: var(--navy);
     }
     .iphone-caption .desc {
@@ -234,7 +234,7 @@
     }
     @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
     .split .text h3 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 36px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 36px;
       letter-spacing: -.02em; line-height: 1.1; margin: 12px 0 16px;
     }
     .split .text .lead {
@@ -249,13 +249,13 @@
     .split .text ul li::before {
       content: counter(item, decimal-leading-zero);
       counter-increment: item;
-      font-family: 'IBM Plex Mono'; font-weight: 500; font-size: 11px;
+      font-family: var(--font-mono); font-weight: 500; font-size: 11px;
       letter-spacing: -.2px; color: var(--terra); min-width: 24px;
       padding-top: 2px;
     }
     .split .text ul { counter-reset: item; }
     .split .text ul li b {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 16px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 16px;
       color: var(--navy); letter-spacing: -.01em; display: block; margin-bottom: 2px;
     }
     .split .text ul li span { color: var(--steel-700); font-size: 14px; line-height: 1.5; }
@@ -296,12 +296,12 @@
       text-align: left;
     }
     .big-stats .stat .num {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 72px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 72px;
       letter-spacing: -.04em; line-height: 1; color: var(--terra);
     }
     .big-stats .stat .num.ivory { color: var(--ivory); }
     .big-stats .stat .label {
-      margin-top: 8px; font-family: 'IBM Plex Mono'; font-size: 11px;
+      margin-top: 8px; font-family: var(--font-mono); font-size: 11px;
       letter-spacing: 1.4px; text-transform: uppercase;
       color: var(--steel-500);
     }
@@ -321,21 +321,21 @@
     .price-card.featured::before {
       content: 'ÖNERİLEN'; position: absolute; top: -12px; left: 32px;
       background: var(--terra); color: var(--ivory-50);
-      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.4px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.4px;
       padding: 5px 12px; border-radius: 4px;
     }
     .price-card h3 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 28px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 28px;
       letter-spacing: -.02em; margin: 0 0 8px;
     }
     .price-card .sub {
       color: var(--steel-500); font-size: 14px; margin-bottom: 24px;
     }
     .price-card .price {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 56px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 56px;
       letter-spacing: -.03em; line-height: 1; margin-bottom: 8px;
     }
-    .price-card .price .small { font-size: 16px; color: var(--steel-500); font-weight: 400; font-family: 'Inter'; }
+    .price-card .price .small { font-size: 16px; color: var(--steel-500); font-weight: 400; font-family: var(--font-sans); }
     .price-card ul { padding: 0; margin: 24px 0 32px; list-style: none; }
     .price-card ul li {
       padding: 10px 0; border-bottom: 1px solid rgba(12,35,64,.06);
@@ -360,12 +360,12 @@
       max-width: 880px; margin: 0 auto; padding: 64px 24px; text-align: center;
     }
     .quote q {
-      font-family: 'Fraunces'; font-style: italic; font-weight: 400;
+      font-family: var(--font-sans); font-style: italic; font-weight: 400;
       font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.25;
       color: var(--navy); quotes: '"' '"';
     }
     .quote .attr {
-      margin-top: 28px; font-family: 'IBM Plex Mono'; font-size: 12px;
+      margin-top: 28px; font-family: var(--font-mono); font-size: 12px;
       letter-spacing: 1.2px; color: var(--steel-500);
     }
     .quote .attr::before {
@@ -379,7 +379,7 @@
       padding: 120px 24px; text-align: center; margin-top: 80px;
     }
     .cta-section h2 {
-      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(48px, 7vw, 96px);
+      font-family: var(--font-sans); font-weight: 700; font-size: clamp(48px, 7vw, 96px);
       letter-spacing: -.04em; line-height: 1; margin: 0;
     }
     .cta-section h2 .italic { font-style: italic; font-weight: 400; color: var(--terra); }
@@ -393,14 +393,14 @@
     .cta-section .btn.ghost { border: 1px solid rgba(245,240,230,.3); color: var(--ivory); }
     .cta-section .contact {
       margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(245,240,230,.12);
-      font-family: 'IBM Plex Mono'; font-size: 12px; color: rgba(245,240,230,.5);
+      font-family: var(--font-mono); font-size: 12px; color: rgba(245,240,230,.5);
       letter-spacing: 1px;
     }
 
     /* Footer */
     footer {
       padding: 32px 24px; text-align: center;
-      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px;
       color: var(--steel-400);
     }
 
@@ -409,7 +409,7 @@
     .tech-badge {
       background: var(--ivory-50); border: 1px solid rgba(12,35,64,.12);
       padding: 8px 14px; border-radius: 999px; font-size: 12px;
-      font-family: 'IBM Plex Mono'; font-weight: 500;
+      font-family: var(--font-mono); font-weight: 500;
       color: var(--navy);
     }
     .dark-section .tech-badge { background: var(--navy-700); border-color: rgba(245,240,230,.12); color: var(--ivory); }
@@ -422,7 +422,7 @@
       text-align: center;
     }
     .strip .quote-text {
-      font-family: 'Fraunces'; font-weight: 400; font-style: italic;
+      font-family: var(--font-sans); font-weight: 400; font-style: italic;
       font-size: clamp(20px, 3vw, 32px); letter-spacing: -.01em;
       line-height: 1.35; color: var(--navy);
     }
@@ -438,7 +438,7 @@
     @media (max-width: 560px) { .walkthrough { grid-template-columns: 1fr; } }
     .walkthrough .iphone-wrap .iphone { max-width: 100%; }
     .walkthrough .step-num {
-      display: inline-block; font-family: 'IBM Plex Mono'; font-size: 11px;
+      display: inline-block; font-family: var(--font-mono); font-size: 11px;
       letter-spacing: 1.6px; color: var(--terra); margin-bottom: 4px;
     }
 
@@ -459,14 +459,14 @@
     .roi .row.total { background: var(--navy); color: var(--ivory); }
     .roi .row.total .val { color: var(--terra); }
     .roi .label b {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 15px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 15px;
       letter-spacing: -.01em; display: block; margin-bottom: 2px;
     }
     .roi .label span { font-size: 12px; color: var(--steel-500); }
     .dark-section .roi .label span { color: rgba(245,240,230,.55); }
     .roi .row.total .label span { color: rgba(245,240,230,.7); }
     .roi .val {
-      font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 18px;
+      font-family: var(--font-mono); font-weight: 700; font-size: 18px;
       letter-spacing: -.02em;
     }
 
@@ -502,12 +502,12 @@
     }
     .dark-section .spec-list > div { background: var(--navy-700); }
     .spec-list .key {
-      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1.2px;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.2px;
       color: var(--steel-500); margin-bottom: 4px;
     }
     .dark-section .spec-list .key { color: rgba(245,240,230,.55); }
     .spec-list .val {
-      font-family: 'Fraunces'; font-weight: 700; font-size: 16px;
+      font-family: var(--font-sans); font-weight: 700; font-size: 16px;
       letter-spacing: -.01em;
     }
     @media (max-width: 700px) { .spec-list { grid-template-columns: 1fr; } }
@@ -620,7 +620,7 @@
         <h2>Tek formülde<br/>üç soruna <span class="accent">tek cevap</span>.</h2>
       </div>
       <div class="meta">
-        <div class="num mono" style="font-family:'IBM Plex Mono';font-weight:700">1:1:1</div>
+        <div class="num mono" style="font-family:var(--font-mono);font-weight:700">1:1:1</div>
         <div class="num-sub">VATANDAŞ · BELEDİYE · YEREL ESNAF</div>
       </div>
     </div>
@@ -928,7 +928,7 @@
 
   <div class="hairline"></div>
 
-  <h3 style="font-family:'Fraunces';font-weight:700;font-size:32px;letter-spacing:-.02em;margin:48px 0 24px;text-align:center">
+  <h3 style="font-family:var(--font-sans);font-weight:700;font-size:32px;letter-spacing:-.02em;margin:48px 0 24px;text-align:center">
     Yıllık net fayda · <span class="display-italic" style="color:var(--terra)">500 çalışan</span> üzerinden örnek
   </h3>
   <div class="roi">
@@ -1086,7 +1086,7 @@
 
     <div style="max-width: 920px; margin: 48px auto 0">
       <div class="eyebrow terra" style="text-align:center; margin-bottom: 8px;">KVKK uyumu · bağımsız vurgu</div>
-      <h3 style="font-family:'Fraunces';font-weight:700;font-size:32px;letter-spacing:-.02em;text-align:center;margin:0 0 24px;color:var(--ivory)">
+      <h3 style="font-family:var(--font-sans);font-weight:700;font-size:32px;letter-spacing:-.02em;text-align:center;margin:0 0 24px;color:var(--ivory)">
         Vatandaşın <span class="display-italic" style="color:var(--terra)">kişisel verisi</span> bir defa bile dışarı çıkmaz.
       </h3>
 
