@@ -1,4 +1,4 @@
-import { Image, Pressable, Switch, Text, View } from "react-native";
+import { Alert, Image, Pressable, Switch, Text, View } from "react-native";
 import { router } from "expo-router";
 import { Screen, LargeTitle, SectionTitle, Hairline } from "@/components/Screen";
 import { Button } from "@/components/Button";
@@ -9,6 +9,7 @@ import { useRedemptionStore } from "@/store/useRedemptionStore";
 import { useActivityStore } from "@/store/useActivityStore";
 import { findNeighborhood } from "@/services/league";
 import { fireLocal, requestNotificationPermission } from "@/services/notifications";
+import { deleteAccount } from "@/services/account";
 import { REWARDS } from "@/constants/seed/rewards";
 import { palette } from "@/constants/theme";
 
@@ -47,6 +48,24 @@ export default function Profile() {
     fireLocal({ title: tr.push.overtakeTitle, body: tr.push.overtakeBody });
   }
 
+  function onDeleteAccount() {
+    Alert.alert(
+      tr.profile.deleteAccountConfirmTitle,
+      tr.profile.deleteAccountConfirmBody,
+      [
+        { text: tr.profile.deleteAccountConfirmCancel, style: "cancel" },
+        {
+          text: tr.profile.deleteAccountConfirmOk,
+          style: "destructive",
+          onPress: async () => {
+            await deleteAccount();
+            router.replace("/(onboarding)/welcome");
+          }
+        }
+      ]
+    );
+  }
+
   return (
     <Screen>
       <LargeTitle eyebrow="Profil" title={user?.name ?? "Misafir"} />
@@ -80,13 +99,13 @@ export default function Profile() {
           />
           <Text
             className="text-navy-900 mt-3"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 24, letterSpacing: -0.6 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 24, letterSpacing: -0.6 }}
           >
             {user?.name ?? "Misafir"}
           </Text>
           <Text
             className="text-steel-500"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 11, letterSpacing: 0.6, marginTop: 2 }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, letterSpacing: 0.6, marginTop: 2 }}
           >
             {(nhood?.name ?? "—").toUpperCase()} · {(nhood?.district ?? "").toUpperCase()}
           </Text>
@@ -97,13 +116,13 @@ export default function Profile() {
             <View className="flex-1 items-center">
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+                style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 20, letterSpacing: -0.6 }}
               >
                 {(user?.totalPoints ?? 0).toLocaleString("tr-TR")}
               </Text>
               <Text
                 className="text-steel-500 mt-0.5"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
               >
                 TOPLAM P
               </Text>
@@ -112,13 +131,13 @@ export default function Profile() {
             <View className="flex-1 items-center">
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+                style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 20, letterSpacing: -0.6 }}
               >
                 Lv {String(lvl).padStart(2, "0")}
               </Text>
               <Text
                 className="text-steel-500 mt-0.5"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
               >
                 SEVİYE
               </Text>
@@ -127,13 +146,13 @@ export default function Profile() {
             <View className="flex-1 items-center">
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+                style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 20, letterSpacing: -0.6 }}
               >
                 {history.length}
               </Text>
               <Text
                 className="text-steel-500 mt-0.5"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
               >
                 AKTİVİTE
               </Text>
@@ -152,7 +171,7 @@ export default function Profile() {
             <View className="w-1.5 h-1.5 rounded-full bg-bronze-500" />
             <Text
               className="text-navy-900"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 11, letterSpacing: 0.2 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 11, letterSpacing: 0.2 }}
             >
               {b}
             </Text>
@@ -165,7 +184,7 @@ export default function Profile() {
         <View className="bg-ivory-50 border border-dashed border-navy-900/15 rounded-2xl px-4 py-5">
           <Text
             className="text-steel-500"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 12, textAlign: "center" }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, textAlign: "center" }}
           >
             Henüz aktivite kaydı yok. Bugün ekranından bir aktivite başlat.
           </Text>
@@ -188,20 +207,20 @@ export default function Profile() {
               <View className="flex-1">
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                  style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
                 >
                   {headline}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, letterSpacing: 0.4, marginTop: 1 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 10, letterSpacing: 0.4, marginTop: 1 }}
                 >
                   {a.durationMin} DK · {formatAgo(a.startedAt).toUpperCase()}
                 </Text>
               </View>
               <Text
                 className="text-terra-500"
-                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 14 }}
+                style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 14 }}
               >
                 +{a.points}
               </Text>
@@ -216,7 +235,7 @@ export default function Profile() {
         <View className="bg-ivory-50 border border-dashed border-navy-900/15 rounded-2xl px-4 py-5">
           <Text
             className="text-steel-500"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 12, textAlign: "center" }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, textAlign: "center" }}
           >
             Henüz redeem yok.
           </Text>
@@ -237,7 +256,7 @@ export default function Profile() {
                 <View className="flex-row items-baseline justify-between">
                   <Text
                     className="text-navy-900 flex-1 pr-2"
-                    style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                    style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
                   >
                     {reward?.title ?? r.rid}
                   </Text>
@@ -254,7 +273,7 @@ export default function Profile() {
                     />
                     <Text
                       style={{
-                        fontFamily: "Inter_600SemiBold",
+                        fontFamily: "System", fontWeight: "600",
                         fontSize: 9,
                         letterSpacing: 1.2,
                         color:
@@ -268,7 +287,7 @@ export default function Profile() {
                 </View>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, marginTop: 2 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 10, marginTop: 2 }}
                 >
                   {formatAgo(r.createdAt).toUpperCase()}
                 </Text>
@@ -284,13 +303,13 @@ export default function Profile() {
           <View>
             <Text
               className="text-navy-900"
-              style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+              style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
             >
               {tr.profile.demoMode}
             </Text>
             <Text
               className="text-steel-500"
-              style={{ fontFamily: "Inter_500Medium", fontSize: 11 }}
+              style={{ fontFamily: "System", fontWeight: "500", fontSize: 11 }}
             >
               Sahte pedometre akışı
             </Text>
@@ -305,33 +324,33 @@ export default function Profile() {
         <Pressable onPress={onPushTest} className="px-4 py-3.5 border-b border-navy-900/8 flex-row items-center justify-between">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
           >
             🔔  {tr.profile.triggerPush}
           </Text>
-          <Text className="text-terra-500" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+          <Text className="text-terra-500" style={{ fontFamily: "System", fontWeight: "600", fontSize: 11 }}>
             GÖNDER →
           </Text>
         </Pressable>
         <Pressable onPress={() => router.push("/feed")} className="px-4 py-3.5 border-b border-navy-900/8 flex-row items-center justify-between">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
           >
             📰  Sosyal Feed
           </Text>
-          <Text className="text-steel-400" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+          <Text className="text-steel-400" style={{ fontFamily: "System", fontWeight: "600", fontSize: 11 }}>
             AÇ →
           </Text>
         </Pressable>
         <Pressable onPress={() => router.push("/business")} className="px-4 py-3.5 flex-row items-center justify-between">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 14, letterSpacing: -0.2 }}
           >
             🏪  Yerel İşletme Paneli
           </Text>
-          <Text className="text-steel-400" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+          <Text className="text-steel-400" style={{ fontFamily: "System", fontWeight: "600", fontSize: 11 }}>
             AÇ →
           </Text>
         </Pressable>
@@ -340,12 +359,65 @@ export default function Profile() {
       <View className="mt-4">
         <Button
           label={tr.profile.signOut}
-          variant="danger"
+          variant="ghost"
           onPress={() => {
             reset();
             router.replace("/(onboarding)/welcome");
           }}
         />
+      </View>
+
+      {/* KVKK silme hakkı — geri alınamaz */}
+      <View className="mt-3 mb-2">
+        <Pressable
+          onPress={onDeleteAccount}
+          className="bg-ivory-50 border border-terra-700/30 active:bg-terra-100 rounded-2xl px-5 py-4"
+        >
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 12,
+                  backgroundColor: palette.terra500,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: 10
+                }}
+              >
+                <Text style={{ color: palette.ivory50, fontFamily: "Menlo", fontWeight: "700", fontSize: 14 }}>
+                  ×
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 14, color: palette.terra700, letterSpacing: -0.1 }}
+                >
+                  {tr.profile.deleteAccount}
+                </Text>
+                <Text
+                  className="text-steel-500"
+                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, marginTop: 1 }}
+                >
+                  {tr.profile.deleteAccountSubtitle}
+                </Text>
+              </View>
+            </View>
+            <View className="px-2 py-0.5 border border-terra-700/30 rounded-sm">
+              <Text
+                style={{
+                  fontFamily: "Menlo", fontWeight: "500",
+                  fontSize: 9,
+                  letterSpacing: 1.2,
+                  color: palette.terra700
+                }}
+              >
+                KVKK
+              </Text>
+            </View>
+          </View>
+        </Pressable>
       </View>
     </Screen>
   );

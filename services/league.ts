@@ -1,5 +1,6 @@
 import { NEIGHBORHOODS, type Neighborhood } from "@/constants/seed/neighborhoods";
 import { FAKE_USERS, type FakeUser } from "@/constants/seed/fakeUsers";
+import { haversineKm } from "./location";
 
 export type LeagueRow = { nid: string; name: string; district: string; weeklyPoints: number; rank: number };
 export type UserLeagueRow = { uid: string; displayName: string; weeklyPoints: number; rank: number; isYou: boolean };
@@ -28,6 +29,22 @@ function anonymize(u: FakeUser, i: number): Omit<UserLeagueRow, "rank"> {
 
 export function findNeighborhood(nid: string): Neighborhood | undefined {
   return NEIGHBORHOODS.find((n) => n.nid === nid);
+}
+
+// GPS noktasına en yakın mahalleyi bul (haversine, km).
+// Onboarding'de auto-detect için.
+export function findNearestNeighborhood(
+  lat: number,
+  lon: number
+): { neighborhood: Neighborhood; distanceKm: number } | null {
+  let best: { neighborhood: Neighborhood; distanceKm: number } | null = null;
+  for (const n of NEIGHBORHOODS) {
+    const d = haversineKm({ lat, lon }, { lat: n.lat, lon: n.lon });
+    if (!best || d < best.distanceKm) {
+      best = { neighborhood: n, distanceKm: d };
+    }
+  }
+  return best;
 }
 
 export function seasonCountdown(now = Date.now()): { days: number; hours: number } {

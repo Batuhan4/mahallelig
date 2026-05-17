@@ -64,7 +64,15 @@ export const tr = {
     redeemed: "Redeem edilen ödül",
     topNeighborhoods: "Bu hafta en aktif 5 mahalle",
     lowAlert: (n: string) => `Düşük aktivite uyarısı: ${n}`,
-    createMission: "Görev oluştur"
+    createMission: "Görev oluştur",
+    authTitle: "Belediye yetkili girişi",
+    authSubtitle: "KVKK m. 6 uyarınca bu panele yalnız yetkilendirilmiş personel erişebilir.",
+    authEmail: "E-POSTA",
+    authPassword: "ŞİFRE",
+    authSubmit: "Giriş yap",
+    authError: "E-posta veya şifre hatalı",
+    authDemoHint: "DEMO ERİŞİMİ",
+    authSignOut: "Çıkış"
   },
   profile: {
     totalPoints: "Toplam puan",
@@ -75,7 +83,14 @@ export const tr = {
     language: "Dil",
     signOut: "Çıkış",
     demoMode: "Demo Mode (10x adım)",
-    triggerPush: "Test push gönder"
+    triggerPush: "Test push gönder",
+    deleteAccount: "Hesabımı sil",
+    deleteAccountSubtitle: "Tüm verin cihazdan silinir, geri alınamaz",
+    deleteAccountConfirmTitle: "Hesabını silmek istediğine emin misin?",
+    deleteAccountConfirmBody:
+      "Tüm aktiviten, puanın, ödüllerin ve profil bilgilerin kalıcı olarak silinecek.\n\nKVKK m. 7 (silme hakkı) uyarınca cihazındaki tüm veri anında temizlenir. Bu işlem geri alınamaz.",
+    deleteAccountConfirmCancel: "Vazgeç",
+    deleteAccountConfirmOk: "Evet, sil"
   },
   feed: { title: "Sosyal Feed" },
   business: {

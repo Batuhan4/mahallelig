@@ -24,6 +24,29 @@ export async function hasLocationPermission(): Promise<boolean> {
   }
 }
 
+// Onboarding sırasında tek atımlık konum okuma — auto-detect mahalle için.
+// İzin yoksa otomatik ister; reddedilirse null döner.
+export async function getCurrentLocation(): Promise<GeoPoint | null> {
+  if (Platform.OS === "web") return null;
+  const granted = await hasLocationPermission();
+  if (!granted) {
+    const ok = await requestLocationPermission();
+    if (!ok) return null;
+  }
+  try {
+    const loc = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced
+    });
+    return {
+      lat: loc.coords.latitude,
+      lon: loc.coords.longitude,
+      t: loc.timestamp ?? Date.now()
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function emptyRoute(): Route {
   return { points: [], distanceKm: 0 };
 }
