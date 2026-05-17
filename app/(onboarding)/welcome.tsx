@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 import { router } from "expo-router";
 import Svg, { Path } from "react-native-svg";
 import { Screen } from "@/components/Screen";
-import { Button } from "@/components/Button";
 import { tr } from "@/constants/i18n";
 import { palette } from "@/constants/theme";
-import { useGoogleAuth, useAppleAuth, type SocialUser } from "@/services/auth";
+import { useGoogleAuth, useAppleAuth, APPLE_AVAILABLE, type SocialUser } from "@/services/auth";
 
 function GoogleIcon() {
   return (
@@ -43,18 +42,64 @@ function AppleIcon({ color = "#ffffff" }: { color?: string }) {
 }
 
 export default function Welcome() {
-  const [name, setName] = useState("");
-  const [showNameInput, setShowNameInput] = useState(false);
+  const [busy, setBusy] = useState<"apple" | "google" | null>(null);
 
-  function onSocialUser(u: SocialUser) {
-    router.push({
-      pathname: "/(onboarding)/neighborhood",
-      params: { name: u.name, email: u.email, avatar: u.picture ?? "" }
-    });
+  function goToIdentity(u: SocialUser | { provider: "guest" }) {
+    if ("name" in u) {
+      router.push({
+        pathname: "/(onboarding)/identity",
+        params: {
+          name: u.name,
+          email: u.email,
+          avatar: u.picture ?? "",
+          provider: u.provider
+        }
+      });
+    } else {
+      router.push({
+        pathname: "/(onboarding)/identity",
+        params: { provider: "guest" }
+      });
+    }
   }
 
-  const { signIn: signInGoogle } = useGoogleAuth(onSocialUser);
-  const { signIn: signInApple } = useAppleAuth(onSocialUser);
+  const { signIn: signInGoogle } = useGoogleAuth((u) => {
+    setBusy(null);
+    goToIdentity(u);
+  });
+  const { signIn: signInApple } = useAppleAuth((u) => {
+    setBusy(null);
+    goToIdentity(u);
+  });
+
+  async function onApple() {
+    setBusy("apple");
+    try {
+      await signInApple();
+    } catch (e: unknown) {
+      setBusy(null);
+      const err = e as { code?: string; message?: string };
+      // ERR_REQUEST_CANCELED: kullanıcı Apple sheet'ini iptal etti — sessiz
+      if (err?.code === "ERR_REQUEST_CANCELED" || /cancel/i.test(err?.message ?? "")) {
+        return;
+      }
+      Alert.alert(
+        "Apple ile giriş başarısız",
+        err?.message ?? "Bilinmeyen hata. Daha sonra tekrar dene."
+      );
+    }
+  }
+
+  async function onGoogle() {
+    setBusy("google");
+    try {
+      await signInGoogle();
+    } catch (e: unknown) {
+      setBusy(null);
+      const err = e as { message?: string };
+      Alert.alert("Google ile giriş başarısız", err?.message ?? "Bilinmeyen hata.");
+    }
+  }
 
   return (
     <Screen>
@@ -121,103 +166,71 @@ export default function Welcome() {
 
         {/* Auth block */}
         <View>
-          {!showNameInput ? (
-            <>
-              {/* Apple sign-in — siyah, HIG kurallarına uygun, en üstte */}
-              <Pressable
-                onPress={signInApple}
-                style={{ backgroundColor: "#000000" }}
-                className="rounded-2xl px-5 py-4 flex-row items-center justify-center"
-              >
-                <AppleIcon color="#ffffff" />
-                <Text
-                  className="ml-2"
-                  style={{ color: "#ffffff", fontFamily: "System", fontWeight: "600", fontSize: 15, letterSpacing: -0.1 }}
-                >
-                  Apple ile devam et
-                </Text>
-              </Pressable>
-
-              {/* Google sign-in */}
-              <Pressable
-                onPress={signInGoogle}
-                className="bg-ivory-50 border border-navy-900/15 rounded-2xl px-5 py-4 flex-row items-center justify-center mt-3"
-              >
-                <GoogleIcon />
-                <Text
-                  className="text-navy-900 ml-3"
-                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 15, letterSpacing: -0.1 }}
-                >
-                  Google ile devam et
-                </Text>
-              </Pressable>
-
-              {/* Guest option */}
-              <Pressable onPress={() => setShowNameInput(true)} className="mt-4 py-2">
-                <Text
-                  className="text-steel-500 text-center"
-                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 13 }}
-                >
-                  veya{" "}
-                  <Text
-                    style={{
-                      fontFamily: "System",
-                      fontWeight: "600",
-                      color: palette.navy900,
-                      textDecorationLine: "underline"
-                    }}
-                  >
-                    giriş yapmadan devam et
-                  </Text>
-                </Text>
-              </Pressable>
-
+          {/* Apple — sadece iOS'ta görünür; HIG-uyumlu siyah pill */}
+          {APPLE_AVAILABLE && (
+            <Pressable
+              onPress={onApple}
+              disabled={busy !== null}
+              style={{ backgroundColor: "#000000", opacity: busy && busy !== "apple" ? 0.5 : 1 }}
+              className="rounded-2xl px-5 py-4 flex-row items-center justify-center"
+            >
+              <AppleIcon color="#ffffff" />
               <Text
-                className="text-steel-400 text-center mt-3"
-                style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, lineHeight: 16 }}
+                className="ml-2"
+                style={{ color: "#ffffff", fontFamily: "System", fontWeight: "600", fontSize: 15, letterSpacing: -0.1 }}
               >
-                Verilerin cihazında kalır. KVKK uyarınca rota, sağlık ve konum bilgilerin{"\n"}
-                hiçbir zaman üçüncü tarafa aktarılmaz.
+                {busy === "apple" ? "Bağlanıyor…" : "Apple ile devam et"}
               </Text>
-            </>
-          ) : (
-            <>
-              <Text
-                className="text-steel-500 mb-2"
-                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.6 }}
-              >
-                İSMİN
-              </Text>
-              <TextInput
-                value={name}
-                onChangeText={setName}
-                autoFocus
-                placeholder="Ör. Murat"
-                placeholderTextColor={palette.steel400}
-                className="border border-navy-900/15 rounded-2xl px-4 py-4 text-navy-900 bg-ivory-50"
-                style={{ fontFamily: "System", fontWeight: "700", fontSize: 18, letterSpacing: -0.3 }}
-              />
-              <View className="mt-4">
-                <Button
-                  label={tr.onboarding.continue}
-                  variant={name.trim() ? "primary" : "ghost"}
-                  onPress={
-                    name.trim()
-                      ? () => router.push({ pathname: "/(onboarding)/neighborhood", params: { name } })
-                      : undefined
-                  }
-                />
-              </View>
-              <Pressable onPress={() => setShowNameInput(false)} className="mt-3 py-2">
-                <Text
-                  className="text-steel-500 text-center"
-                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 13 }}
-                >
-                  ← sosyal hesapla devam et
-                </Text>
-              </Pressable>
-            </>
+            </Pressable>
           )}
+
+          {/* Google */}
+          <Pressable
+            onPress={onGoogle}
+            disabled={busy !== null}
+            style={{ opacity: busy && busy !== "google" ? 0.5 : 1 }}
+            className={`bg-ivory-50 border border-navy-900/15 rounded-2xl px-5 py-4 flex-row items-center justify-center ${APPLE_AVAILABLE ? "mt-3" : ""}`}
+          >
+            <GoogleIcon />
+            <Text
+              className="text-navy-900 ml-3"
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 15, letterSpacing: -0.1 }}
+            >
+              {busy === "google" ? "Bağlanıyor…" : "Google ile devam et"}
+            </Text>
+          </Pressable>
+
+          {/* Guest */}
+          <Pressable
+            onPress={() => goToIdentity({ provider: "guest" })}
+            disabled={busy !== null}
+            className="mt-4 py-2"
+          >
+            <Text
+              className="text-steel-500 text-center"
+              style={{ fontFamily: "System", fontWeight: "500", fontSize: 13 }}
+            >
+              veya{" "}
+              <Text
+                style={{
+                  fontFamily: "System",
+                  fontWeight: "600",
+                  color: palette.navy900,
+                  textDecorationLine: "underline"
+                }}
+              >
+                giriş yapmadan devam et
+              </Text>
+            </Text>
+          </Pressable>
+
+          <Text
+            className="text-steel-400 text-center mt-3"
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, lineHeight: 16 }}
+          >
+            Verilerin cihazında kalır. KVKK uyarınca rota, sağlık ve konum bilgilerin{"\n"}
+            hiçbir zaman üçüncü tarafa aktarılmaz.
+          </Text>
 
           <View className="flex-row items-center justify-center mt-6 gap-2">
             <View className="h-px flex-1 bg-navy-900/10" />
@@ -225,7 +238,7 @@ export default function Welcome() {
               className="text-steel-400"
               style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 9, letterSpacing: 1.4 }}
             >
-              {showNameInput ? "MİSAFİR" : "GİRİŞ"} · 1 / 3
+              GİRİŞ · 1 / 3
             </Text>
             <View className="h-px flex-1 bg-navy-900/10" />
           </View>

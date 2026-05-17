@@ -1,31 +1,45 @@
-// Sosyal giriş — şu an MOCK akış (Google + Apple).
+// Sosyal giriş.
 //
-// Gerçek OAuth/Sign-in-with-Apple açmak için:
-//   GOOGLE:
-//     1. Google Cloud Console'dan OAuth Client ID al (iOS / Android / Web)
-//     2. `services/auth.real.ts` aç, expo-auth-session/providers/google import et
-//     3. Custom URL scheme + dev client gerekir (Expo Go ile çalışmaz)
-//   APPLE:
-//     1. Apple Developer'da "Sign in with Apple" capability'sini bundle ID'ye ekle
-//     2. `npx expo install expo-apple-authentication`
-//     3. app.json -> "ios": { "usesAppleSignIn": true }
-//     4. import * as AppleAuthentication from "expo-apple-authentication"
-//        AppleAuthentication.signInAsync({ requestedScopes: [FULL_NAME, EMAIL] })
-//     5. Android'de Apple Sign-In gösterilemez — Platform.OS === "ios" ile guard
+// APPLE (gerçek):
+//   - expo-apple-authentication (Expo Go SDK 54'te bundle edilmiş gelir)
+//   - app.json: "ios": { "usesAppleSignIn": true } + plugin eklendi
+//   - Sadece iOS — Platform.OS === "ios" guard'ı ile UI'da gizleniyor
+//   - İlk girişte: fullName.givenName + familyName + email döner;
+//     SONRAKİ girişlerde Apple sadece "user" (sub) döner — uygulamanın
+//     ilk seferki veriyi saklaması beklenir
 //
-// Şu anda expo-auth-session / expo-apple-authentication / expo-crypto STATİK
-// İMPORT EDİLMEZ — aksi hâlde Expo Go SDK 54 bazı yüklemelerde
-// "Cannot find native module ExpoCryptoAES" hatası fırlatıyor.
+// GOOGLE (mock):
+//   - Hâlâ mock — Google Cloud Console'dan client ID alındığında
+//     expo-auth-session/providers/google ile entegre edilecek
+//   - Mock fallback Google için kasıtlı (kurulu değil); Apple için fallback YOK,
+//     hata propagate olur
 
 import { useCallback } from "react";
+import { Platform } from "react-native";
+
+// Lazy require: Android/web bundle'ında expo-apple-authentication'ı yüklemeye
+// çalışmasın diye platform guard'ı ile gate ediyoruz.
+type AppleAuthModule = typeof import("expo-apple-authentication");
+let AppleAuthentication: AppleAuthModule | null = null;
+if (Platform.OS === "ios") {
+  try {
+    AppleAuthentication = require("expo-apple-authentication") as AppleAuthModule;
+  } catch {
+    AppleAuthentication = null;
+  }
+}
 
 export type SocialUser = {
   email: string;
   name: string;
   picture?: string;
   sub: string;
-  provider: "google" | "apple";
+  provider: "google" | "apple" | "guest";
 };
+
+// Backwards-compat alias.
+export type GoogleUser = SocialUser;
+export type AppleUser = SocialUser;
 
 const MOCK_NAMES = [
   "Ayşe Yılmaz",
@@ -45,10 +59,6 @@ function slugify(name: string) {
   return name.toLowerCase().replace(/[^a-z]/g, "");
 }
 
-// Backwards-compat alias.
-export type GoogleUser = SocialUser;
-export type AppleUser = SocialUser;
-
 export function useGoogleAuth(onUser: (u: SocialUser) => void) {
   const signIn = useCallback(async () => {
     const n = pickName();
@@ -63,24 +73,36 @@ export function useGoogleAuth(onUser: (u: SocialUser) => void) {
     });
   }, [onUser]);
 
-  return { signIn, isReady: true, isMock: true };
+  return { signIn, isReady: true, isMock: true, isAvailable: true };
 }
+
+export const APPLE_AVAILABLE = AppleAuthentication !== null;
 
 export function useAppleAuth(onUser: (u: SocialUser) => void) {
   const signIn = useCallback(async () => {
-    const n = pickName();
-    const slug = slugify(n);
-    const sub = "apple-mock-" + Math.random().toString(36).slice(2, 10);
-    // Apple'ın "Hide My Email" özelliği gerçek akışta privaterelay.appleid.com
-    // ile maskelenmiş bir adres döner — mock için bunu taklit ediyoruz.
+    if (!AppleAuthentication) {
+      throw new Error("Apple ile giriş yalnızca iOS cihazlarda kullanılabilir.");
+    }
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL
+      ]
+    });
+
+    // İsim sadece ilk girişte gelir; sonrakilerde null.
+    const given = credential.fullName?.givenName?.trim() ?? "";
+    const family = credential.fullName?.familyName?.trim() ?? "";
+    const name = [given, family].filter(Boolean).join(" ");
+
     onUser({
-      email: `${slug}@privaterelay.appleid.com`,
-      name: n,
-      picture: `https://api.dicebear.com/9.x/initials/png?seed=${encodeURIComponent(n)}&backgroundColor=000000&textColor=ffffff`,
-      sub,
+      email: credential.email ?? "",
+      name,
+      // Apple avatar dönmez — kullanıcı sonradan kendi yükleyebilir.
+      sub: credential.user,
       provider: "apple"
     });
   }, [onUser]);
 
-  return { signIn, isReady: true, isMock: true };
+  return { signIn, isReady: true, isMock: false, isAvailable: APPLE_AVAILABLE };
 }

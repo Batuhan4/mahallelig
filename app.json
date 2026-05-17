@@ -17,6 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mahallelig.app",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "NSMotionUsageDescription": "MahalleLig adımlarını sayar ve puana çevirir.",
         "NSLocationWhenInUseUsageDescription": "Aktif ulaşım rotanı kaydetmek için konuma ihtiyacımız var."
@@ -30,7 +31,8 @@
       "expo-router",
       "expo-location",
       "expo-notifications",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      "expo-apple-authentication"
     ],
     "experiments": { "typedRoutes": true }
   }
