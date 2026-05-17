@@ -4,11 +4,13 @@ describe("points", () => {
   test("walk: 1km ≈ 50 pts", () => {
     expect(pointsForActivity({ type: "walk", steps: 1300, distanceKm: 1 })).toBe(50);
   });
-  test("run: 1km ≈ 80 pts", () => {
-    expect(pointsForActivity({ type: "run", steps: 1100, distanceKm: 1 })).toBe(80);
-  });
-  test("bike: 1km ≈ 30 pts", () => {
+  test("bike: 1km ≈ 30 pts (steps ignored)", () => {
     expect(pointsForActivity({ type: "bike", steps: 0, distanceKm: 1 })).toBe(30);
+    expect(pointsForActivity({ type: "bike", steps: 5000, distanceKm: 1 })).toBe(30);
+  });
+  test("stairs: per floor via altitude or steps", () => {
+    expect(pointsForActivity({ type: "stairs", steps: 0, distanceKm: 0, altitudeM: 30 })).toBe(80);
+    expect(pointsForActivity({ type: "stairs", steps: 140, distanceKm: 0 })).toBe(80);
   });
   test("active transport bonus +20%", () => {
     const base = pointsForActivity({ type: "walk", steps: 2600, distanceKm: 2 });
@@ -16,7 +18,7 @@ describe("points", () => {
     expect(boosted).toBe(base + Math.round(base * 0.2));
   });
   test("daily cap = 1000", () => {
-    expect(pointsForActivity({ type: "run", steps: 0, distanceKm: 100 })).toBe(DAILY_POINT_CAP);
+    expect(pointsForActivity({ type: "bike", steps: 0, distanceKm: 100 })).toBe(DAILY_POINT_CAP);
   });
   test("levelFromPoints", () => {
     expect(levelFromPoints(0)).toBe(0);

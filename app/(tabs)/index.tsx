@@ -13,6 +13,7 @@ import { useSettingsStore } from "@/store/useSettingsStore";
 import { findNeighborhood } from "@/services/league";
 import { isAvailable, watchSteps, getStepsToday, requestPermissions as requestMotion } from "@/services/pedometer";
 import { hasLocationPermission, requestLocationPermission, watchPosition } from "@/services/location";
+import { isBarometerAvailable, watchAltitudeGain } from "@/services/barometer";
 import { startDemoStepStream } from "@/services/demoMode";
 import { pointsForActivity, applyDailyCap } from "@/services/points";
 import { backend } from "@/services/backend";
@@ -32,17 +33,19 @@ export default function Today() {
   const startLive = useActivityStore((s) => s.startLive);
   const pushLiveSteps = useActivityStore((s) => s.pushLiveSteps);
   const pushLiveDistance = useActivityStore((s) => s.pushLiveDistance);
+  const setLiveAltitude = useActivityStore((s) => s.setLiveAltitude);
   const endLive = useActivityStore((s) => s.endLive);
   const pushHistory = useActivityStore((s) => s.pushHistory);
   const demoMode = useSettingsStore((s) => s.demoMode);
   const bumpUserNeighborhood = useLeagueStore((s) => s.bumpUserNeighborhood);
 
-  const [type, setType] = useState<"walk" | "run" | "bike">("walk");
+  const [type, setType] = useState<"walk" | "bike" | "stairs">("walk");
   const [trend] = useState<number[]>([3200, 4800, 6100, 2900, 8400, 5500, 7700]);
   const [pedometerReady, setPedometerReady] = useState(false);
   const [gpsActive, setGpsActive] = useState(false);
   const [gpsGranted, setGpsGranted] = useState(false);
   const [motionGranted, setMotionGranted] = useState(false);
+  const [baroAvailable, setBaroAvailable] = useState(false);
 
   // === Today total: refresh from native pedometer + live deltas while open ===
   useEffect(() => {
@@ -67,6 +70,8 @@ export default function Today() {
       setPedometerReady(true);
       const locOk = await hasLocationPermission();
       if (alive) setGpsGranted(locOk);
+      const baroOk = await isBarometerAvailable();
+      if (alive) setBaroAvailable(baroOk);
       await refresh();
       // Periodic refresh from Health/HealthConnect — covers steps that came in
       // while the app was backgrounded.
@@ -88,7 +93,7 @@ export default function Today() {
     };
   }, [demoMode, setTodaySteps, addTodaySteps]);
 
-  // === Live activity: pedometer + GPS ===
+  // === Live activity: pedometer + GPS + barometer (stairs) ===
   useEffect(() => {
     if (!live) {
       setGpsActive(false);
@@ -96,6 +101,7 @@ export default function Today() {
     }
     let stepSub: { remove: () => void } | null = null;
     let geoSub: { remove: () => void } | null = null;
+    let baroSub: { remove: () => void } | null = null;
 
     if (demoMode) {
       stepSub = startDemoStepStream((delta) => {
@@ -103,45 +109,48 @@ export default function Today() {
         addTodaySteps(delta);
       });
     } else {
-      // Live step deltas
-      stepSub = watchSteps((delta) => {
-        pushLiveSteps(delta);
-        addTodaySteps(delta);
-      });
-      // Live GPS distance — only if user granted location
-      (async () => {
-        const granted = await hasLocationPermission();
-        if (!granted) return;
-        const sub = await watchPosition((deltaKm) => {
-          pushLiveDistance(deltaKm);
+      // Steps: walk + stairs care, bike ignores
+      if (live.type !== "bike") {
+        stepSub = watchSteps((delta) => {
+          pushLiveSteps(delta);
+          addTodaySteps(delta);
         });
-        if (sub) {
-          geoSub = sub;
-          setGpsActive(true);
-        }
-      })();
+      }
+      // GPS: walk + bike, not stairs
+      if (live.type !== "stairs") {
+        (async () => {
+          const granted = await hasLocationPermission();
+          if (!granted) return;
+          const sub = await watchPosition((deltaKm) => {
+            pushLiveDistance(deltaKm);
+          });
+          if (sub) {
+            geoSub = sub;
+            setGpsActive(true);
+          }
+        })();
+      }
+      // Barometer: stairs only
+      if (live.type === "stairs" && baroAvailable) {
+        baroSub = watchAltitudeGain((gain) => setLiveAltitude(gain));
+      }
     }
 
     return () => {
       stepSub?.remove();
       geoSub?.remove();
+      baroSub?.remove();
       setGpsActive(false);
     };
-  }, [live, demoMode, pushLiveSteps, pushLiveDistance, addTodaySteps]);
+  }, [live, demoMode, baroAvailable, pushLiveSteps, pushLiveDistance, setLiveAltitude, addTodaySteps]);
 
   async function onStart() {
-    // Request perms inline if user skipped onboarding (already onboarded users)
     if (!demoMode) {
-      if (!motionGranted) {
+      if (type !== "bike" && !motionGranted) {
         const ok = await requestMotion();
         setMotionGranted(ok);
       }
-      if (!gpsGranted && type !== "walk") {
-        // Bike + run especially need GPS for real distance
-        const ok = await requestLocationPermission();
-        setGpsGranted(ok);
-      } else if (!gpsGranted) {
-        // Walk also asks but doesn't block if declined
+      if (type !== "stairs" && !gpsGranted) {
         const ok = await requestLocationPermission();
         setGpsGranted(ok);
       }
@@ -163,38 +172,41 @@ export default function Today() {
   async function onStop() {
     const ended = endLive();
     if (!ended || !user) return;
-    // For walk/run: real GPS distance preferred; fall back to step estimate.
-    // For bike: GPS only (steps ≈ 0).
+    // walk: prefer GPS distance, fall back to step estimate.
+    // bike: GPS only (steps ≈ 0).
+    // stairs: distanceKm meaningless, altitudeM matters.
     const fromSteps = ended.steps / 1300;
-    const distanceKm = ended.type === "bike" ? ended.distanceKm : Math.max(ended.distanceKm, fromSteps);
-    const earned = pointsForActivity({ type: ended.type, steps: ended.steps, distanceKm });
+    const distanceKm =
+      ended.type === "bike"
+        ? ended.distanceKm
+        : ended.type === "stairs"
+          ? 0
+          : Math.max(ended.distanceKm, fromSteps);
+    const earned = pointsForActivity({
+      type: ended.type,
+      steps: ended.steps,
+      distanceKm,
+      altitudeM: ended.altitudeM
+    });
     const capped = applyDailyCap(todayPoints, earned);
     addTodayPoints(capped);
     addPoints(capped);
     bumpUserNeighborhood(user.neighborhoodId, capped);
     const startedAt = Date.now() - ended.durationMin * 60000;
-    pushHistory({
+    const record = {
       aid: `act-${startedAt}`,
       uid: user.uid,
       type: ended.type,
       steps: ended.steps,
       distanceKm,
+      altitudeM: ended.altitudeM > 0 ? ended.altitudeM : undefined,
       durationMin: ended.durationMin,
       points: capped,
       startedAt,
       endedAt: Date.now()
-    });
-    await backend.recordActivity({
-      aid: `act-${startedAt}`,
-      uid: user.uid,
-      type: ended.type,
-      steps: ended.steps,
-      distanceKm,
-      durationMin: ended.durationMin,
-      points: capped,
-      startedAt,
-      endedAt: Date.now()
-    });
+    };
+    pushHistory(record);
+    await backend.recordActivity(record);
   }
 
   const nhood = user ? findNeighborhood(user.neighborhoodId) : undefined;
@@ -258,9 +270,24 @@ export default function Today() {
         onSelectType={setType}
         onStart={onStart}
         onStop={onStop}
-        source={demoMode ? tr.today.sourceDemo : gpsActive ? "Pedometre + GPS" : "Pedometre"}
+        source={
+          demoMode
+            ? tr.today.sourceDemo
+            : type === "stairs"
+              ? baroAvailable
+                ? "Pedometre + Barometre"
+                : "Pedometre"
+              : type === "bike"
+                ? gpsActive
+                  ? "GPS"
+                  : "GPS bekleniyor"
+                : gpsActive
+                  ? "Pedometre + GPS"
+                  : "Pedometre"
+        }
         liveSteps={live?.steps ?? 0}
         liveDistanceKm={live?.distanceKm ?? 0}
+        liveAltitudeM={live?.altitudeM ?? 0}
       />
 
       <SectionTitle sub="HAFTALIK">Trend</SectionTitle>

@@ -13,7 +13,12 @@ import { REWARDS } from "@/constants/seed/rewards";
 import { palette } from "@/constants/theme";
 
 const BADGES = ["Mahalle Şampiyonu", "İlk Yürüyüş", "5km Klübü", "Sabah Kuşu", "Bisiklet Dostu"];
-const ACTIVITY_ICON = { walk: "🚶", run: "🏃", bike: "🚴" } as const;
+const ACTIVITY_ICON: Record<string, string> = {
+  walk: "🚶",
+  bike: "🚴",
+  stairs: "🪜",
+  run: "🏃" // legacy records before merge
+};
 
 function formatAgo(ts: number) {
   const diff = Date.now() - ts;
@@ -167,18 +172,25 @@ export default function Profile() {
         </View>
       ) : (
         <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl px-4 py-2">
-          {history.slice(0, 6).map((a, i, arr) => (
+          {history.slice(0, 6).map((a, i, arr) => {
+            const headline =
+              a.type === "bike"
+                ? `${a.distanceKm.toFixed(2)} km`
+                : a.type === "stairs"
+                  ? `${Math.round((a.altitudeM ?? 0) / 3)} kat · ${a.steps.toLocaleString("tr-TR")} adım`
+                  : `${a.distanceKm.toFixed(2)} km · ${a.steps.toLocaleString("tr-TR")} adım`;
+            return (
             <View
               key={a.aid}
               className={`flex-row items-center py-3 ${i < arr.length - 1 ? "border-b border-navy-900/8" : ""}`}
             >
-              <Text className="text-xl mr-3">{ACTIVITY_ICON[a.type]}</Text>
+              <Text className="text-xl mr-3">{ACTIVITY_ICON[a.type] ?? "🟢"}</Text>
               <View className="flex-1">
                 <Text
                   className="text-navy-900"
                   style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
                 >
-                  {a.distanceKm.toFixed(2)} km · {a.steps.toLocaleString("tr-TR")} adım
+                  {headline}
                 </Text>
                 <Text
                   className="text-steel-500"
@@ -194,7 +206,8 @@ export default function Profile() {
                 +{a.points}
               </Text>
             </View>
-          ))}
+            );
+          })}
         </View>
       )}
 

@@ -23,8 +23,8 @@ export const tr = {
     sourcePedometer: "Pedometre",
     sourceDemo: "Demo Mode (10x)",
     activityTypeWalk: "Yürüyüş",
-    activityTypeRun: "Koşu",
-    activityTypeBike: "Bisiklet"
+    activityTypeBike: "Bisiklet",
+    activityTypeStairs: "Merdiven"
   },
   league: {
     title: "Mahalle Ligi",

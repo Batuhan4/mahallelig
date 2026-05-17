@@ -17,6 +17,7 @@ export type ActivityRecord = {
   type: ActivityType;
   steps: number;
   distanceKm: number;
+  altitudeM?: number;
   durationMin: number;
   points: number;
   startedAt: number;
