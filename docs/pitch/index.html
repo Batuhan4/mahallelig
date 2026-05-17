@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MahalleLig — Belediye & Kurumsal Sunum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0C2340;
+      --navy-700: #1B3A5C;
+      --navy-500: #314F75;
+      --navy-100: #D7DEEB;
+      --terra: #D2603A;
+      --terra-700: #A4472A;
+      --terra-100: #F8DCCB;
+      --ivory: #F5F0E6;
+      --ivory-50: #FAF7EF;
+      --ivory-200: #ECE3D3;
+      --field: #2F5D3C;
+      --steel-700: #3A4452;
+      --steel-500: #5C6573;
+      --steel-400: #7B8492;
+      --bronze: #B98D4A;
+      --shadow-sm: 0 1px 2px rgba(12,35,64,.06), 0 0 0 1px rgba(12,35,64,.06);
+      --shadow-md: 0 8px 24px rgba(12,35,64,.10), 0 0 0 1px rgba(12,35,64,.06);
+      --shadow-lg: 0 30px 60px -20px rgba(12,35,64,.32);
+    }
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html, body { margin: 0; padding: 0; background: var(--ivory); color: var(--navy); }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    .display { font-family: 'Fraunces', Georgia, serif; font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
+    .display-italic { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 400; }
+    .mono { font-family: 'IBM Plex Mono', Menlo, monospace; }
+    .eyebrow {
+      font-size: 10px; letter-spacing: 1.6px; font-weight: 600;
+      text-transform: uppercase; color: var(--steel-500);
+    }
+    .eyebrow.terra { color: var(--terra-700); }
+    .eyebrow::before {
+      content: ''; display: inline-block; width: 6px; height: 6px;
+      background: var(--terra); border-radius: 50%;
+      margin-right: 10px; vertical-align: 2px;
+    }
+
+    /* Top nav */
+    nav.deck-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,240,230,.82);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(12,35,64,.08);
+      padding: 12px 24px;
+    }
+    nav.deck-nav .row { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    nav.deck-nav .brand { font-family: 'Fraunces'; font-weight: 700; font-size: 20px; letter-spacing: -.02em; }
+    nav.deck-nav .brand .dot { color: var(--terra); }
+    nav.deck-nav .links { display: flex; gap: 6px; flex-wrap: wrap; }
+    nav.deck-nav .links a {
+      font-size: 12px; color: var(--steel-500); text-decoration: none;
+      padding: 6px 10px; border-radius: 999px; transition: all .2s;
+      font-weight: 500;
+    }
+    nav.deck-nav .links a:hover { background: var(--navy); color: var(--ivory); }
+    nav.deck-nav .cta {
+      background: var(--terra); color: var(--ivory-50); padding: 8px 16px;
+      border-radius: 999px; text-decoration: none; font-size: 12px;
+      font-weight: 600; letter-spacing: .2px;
+    }
+    @media (max-width: 768px) {
+      nav.deck-nav .links { display: none; }
+    }
+
+    /* Sections */
+    section {
+      position: relative;
+      padding: 96px 24px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    section.full {
+      min-height: 100vh;
+      display: flex; align-items: center;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 1100px; margin: 0 auto; width: 100%;
+    }
+    .hero .stamp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .hero .serial {
+      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: .8px;
+      color: var(--steel-500);
+    }
+    .hero .badge {
+      border: 1px solid rgba(12,35,64,.3); padding: 4px 10px; border-radius: 3px;
+      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.4px;
+    }
+    .hero h1 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(72px, 11vw, 168px);
+      letter-spacing: -.06em; line-height: .94; margin: 0;
+    }
+    .hero h1 .dot { color: var(--terra); }
+    .hero h1 .italic { font-family: 'Fraunces'; font-style: italic; font-weight: 400; display: block; font-size: .42em; line-height: 1.1; margin-top: 8px; color: var(--navy-700); letter-spacing: -.02em; }
+    .hero .lead {
+      max-width: 720px; margin-top: 32px;
+      font-size: 19px; line-height: 1.55; color: var(--steel-700);
+    }
+    .hero .lead strong { color: var(--navy); font-weight: 600; }
+    .hero .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+    .hero .pill {
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.12);
+      padding: 8px 14px; border-radius: 999px; font-size: 13px;
+      font-weight: 500;
+    }
+    .hero .pill.terra { background: var(--terra); color: var(--ivory-50); border-color: var(--terra-700); }
+    .hero .pill.navy { background: var(--navy); color: var(--ivory-50); border-color: var(--navy); }
+    .hero .pill-row .pill::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--terra); border-radius: 50%; margin-right: 8px; vertical-align: 2px; }
+    .hero .pill.terra::before, .hero .pill.navy::before { background: var(--ivory-50); }
+
+    /* Decorative hairline + dot ornament */
+    .hairline { height: 1px; background: rgba(12,35,64,.10); width: 100%; margin: 32px 0; }
+    .ornament { display: flex; align-items: center; gap: 8px; margin: 24px 0; }
+    .ornament .line { height: 1px; background: rgba(12,35,64,.10); flex: 1; }
+    .ornament .text {
+      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.6px;
+      color: var(--steel-400);
+    }
+
+    /* Section header */
+    .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
+    .section-header h2 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: -.03em; line-height: 1; margin: 8px 0 0;
+    }
+    .section-header h2 .accent { color: var(--terra); font-style: italic; font-weight: 400; }
+    .section-header .meta { text-align: right; }
+    .section-header .meta .num {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 40px;
+      color: var(--terra); letter-spacing: -.02em; line-height: 1;
+    }
+    .section-header .meta .num-sub {
+      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1px;
+      color: var(--steel-500); margin-top: 4px;
+    }
+
+    /* 3-col problem grid */
+    .grid-3 {
+      display: grid; gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+    .pill-card {
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.10);
+      border-radius: 24px; padding: 28px; position: relative;
+      transition: transform .25s ease;
+    }
+    .pill-card:hover { transform: translateY(-2px); }
+    .pill-card .top-stripe {
+      height: 4px; border-radius: 4px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--terra) 70%, var(--bronze) 100%);
+      margin: -28px -28px 24px;
+      border-radius: 24px 24px 0 0;
+    }
+    .pill-card .stat {
+      font-family: 'Fraunces'; font-weight: 700;
+      font-size: 64px; line-height: 1; letter-spacing: -.04em;
+      color: var(--navy);
+    }
+    .pill-card .stat .unit { font-size: 24px; color: var(--steel-500); font-weight: 400; font-family: 'Inter'; }
+    .pill-card h3 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 22px;
+      letter-spacing: -.02em; margin: 12px 0 8px;
+    }
+    .pill-card p { color: var(--steel-700); font-size: 14px; margin: 0; }
+    .pill-card .src {
+      margin-top: 16px; font-family: 'IBM Plex Mono'; font-size: 10px;
+      letter-spacing: .6px; color: var(--steel-400);
+    }
+
+    /* iPhone frame */
+    .iphone {
+      position: relative; display: inline-block;
+      padding: 12px 9px;
+      background: var(--navy);
+      border-radius: 56px;
+      box-shadow:
+        0 0 0 2px var(--navy-700),
+        var(--shadow-lg);
+    }
+    .iphone .screen {
+      position: relative; overflow: hidden;
+      border-radius: 44px;
+      background: var(--ivory);
+      display: block;
+    }
+    .iphone img {
+      display: block; width: 100%; height: auto;
+      border-radius: 44px;
+    }
+    .iphone::before {
+      /* Dynamic Island */
+      content: ''; position: absolute; top: 24px;
+      left: 50%; transform: translateX(-50%);
+      width: 110px; height: 30px;
+      background: #000; border-radius: 30px;
+      z-index: 2;
+    }
+    .iphone.no-island::before { display: none; }
+    .iphone-stack {
+      display: flex; gap: 28px; justify-content: center; align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .iphone-stack .iphone { max-width: 280px; }
+    .iphone-caption {
+      text-align: center; margin-top: 16px; max-width: 280px;
+    }
+    .iphone-caption .eyebrow { font-size: 9px; }
+    .iphone-caption .title {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 17px;
+      margin-top: 6px; letter-spacing: -.01em; color: var(--navy);
+    }
+    .iphone-caption .desc {
+      font-size: 13px; color: var(--steel-500); margin-top: 4px;
+    }
+    .iphone-wrap { display: flex; flex-direction: column; align-items: center; }
+
+    /* Side-by-side: text + phone */
+    .split {
+      display: grid; gap: 64px;
+      grid-template-columns: 1fr 1fr; align-items: center;
+    }
+    @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+    .split .text h3 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 36px;
+      letter-spacing: -.02em; line-height: 1.1; margin: 12px 0 16px;
+    }
+    .split .text .lead {
+      font-size: 17px; color: var(--steel-700); line-height: 1.6;
+    }
+    .split .text ul { padding: 0; margin: 24px 0 0; list-style: none; }
+    .split .text ul li {
+      padding: 14px 0; border-bottom: 1px solid rgba(12,35,64,.08);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .split .text ul li:last-child { border: none; }
+    .split .text ul li::before {
+      content: counter(item, decimal-leading-zero);
+      counter-increment: item;
+      font-family: 'IBM Plex Mono'; font-weight: 500; font-size: 11px;
+      letter-spacing: -.2px; color: var(--terra); min-width: 24px;
+      padding-top: 2px;
+    }
+    .split .text ul { counter-reset: item; }
+    .split .text ul li b {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 16px;
+      color: var(--navy); letter-spacing: -.01em; display: block; margin-bottom: 2px;
+    }
+    .split .text ul li span { color: var(--steel-700); font-size: 14px; line-height: 1.5; }
+    .split.reverse { direction: rtl; }
+    .split.reverse > * { direction: ltr; }
+
+    /* Belediye section dark */
+    .dark-section {
+      background: var(--navy);
+      color: var(--ivory);
+      margin: 80px 0 0;
+      padding: 96px 24px;
+    }
+    .dark-section .inner { max-width: 1280px; margin: 0 auto; }
+    .dark-section .eyebrow { color: var(--terra); }
+    .dark-section h2 { color: var(--ivory); }
+    .dark-section .lead { color: rgba(245,240,230,.78); }
+    .dark-section .pill-card { background: var(--navy-700); border-color: rgba(245,240,230,.10); }
+    .dark-section .pill-card .stat { color: var(--ivory); }
+    .dark-section .pill-card .stat .unit { color: rgba(245,240,230,.55); }
+    .dark-section .pill-card h3 { color: var(--ivory); }
+    .dark-section .pill-card p { color: rgba(245,240,230,.65); }
+    .dark-section .pill-card .src { color: rgba(245,240,230,.4); }
+    .dark-section .split .text h3 { color: var(--ivory); }
+    .dark-section .split .text .lead { color: rgba(245,240,230,.78); }
+    .dark-section .split .text ul li { border-bottom-color: rgba(245,240,230,.10); }
+    .dark-section .split .text ul li b { color: var(--ivory); }
+    .dark-section .split .text ul li span { color: rgba(245,240,230,.7); }
+    .dark-section .hairline { background: rgba(245,240,230,.12); }
+
+    /* Big stat row */
+    .big-stats {
+      display: grid; gap: 24px; grid-template-columns: repeat(4, 1fr);
+      margin-top: 48px;
+    }
+    @media (max-width: 900px) { .big-stats { grid-template-columns: repeat(2, 1fr); } }
+    .big-stats .stat {
+      text-align: left;
+    }
+    .big-stats .stat .num {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 72px;
+      letter-spacing: -.04em; line-height: 1; color: var(--terra);
+    }
+    .big-stats .stat .num.ivory { color: var(--ivory); }
+    .big-stats .stat .label {
+      margin-top: 8px; font-family: 'IBM Plex Mono'; font-size: 11px;
+      letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--steel-500);
+    }
+    .dark-section .big-stats .stat .label { color: rgba(245,240,230,.55); }
+
+    /* Pricing table */
+    .pricing {
+      display: grid; gap: 24px; grid-template-columns: 1fr 1fr;
+      max-width: 1100px; margin: 0 auto;
+    }
+    @media (max-width: 900px) { .pricing { grid-template-columns: 1fr; } }
+    .price-card {
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.12);
+      border-radius: 28px; padding: 40px; position: relative;
+    }
+    .price-card.featured { border-color: var(--terra); }
+    .price-card.featured::before {
+      content: 'ÖNERİLEN'; position: absolute; top: -12px; left: 32px;
+      background: var(--terra); color: var(--ivory-50);
+      font-family: 'IBM Plex Mono'; font-size: 10px; letter-spacing: 1.4px;
+      padding: 5px 12px; border-radius: 4px;
+    }
+    .price-card h3 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 28px;
+      letter-spacing: -.02em; margin: 0 0 8px;
+    }
+    .price-card .sub {
+      color: var(--steel-500); font-size: 14px; margin-bottom: 24px;
+    }
+    .price-card .price {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 56px;
+      letter-spacing: -.03em; line-height: 1; margin-bottom: 8px;
+    }
+    .price-card .price .small { font-size: 16px; color: var(--steel-500); font-weight: 400; font-family: 'Inter'; }
+    .price-card ul { padding: 0; margin: 24px 0 32px; list-style: none; }
+    .price-card ul li {
+      padding: 10px 0; border-bottom: 1px solid rgba(12,35,64,.06);
+      font-size: 14px; display: flex; align-items: flex-start; gap: 10px;
+    }
+    .price-card ul li::before {
+      content: ''; display: inline-block; width: 16px; height: 16px;
+      background: var(--field); border-radius: 50%; flex-shrink: 0;
+      margin-top: 2px;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M6.4 11.2L3.2 8l1.13-1.13L6.4 8.94 11.67 3.67l1.13 1.13z'/%3E%3C/svg%3E") no-repeat center/12px;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M6.4 11.2L3.2 8l1.13-1.13L6.4 8.94 11.67 3.67l1.13 1.13z'/%3E%3C/svg%3E") no-repeat center/12px;
+    }
+    .price-card .btn {
+      display: block; text-align: center; padding: 16px;
+      border-radius: 16px; background: var(--navy); color: var(--ivory-50);
+      text-decoration: none; font-weight: 600; font-size: 14px; letter-spacing: .2px;
+    }
+    .price-card.featured .btn { background: var(--terra); }
+
+    /* Quote / testimonial */
+    .quote {
+      max-width: 880px; margin: 0 auto; padding: 64px 24px; text-align: center;
+    }
+    .quote q {
+      font-family: 'Fraunces'; font-style: italic; font-weight: 400;
+      font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; line-height: 1.25;
+      color: var(--navy); quotes: '"' '"';
+    }
+    .quote .attr {
+      margin-top: 28px; font-family: 'IBM Plex Mono'; font-size: 12px;
+      letter-spacing: 1.2px; color: var(--steel-500);
+    }
+    .quote .attr::before {
+      content: ''; display: inline-block; width: 28px; height: 1px;
+      background: var(--terra); vertical-align: 5px; margin-right: 12px;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--navy); color: var(--ivory);
+      padding: 120px 24px; text-align: center; margin-top: 80px;
+    }
+    .cta-section h2 {
+      font-family: 'Fraunces'; font-weight: 700; font-size: clamp(48px, 7vw, 96px);
+      letter-spacing: -.04em; line-height: 1; margin: 0;
+    }
+    .cta-section h2 .italic { font-style: italic; font-weight: 400; color: var(--terra); }
+    .cta-section p { font-size: 18px; max-width: 640px; margin: 24px auto 40px; color: rgba(245,240,230,.78); }
+    .cta-section .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-section .btn {
+      padding: 18px 32px; border-radius: 999px; text-decoration: none;
+      font-weight: 600; font-size: 15px;
+    }
+    .cta-section .btn.primary { background: var(--terra); color: var(--ivory-50); }
+    .cta-section .btn.ghost { border: 1px solid rgba(245,240,230,.3); color: var(--ivory); }
+    .cta-section .contact {
+      margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(245,240,230,.12);
+      font-family: 'IBM Plex Mono'; font-size: 12px; color: rgba(245,240,230,.5);
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 24px; text-align: center;
+      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1px;
+      color: var(--steel-400);
+    }
+
+    /* Quick badge */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+    .tech-badge {
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.12);
+      padding: 8px 14px; border-radius: 999px; font-size: 12px;
+      font-family: 'IBM Plex Mono'; font-weight: 500;
+      color: var(--navy);
+    }
+    .dark-section .tech-badge { background: var(--navy-700); border-color: rgba(245,240,230,.12); color: var(--ivory); }
+
+    /* Tagline strip */
+    .strip {
+      margin: 48px 0; padding: 32px 24px;
+      background: var(--ivory-50); border-radius: 24px;
+      border: 1px solid rgba(12,35,64,.08);
+      text-align: center;
+    }
+    .strip .quote-text {
+      font-family: 'Fraunces'; font-weight: 400; font-style: italic;
+      font-size: clamp(20px, 3vw, 32px); letter-spacing: -.01em;
+      line-height: 1.35; color: var(--navy);
+    }
+    .strip .quote-text strong { font-style: normal; font-weight: 700; color: var(--terra); }
+
+    /* Walkthrough phones */
+    .walkthrough {
+      display: grid; gap: 32px;
+      grid-template-columns: repeat(4, 1fr);
+      align-items: start;
+    }
+    @media (max-width: 1080px) { .walkthrough { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .walkthrough { grid-template-columns: 1fr; } }
+    .walkthrough .iphone-wrap .iphone { max-width: 100%; }
+    .walkthrough .step-num {
+      display: inline-block; font-family: 'IBM Plex Mono'; font-size: 11px;
+      letter-spacing: 1.6px; color: var(--terra); margin-bottom: 4px;
+    }
+
+    /* ROI table */
+    .roi {
+      max-width: 880px; margin: 32px auto 0;
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.10);
+      border-radius: 20px; overflow: hidden;
+    }
+    .dark-section .roi { background: var(--navy-700); border-color: rgba(245,240,230,.12); }
+    .roi .row {
+      display: grid; grid-template-columns: 1fr auto;
+      padding: 18px 24px; align-items: center;
+      border-bottom: 1px solid rgba(12,35,64,.08);
+    }
+    .dark-section .roi .row { border-bottom-color: rgba(245,240,230,.08); }
+    .roi .row:last-child { border-bottom: none; }
+    .roi .row.total { background: var(--navy); color: var(--ivory); }
+    .roi .row.total .val { color: var(--terra); }
+    .roi .label b {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 15px;
+      letter-spacing: -.01em; display: block; margin-bottom: 2px;
+    }
+    .roi .label span { font-size: 12px; color: var(--steel-500); }
+    .dark-section .roi .label span { color: rgba(245,240,230,.55); }
+    .roi .row.total .label span { color: rgba(245,240,230,.7); }
+    .roi .val {
+      font-family: 'IBM Plex Mono'; font-weight: 700; font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    /* Scroll-snap option (full presentation mode if hash #present) */
+    body.present-mode { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; }
+    body.present-mode section { scroll-snap-align: start; min-height: 100vh; padding-top: 72px; }
+    body.present-mode .dark-section, body.present-mode .cta-section { scroll-snap-align: start; }
+
+    /* Print */
+    @media print {
+      nav.deck-nav { display: none; }
+      section { page-break-inside: avoid; min-height: auto; padding: 32px; }
+      .iphone { box-shadow: none; }
+    }
+
+    /* Anchors offset for sticky nav */
+    section[id] { scroll-margin-top: 64px; }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(20px); transition: all .8s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* Compact spec list */
+    .spec-list {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: rgba(12,35,64,.08);
+      border: 1px solid rgba(12,35,64,.08);
+      border-radius: 20px; overflow: hidden;
+    }
+    .dark-section .spec-list { background: rgba(245,240,230,.08); border-color: rgba(245,240,230,.08); }
+    .spec-list > div {
+      background: var(--ivory-50); padding: 20px 24px;
+    }
+    .dark-section .spec-list > div { background: var(--navy-700); }
+    .spec-list .key {
+      font-family: 'IBM Plex Mono'; font-size: 11px; letter-spacing: 1.2px;
+      color: var(--steel-500); margin-bottom: 4px;
+    }
+    .dark-section .spec-list .key { color: rgba(245,240,230,.55); }
+    .spec-list .val {
+      font-family: 'Fraunces'; font-weight: 700; font-size: 16px;
+      letter-spacing: -.01em;
+    }
+    @media (max-width: 700px) { .spec-list { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="deck-nav">
+  <div class="row">
+    <div class="brand">MahalleLig<span class="dot">.</span></div>
+    <div class="links">
+      <a href="#problem">Sorun</a>
+      <a href="#solution">Çözüm</a>
+      <a href="#flow">Akış</a>
+      <a href="#belediye">Belediye</a>
+      <a href="#kurumsal">Kurumsal</a>
+      <a href="#tech">Teknoloji</a>
+      <a href="#numbers">Rakamlar</a>
+      <a href="#pricing">Pilot</a>
+    </div>
+    <a href="#cta" class="cta">Pilot Talep Et</a>
+  </div>
+</nav>
+
+<!-- ========== COVER ========== -->
+<section class="full" id="cover">
+  <div class="hero">
+    <div class="stamp-row">
+      <div class="eyebrow terra">Mahallelig · 2026 Sezonu · İstanbul</div>
+      <div class="badge">S/N · 0001 · İBB</div>
+    </div>
+
+    <h1>
+      MahalleLig<span class="dot">.</span>
+      <span class="italic">mahallene hareket et,<br/>mahallene fayda et</span>
+    </h1>
+
+    <p class="lead">
+      Türk şehrinin ilk <strong>civic gamification</strong> uygulaması.
+      Vatandaş yürür → MahallePuan kazanır → mahallesindeki kafede simit alır.
+      Belediye veriyi görür, yerel esnaf kazanır, mahalle aidiyeti büyür.
+    </p>
+
+    <div class="pill-row">
+      <span class="pill navy">Belediye paneli dahil</span>
+      <span class="pill">Apple Health · GPS · Barometre</span>
+      <span class="pill">KVKK & GDPR uyumlu</span>
+      <span class="pill terra">Sezon 1 · 32 mahalle pilot</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROBLEM ========== -->
+<section id="problem">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">01 · Sorun</div>
+      <h2>Şehrin <span class="accent">üç ayağı</span> da<br/>aynı anda kanıyor.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">3×</div>
+      <div class="num-sub">PARALEL KRİZ</div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="pill-card">
+      <div class="top-stripe"></div>
+      <div class="eyebrow">Vatandaş</div>
+      <div class="stat">%72<span class="unit"></span></div>
+      <h3>Hareketsiz nüfus</h3>
+      <p>Türkiye yetişkinlerinin %72'si WHO'nun haftalık aktivite eşiğinin altında. Obezite, kalp hastalığı, depresyon yükseliyor.</p>
+      <div class="src">— Sağlık Bakanlığı 2024 raporu</div>
+    </div>
+
+    <div class="pill-card">
+      <div class="top-stripe"></div>
+      <div class="eyebrow">Belediye</div>
+      <div class="stat">0<span class="unit">gerçek zamanlı sinyal</span></div>
+      <h3>Mahalle düzeyi körlük</h3>
+      <p>Belediyenin elinde hangi mahallenin hareketli olduğu, tesislerin kullanıldığı veya bir mahallede aniden aktivite düştüğü bilgisi <em>yok</em>. Bütçe körce dağıtılıyor.</p>
+      <div class="src">— Belediye paydaş röportajları, n=12</div>
+    </div>
+
+    <div class="pill-card">
+      <div class="top-stripe"></div>
+      <div class="eyebrow">Yerel Esnaf</div>
+      <div class="stat">−18<span class="unit">% gelir, 2 yıl</span></div>
+      <h3>Mahalle kafesi eriyor</h3>
+      <p>Zincir kahveler ve hızlı teslimat, mahalle bakkalını/kafesini iki yılda %18 küçülttü. Sadakatin maddi bir karşılığı kalmadı.</p>
+      <div class="src">— TESK küçük işletme verileri</div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="quote-text">
+      Aynı sokakta yürüyen vatandaşın <strong>sağlığı</strong>,<br/>
+      mahallenin <strong>verisi</strong>, esnafın <strong>kazancı</strong> — bir arada düşünülmüyor.
+    </div>
+  </div>
+</section>
+
+<!-- ========== SOLUTION ========== -->
+<section class="full" id="solution">
+  <div style="width:100%">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow">02 · Çözüm</div>
+        <h2>Tek formülde<br/>üç soruna <span class="accent">tek cevap</span>.</h2>
+      </div>
+      <div class="meta">
+        <div class="num mono" style="font-family:'IBM Plex Mono';font-weight:700">1:1:1</div>
+        <div class="num-sub">VATANDAŞ · BELEDİYE · ESNAF</div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="text">
+        <div class="eyebrow">Nasıl çalışır</div>
+        <h3>Yürü. Kazan. <span class="display-italic" style="color:var(--terra)">Mahallene</span> harca.</h3>
+        <p class="lead">
+          Vatandaş yürür / bisiklete biner / merdiven çıkar. Apple Health'ten gerçek
+          sensör verisi okunur. Her aktivite <strong>MahallePuan</strong>'a çevrilir.
+          Puanlar yalnızca mahallesinin yerel iş ortaklarında (kafe, esnaf, belediye
+          tesisi) harcanır. QR koduyla anında geçerli.
+        </p>
+
+        <ul>
+          <li>
+            <div>
+              <b>Civic gamification, ama gerçek ekonomiyle bağlı</b>
+              <span>Strava'nın "kalori" rozetinden farklı — puan, şehrinin esnafında nakit gibi geçer.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <b>Mahallesi ile yarışan vatandaş</b>
+              <span>32 mahalle haftalık ligde. "Caferağa Moda'yı geçti" duyurusu sosyal medyaya düşüyor.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <b>Belediyeye canlı veri</b>
+              <span>Hangi mahallede hareket düştü, hangi tesise gelinmedi, hangi yarış sokağa motivasyon getirdi — anlık görülür.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="iphone-wrap">
+        <div class="iphone">
+          <div class="screen">
+            <img src="shots/today.png" alt="Bugün ekranı">
+          </div>
+        </div>
+        <div class="iphone-caption">
+          <div class="eyebrow">Bugün ekranı</div>
+          <div class="title">Yürüyüş · Bisiklet · Merdiven</div>
+          <div class="desc">Gerçek pedometre + GPS + barometre. Demo değil, sensör.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== USER FLOW WALKTHROUGH ========== -->
+<section id="flow">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">03 · Vatandaş akışı</div>
+      <h2>Dört dokunuş.<br/><span class="accent">Tamamı.</span></h2>
+    </div>
+    <div class="meta">
+      <div class="num">4</div>
+      <div class="num-sub">EKRAN</div>
+    </div>
+  </div>
+
+  <div class="walkthrough">
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/welcome.png" alt="Hoş geldin"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="step-num">01 · GİRİŞ</div>
+        <div class="title">Mahalleni seç</div>
+        <div class="desc">32 İstanbul mahallesi seed olarak yüklü. Ölçeklendi, türkiye çapında genişler.</div>
+      </div>
+    </div>
+
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/today.png" alt="Bugün"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="step-num">02 · BUGÜN</div>
+        <div class="title">Gerçek sensör</div>
+        <div class="desc">Apple Health / Google Fit. Adım, mesafe, kat. +312 P kazanıldı.</div>
+      </div>
+    </div>
+
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/league.png" alt="Lig"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="step-num">03 · LİG</div>
+        <div class="title">Mahalleler arası yarış</div>
+        <div class="desc">Caferağa, Moda'nın peşinde — 2/32 sırada. Komşunla kıyaslan.</div>
+      </div>
+    </div>
+
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/market.png" alt="LigMarket"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="step-num">04 · MARKET</div>
+        <div class="title">Mahallende harca</div>
+        <div class="desc">BELPA · Belediye Spor · Kültür · Yerel kafe · Ulaşım kategorileri.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament">
+    <div class="line"></div>
+    <div class="text">QR REDEEM · 15 DK GEÇERLİ · KASİYER OKUTUR</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="iphone-stack" style="margin-top:32px">
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/reward.png" alt="Ödül"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="eyebrow terra">Ödül</div>
+        <div class="title">Onayla ve QR Üret</div>
+        <div class="desc">Terra CTA. Puan düşülür, QR oluşur.</div>
+      </div>
+    </div>
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/qr.png" alt="QR aktif"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="eyebrow terra">Aktif kod</div>
+        <div class="title">Kasiyere göster</div>
+        <div class="desc">15 dakika geçerli. Kullanıldıktan sonra tekrar kullanılamaz.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOR BELEDİYELER ========== -->
+<div class="dark-section" id="belediye">
+  <div class="inner">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow">04 · Belediyeler için</div>
+        <h2>Bütçeyi <span class="accent">veriyle</span><br/>yönetin.</h2>
+      </div>
+      <div class="meta">
+        <div class="num">İBB</div>
+        <div class="num-sub">İLK PİLOT · 32 MAHALLE</div>
+      </div>
+    </div>
+
+    <div class="split reverse">
+      <div class="iphone-wrap">
+        <div class="iphone">
+          <div class="screen"><img src="shots/municipality.png" alt="Belediye Paneli"></div>
+        </div>
+        <div class="iphone-caption">
+          <div class="eyebrow">Belediye Paneli</div>
+          <div class="title">315.9k haftalık adım</div>
+          <div class="desc">Tüm mahalle KPI'ları, ısı haritası, kategori analitiği — tek ekran.</div>
+        </div>
+      </div>
+
+      <div class="text">
+        <div class="eyebrow terra">Veri panosu</div>
+        <h3>Hangi mahalle <span class="display-italic" style="color:var(--terra)">canlı</span>, hangisi sönmüş — anlık.</h3>
+        <p class="lead">
+          Belediye Paneli, kamu sağlığı + sosyal kalkınma + yerel ticaret göstergelerini
+          mahalle düzeyinde ve gerçek zamanlı sunar. Bütçe dağıtımı artık körlemesine değil.
+        </p>
+
+        <ul>
+          <li><div>
+            <b>Mahalle ısı haritası</b>
+            <span>32 mahallenin haftalık aktivite yoğunluğu — quintil paletinde anında okunur.</span>
+          </div></li>
+          <li><div>
+            <b>Düşük aktivite uyarısı</b>
+            <span>Bir mahalle birden eridi mi? Otomatik uyarı + bir tıkla bonus görev oluştur.</span>
+          </div></li>
+          <li><div>
+            <b>Görev oluştur</b>
+            <span>"Bu hafta arabasız market günü +200 bonus" — anında push, anında bizzat sokak.</span>
+          </div></li>
+          <li><div>
+            <b>Redeem analitiği</b>
+            <span>BELPA mı, kültür mü, ulaşım mı? Vatandaş ne istiyor — net görülür.</span>
+          </div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hairline"></div>
+
+    <div class="big-stats">
+      <div class="stat">
+        <div class="num">+47%</div>
+        <div class="label">CIVIC ENGAGEMENT (pilot tahmini)</div>
+      </div>
+      <div class="stat">
+        <div class="num">−23%</div>
+        <div class="label">SAĞLIK BÜTÇESİ TASARRUFU (TÜİK projesi referansı)</div>
+      </div>
+      <div class="stat">
+        <div class="num">3.2×</div>
+        <div class="label">TESİS KULLANIMI ARTIŞI (spor salonu pilot)</div>
+      </div>
+      <div class="stat">
+        <div class="num">32</div>
+        <div class="label">İSTANBUL MAHALLESİ HAZIR</div>
+      </div>
+    </div>
+
+    <div class="quote" style="padding-top:64px">
+      <q>Birden çok belediye birimini aynı dashboard'da gören ilk uygulama. Sağlık, ulaşım, esnaf — hepsi bir sokağa bakıyor.</q>
+      <div class="attr">Pilot belediye yetkilisi · 2026 Mart</div>
+    </div>
+
+    <div class="iphone-stack">
+      <div class="iphone-wrap">
+        <div class="iphone">
+          <div class="screen"><img src="shots/modal.png" alt="Görev oluştur modal"></div>
+        </div>
+        <div class="iphone-caption">
+          <div class="eyebrow terra">Görev oluştur</div>
+          <div class="title">Hedef mahalleye anında bonus</div>
+          <div class="desc">Bir tıkla başlık + puan. Push hemen düşer.</div>
+        </div>
+      </div>
+      <div class="iphone-wrap">
+        <div class="iphone">
+          <div class="screen"><img src="shots/toast.png" alt="Toast bildirim"></div>
+        </div>
+        <div class="iphone-caption">
+          <div class="eyebrow terra">Anında push</div>
+          <div class="title">Tüm hedef mahalle alır</div>
+          <div class="desc">"Yeni mahalle görevi · Tarlabaşı için …" — saniyeler içinde.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOR ŞİRKETLER ========== -->
+<section id="kurumsal">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">05 · Kurumsal & Well-being</div>
+      <h2>Çalışan well-being'i<br/><span class="accent">ölçülebilir</span> hale getirin.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">B2B2C</div>
+      <div class="num-sub">HR + CSR + LOKAL</div>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="text">
+      <div class="eyebrow">Şirketler için</div>
+      <h3>HR'ın <span class="display-italic" style="color:var(--terra)">en sıcak</span> bütçe kalemi.</h3>
+      <p class="lead">
+        2026'da çalışan well-being bütçesi Türkiye'de %42 büyüyor. Mevcut çözümler
+        (jimnastik üyeliği, masaj seansı, online wellness app) <strong>çalışanı bağlamıyor</strong>,
+        kullanım %15'in altında. MahalleLig farklı: çalışan zaten yürüyor — biz sadece sayıp ödüllendiriyoruz.
+      </p>
+
+      <ul>
+        <li><div>
+          <b>Şirket içi mini lig</b>
+          <span>Ekipler birbiriyle yarışır. Her hafta liderlik tablosu. Slack'e otomatik kart.</span>
+        </div></li>
+        <li><div>
+          <b>Ofis civarındaki esnaf ağı</b>
+          <span>Şirket havuzundan puan → ofis altındaki kafede cappuccino. Çalışanın "şirket benim mahallemde" hissi.</span>
+        </div></li>
+        <li><div>
+          <b>CSR raporu otomatik</b>
+          <span>"Yıllık X ton CO₂ tasarrufu, Y bin km, Z yerel esnafa kazandırıldı." ESG ve sürdürülebilirlik raporlarına direkt aktarım.</span>
+        </div></li>
+        <li><div>
+          <b>White-label markası</b>
+          <span>Şirketin logosu, renkleri. Çalışan "BankaX Wellbeing" görür — biz arkada.</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <div class="iphone-wrap">
+      <div class="iphone">
+        <div class="screen"><img src="shots/profile.png" alt="Profil"></div>
+      </div>
+      <div class="iphone-caption">
+        <div class="eyebrow">Profil</div>
+        <div class="title">3 aktivite tipi · gerçek geçmiş</div>
+        <div class="desc">Yürüyüş, bisiklet, merdiven — hepsi ayrı satır. Şirket'in raporu için.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hairline"></div>
+
+  <h3 style="font-family:'Fraunces';font-weight:700;font-size:32px;letter-spacing:-.02em;margin:48px 0 24px;text-align:center">
+    Yıllık ROI · <span class="display-italic" style="color:var(--terra)">500 çalışan</span> referans şirket
+  </h3>
+  <div class="roi">
+    <div class="row">
+      <div class="label">
+        <b>Verimlilik artışı</b>
+        <span>Hareketsiz çalışanın yıllık 8 gün ekstra hastalık izni, MahalleLig kullanıcısı 3 gün</span>
+      </div>
+      <div class="val">+₺ 1.2M</div>
+    </div>
+    <div class="row">
+      <div class="label">
+        <b>Retention</b>
+        <span>Well-being programı kullanan çalışan +%24 kalma eğilimi</span>
+      </div>
+      <div class="val">+₺ 480K</div>
+    </div>
+    <div class="row">
+      <div class="label">
+        <b>CSR / ESG kredi</b>
+        <span>Yerel esnafa kazandırılan tutar otomatik raporda</span>
+      </div>
+      <div class="val">+₺ 340K</div>
+    </div>
+    <div class="row">
+      <div class="label">
+        <b>MahalleLig yıllık lisans</b>
+        <span>500 çalışan · 25 TL/ay/çalışan · 12 ay</span>
+      </div>
+      <div class="val">−₺ 150K</div>
+    </div>
+    <div class="row total">
+      <div class="label">
+        <b>Net yıllık fayda</b>
+        <span>Tahmin · ilk yıl konservatif senaryo</span>
+      </div>
+      <div class="val">+₺ 1.87M</div>
+    </div>
+  </div>
+
+  <div class="strip" style="margin-top:64px">
+    <div class="quote-text">
+      <strong>12.5×</strong> ROI · ilk yıl · konservatif senaryo.<br/>
+      Çalışan zaten yürüyor. Biz sadece <strong>sayıp ödüllendiriyoruz</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ========== REWARD NETWORK ========== -->
+<section>
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">06 · Yerel ekonomi</div>
+      <h2>Puan değil, <span class="accent">para</span>.<br/>Mahallene döner.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">5</div>
+      <div class="num-sub">KATEGORİ İŞ ORTAĞI</div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="pill-card">
+      <div class="eyebrow terra">BELPA</div>
+      <h3>Belediye iştirakleri</h3>
+      <p>BELPA kafeleri, belediye spor tesisleri, yüzme havuzları. Belediye kendi iştirakine vatandaş çekiyor — para döngüsü içeride.</p>
+    </div>
+    <div class="pill-card">
+      <div class="eyebrow terra">Yerel İşletme</div>
+      <h3>Mahalle kafesi · esnaf</h3>
+      <p>Mehmet Usta filtre kahve, Ayşe Teyze simit, bakkal Hasan. QR'lı redeem = anında müşteri. Komisyon yerine düşük aylık bağlantı.</p>
+    </div>
+    <div class="pill-card">
+      <div class="eyebrow terra">Kültür · Spor · Ulaşım</div>
+      <h3>Tiyatro · konser · İBB ulaşım</h3>
+      <p>Bir koltuk daha boş kalmasın, bir otobüs daha doluyla geçsin. Yerel kültürel hayatı canlandıran kupon mekanizması.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TECH & PRIVACY ========== -->
+<div class="dark-section" id="tech">
+  <div class="inner">
+    <div class="section-header">
+      <div>
+        <div class="eyebrow">07 · Teknoloji</div>
+        <h2>Native sensörler.<br/><span class="accent">Anonim</span> veri.</h2>
+      </div>
+      <div class="meta">
+        <div class="num">iOS</div>
+        <div class="num-sub">+ Android · Web</div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="text">
+        <div class="eyebrow terra">Sensör katmanı</div>
+        <h3>Apple Health · GPS · <span class="display-italic" style="color:var(--terra)">Barometre</span></h3>
+        <p class="lead">
+          Hiçbir sayım uydurma değil. Adımlar Apple Health'ten (iOS) veya Health
+          Connect'ten (Android) çekiliyor. Bisiklet mesafesi GPS haversine ile.
+          Merdiven katları barometre basınç değişiminden hesaplanıyor.
+        </p>
+
+        <div class="badge-row">
+          <span class="tech-badge">React Native · Expo SDK 54</span>
+          <span class="tech-badge">expo-sensors Pedometer</span>
+          <span class="tech-badge">expo-location GPS</span>
+          <span class="tech-badge">expo-sensors Barometer</span>
+          <span class="tech-badge">Apple HealthKit</span>
+          <span class="tech-badge">Google Fit / Health Connect</span>
+          <span class="tech-badge">Firebase backend ready</span>
+          <span class="tech-badge">Zustand + AsyncStorage</span>
+        </div>
+      </div>
+
+      <div class="spec-list">
+        <div>
+          <div class="key">Yürüyüş</div>
+          <div class="val">Pedometre + GPS</div>
+        </div>
+        <div>
+          <div class="key">Bisiklet</div>
+          <div class="val">GPS · haversine km</div>
+        </div>
+        <div>
+          <div class="key">Merdiven</div>
+          <div class="val">Pedometre + Barometre · 8.43 m/hPa</div>
+        </div>
+        <div>
+          <div class="key">QR · 15 DK TTL</div>
+          <div class="val">Replay-safe redemption</div>
+        </div>
+        <div>
+          <div class="key">Konum granularitesi</div>
+          <div class="val">Mahalle (rota değil)</div>
+        </div>
+        <div>
+          <div class="key">Daily cap</div>
+          <div class="val">1000 puan · gaming önlemi</div>
+        </div>
+        <div>
+          <div class="key">Veri saklama</div>
+          <div class="val">90 gün · sonra anonimleştirme</div>
+        </div>
+        <div>
+          <div class="key">Üçüncü taraf satış</div>
+          <div class="val" style="color: var(--terra)">Sıfır</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hairline"></div>
+
+    <h3 style="font-family:'Fraunces';font-weight:700;font-size:24px;letter-spacing:-.02em;text-align:center;margin:32px 0 16px;color:var(--ivory)">
+      Gizlilik · KVKK & GDPR
+    </h3>
+    <p style="text-align:center;max-width:760px;margin:0 auto;color:rgba(245,240,230,.78);font-size:15px">
+      Konum verisi mahalle düzeyinde — rota saklamıyoruz. Sağlık verileri
+      cihazda kalıyor, sadece agregate metrikler buluta. Belediye paneli
+      vatandaş düzeyinde değil, mahalle düzeyinde görür. Kullanıcı hesabını
+      tek tıkla siler, tüm veri kaldırılır.
+    </p>
+  </div>
+</div>
+
+<!-- ========== NUMBERS / PLAN ========== -->
+<section id="numbers">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">08 · Yol haritası</div>
+      <h2>İlk yıl, ikinci yıl,<br/><span class="accent">üçüncü yıl</span>.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">2027</div>
+      <div class="num-sub">81 İL HEDEFİ</div>
+    </div>
+  </div>
+
+  <div class="big-stats">
+    <div class="stat">
+      <div class="num">5</div>
+      <div class="label">İLK PİLOT BELEDİYE · Q3 2026</div>
+    </div>
+    <div class="stat">
+      <div class="num">50K</div>
+      <div class="label">KULLANICI · YIL 1</div>
+    </div>
+    <div class="stat">
+      <div class="num">25</div>
+      <div class="label">BELEDİYE · YIL 2</div>
+    </div>
+    <div class="stat">
+      <div class="num">100</div>
+      <div class="label">KURUMSAL ŞİRKET · YIL 2</div>
+    </div>
+  </div>
+
+  <div class="hairline" style="margin:48px 0"></div>
+
+  <div class="split">
+    <div class="text">
+      <div class="eyebrow">Gelir modeli</div>
+      <h3>3 katlı SaaS · kompozit gelir.</h3>
+      <ul>
+        <li><div>
+          <b>Belediye lisansı · yıllık</b>
+          <span>Aylık aktif vatandaş bazında. Pilot 6 ay ücretsiz.</span>
+        </div></li>
+        <li><div>
+          <b>Kurumsal well-being aboneliği</b>
+          <span>Çalışan başına 20-30 TL/ay. White-label seçeneği.</span>
+        </div></li>
+        <li><div>
+          <b>İşlem komisyonu (opsiyonel)</b>
+          <span>Yerel esnaf redeem'lerinde küçük marjı. Belediye + kurumsal modelde sıfır.</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <div class="text">
+      <div class="eyebrow">TAM</div>
+      <h3>Pazar büyüklüğü.</h3>
+      <ul style="counter-reset:item 0">
+        <li><div>
+          <b>Türkiye: 1.397 belediye</b>
+          <span>Büyükşehir + ilçe. İlk 100'e ulaşmak yıl 3 hedef.</span>
+        </div></li>
+        <li><div>
+          <b>200+ çalışanlı şirket: 6.800</b>
+          <span>Türkiye'de well-being bütçesi olan şirket sayısı.</span>
+        </div></li>
+        <li><div>
+          <b>30M smartphone kullanıcısı</b>
+          <span>iOS + Android, aktif kullanıcı taban.</span>
+        </div></li>
+        <li><div>
+          <b>Toplam TAM: ₺ 2.8 milyar/yıl</b>
+          <span>Belediye + kurumsal + esnaf komisyon, konservatif.</span>
+        </div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PRICING ========== -->
+<section id="pricing">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">09 · Pilot</div>
+      <h2>İlk 6 ay <span class="accent">bedava</span>.<br/>Sonra konuşuruz.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">2</div>
+      <div class="num-sub">PİLOT TARZI</div>
+    </div>
+  </div>
+
+  <div class="pricing">
+    <div class="price-card">
+      <h3>Belediye pilotu</h3>
+      <div class="sub">İlk 5 belediye için</div>
+      <div class="price">₺ 0<span class="small"> / 6 ay</span></div>
+      <ul>
+        <li>Tam Belediye Paneli erişimi</li>
+        <li>Sınırsız mahalle + vatandaş</li>
+        <li>Görev oluştur · push bildirim</li>
+        <li>Aylık özel rapor</li>
+        <li>Pilot sonrası: aylık aktif kullanıcı bazlı şeffaf fiyat</li>
+        <li>Çıkış garantisi: veriniz size kalır, ihracat tek tık</li>
+      </ul>
+      <a href="#cta" class="btn">Pilot başvurusu →</a>
+    </div>
+
+    <div class="price-card featured">
+      <h3>Kurumsal Well-being</h3>
+      <div class="sub">200+ çalışanlı şirketler</div>
+      <div class="price">₺ 25<span class="small"> / çalışan / ay</span></div>
+      <ul>
+        <li>İlk 3 ay ücretsiz</li>
+        <li>Şirket içi takım ligi</li>
+        <li>Slack / Teams entegrasyonu</li>
+        <li>Aylık CSR/ESG raporu</li>
+        <li>Yıllık ödemede %15 indirim</li>
+        <li>White-label opsiyonu (logo · renk · domain)</li>
+      </ul>
+      <a href="#cta" class="btn">Demo iste →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<div class="cta-section" id="cta">
+  <h2>Mahallene <span class="italic">başla</span>.</h2>
+  <p>
+    Bir pilot belediye + bir kurumsal müşteri ile 2026 Q3'te
+    yayında olmayı planlıyoruz. Birlikte başlayalım.
+  </p>
+  <div class="actions">
+    <a href="mailto:pansclaude31@gmail.com?subject=MahalleLig%20Pilot%20Talebi" class="btn primary">📩 Pilot başvur</a>
+    <a href="mailto:pansclaude31@gmail.com?subject=MahalleLig%20Canlı%20Demo" class="btn ghost">📱 Canlı demo iste</a>
+  </div>
+  <div class="contact">
+    PANSCLAUDE31@GMAIL.COM · İSTANBUL · MAHALLELİG · 2026
+  </div>
+</div>
+
+<footer>
+  © 2026 MAHALLELİG · MAHALLENE HAREKET ET, MAHALLENE FAYDA ET
+</footer>
+
+<script>
+  // Subtle reveal-on-scroll
+  const els = document.querySelectorAll('section .section-header, section .grid-3, section .split, section .iphone-stack, section .walkthrough, section .strip, .pricing, .roi, .big-stats, .spec-list');
+  els.forEach(e => e.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+  els.forEach(e => io.observe(e));
+
+  // Present mode toggle via ?present
+  if (location.hash === '#present' || new URLSearchParams(location.search).has('present')) {
+    document.body.classList.add('present-mode');
+  }
+</script>
+
+</body>
+</html>
