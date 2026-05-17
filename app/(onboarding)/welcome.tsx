@@ -47,15 +47,18 @@ export default function Welcome() {
         {/* Hero */}
         <View>
           <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 64, letterSpacing: -3, lineHeight: 60 }}
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 48, letterSpacing: -2, lineHeight: 50 }}
           >
             {tr.onboarding.welcomeTitle.split(" ")[0]}
             <Text style={{ color: palette.terra500, fontFamily: "Fraunces_400Italic" }}>.</Text>
           </Text>
           <Text
-            className="text-navy-900 -mt-1"
-            style={{ fontFamily: "Fraunces_400Italic", fontSize: 30, letterSpacing: -0.8, lineHeight: 32 }}
+            numberOfLines={1}
+            className="text-navy-900 mt-1"
+            style={{ fontFamily: "Fraunces_400Italic", fontSize: 24, letterSpacing: -0.6, lineHeight: 28 }}
           >
             {tr.onboarding.welcomeTitle.split(" ").slice(1).join(" ")}
           </Text>
