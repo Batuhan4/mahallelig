@@ -103,7 +103,11 @@ Mahalle kahvecisi/bisikletçi/spor mağazası — küçük indirim karşılığ�
 - Büyük kart: bugünki adım + kazanılan MahallePuan (canlı sayar)
 - Aktivite durumu: yürüyüş / bisiklet / koşu (sensörden otomatik)
 - Mini grafik: son 7 günün adım trendi
-- Alt eylem: **"Aktivite Başlat"** butonu (GPS izlemeli yürüyüş)
+- Alt eylem: **"Aktivite Başlat"** butonu
+
+**İki sayım modu:**
+- **Pasif:** Pedometer arka planda her zaman gün boyu adım sayar, otomatik puan
+- **Aktif:** "Aktivite Başlat" GPS rotası kayda alır, bonus puanla biter (rota görselleştirilir)
 
 **Demo değeri:** Sahnede telefonu cebine koy, sayaç gerçek zamanlı artar, bittiğinde **"+47 MahallePuan"** animasyonu.
 
@@ -143,7 +147,10 @@ Mahalle kahvecisi/bisikletçi/spor mağazası — küçük indirim karşılığ�
 
 **Amaç:** Jüriye "iki taraflı düşündük" demek. Belediye için karar destek aracı.
 
-**Bileşenler (app içinde "Belediye Görünümü" tab'ı):**
+**Erişim (MVP):** App içinde her kullanıcıya açık 5. tab "Belediye". Demo amaçlı tüm vatandaşlar görebilir.
+**Erişim (gerçek üründe — v2):** Belediye personeli için ayrı role-based auth, vatandaşa görünmez.
+
+**Bileşenler:**
 - Üstte 4 KPI: **Aktif vatandaş · Toplam adım/hafta · Tesis ziyareti · Redeem edilen ödül**
 - Mahalle ısı haritası: hangi mahalleler en aktif (renk yoğunluğu)
 - Pasta grafik: en çok tercih edilen ödül kategorileri
