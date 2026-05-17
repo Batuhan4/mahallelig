@@ -11,6 +11,7 @@ import { neighborhoodLeaderboard, userLeaderboardForNeighborhood, seasonCountdow
 export default function League() {
   const user = useUserStore((s) => s.user);
   const delta = useLeagueStore((s) => s.weeklyDeltaByNid);
+  const missions = useLeagueStore((s) => s.missions);
   const todayPoints = useActivityStore((s) => s.todayPoints);
   const [tab, setTab] = useState<"inside" | "outside">("inside");
 
@@ -18,6 +19,7 @@ export default function League() {
   const yourNhoodRow = outsideRows.find((r) => r.nid === user?.neighborhoodId);
   const insideRows = user ? userLeaderboardForNeighborhood(user.neighborhoodId, { uid: user.uid, displayName: user.name, weeklyPoints: todayPoints }) : [];
   const c = seasonCountdown();
+  const activeMission = missions.find((m) => m.targetNid === user?.neighborhoodId) ?? missions[0];
 
   return (
     <Screen scroll={false}>
@@ -29,7 +31,11 @@ export default function League() {
       </View>
 
       <View className="rounded-xl bg-amber-100 p-3 mb-3">
-        <Text className="text-amber-900 font-semibold">🏁 {tr.league.weeklyMission}</Text>
+        {activeMission ? (
+          <Text className="text-amber-900 font-semibold">🏁 {activeMission.title} — +{activeMission.bonusPoints} bonus</Text>
+        ) : (
+          <Text className="text-amber-900 font-semibold">🏁 {tr.league.weeklyMission}</Text>
+        )}
       </View>
 
       <View className="flex-row mb-3">
