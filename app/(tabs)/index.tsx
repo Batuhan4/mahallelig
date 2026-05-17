@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AppState, Text, View } from "react-native";
+import { AppState, Pressable, Text, View } from "react-native";
 import { Screen, LargeTitle, SectionTitle } from "@/components/Screen";
 import { PointCounter } from "@/components/PointCounter";
 import { ActivityCard } from "@/components/ActivityCard";
@@ -12,7 +12,7 @@ import { useLeagueStore } from "@/store/useLeagueStore";
 import { useSettingsStore } from "@/store/useSettingsStore";
 import { findNeighborhood } from "@/services/league";
 import { isAvailable, watchSteps, getStepsToday, requestPermissions as requestMotion } from "@/services/pedometer";
-import { hasLocationPermission, watchPosition } from "@/services/location";
+import { hasLocationPermission, requestLocationPermission, watchPosition } from "@/services/location";
 import { startDemoStepStream } from "@/services/demoMode";
 import { pointsForActivity, applyDailyCap } from "@/services/points";
 import { backend } from "@/services/backend";
@@ -41,6 +41,8 @@ export default function Today() {
   const [trend] = useState<number[]>([3200, 4800, 6100, 2900, 8400, 5500, 7700]);
   const [pedometerReady, setPedometerReady] = useState(false);
   const [gpsActive, setGpsActive] = useState(false);
+  const [gpsGranted, setGpsGranted] = useState(false);
+  const [motionGranted, setMotionGranted] = useState(false);
 
   // === Today total: refresh from native pedometer + live deltas while open ===
   useEffect(() => {
@@ -59,8 +61,12 @@ export default function Today() {
     (async () => {
       const ok = await isAvailable();
       if (!alive || !ok) return;
-      await requestMotion();
+      const motionOk = await requestMotion();
+      if (!alive) return;
+      setMotionGranted(motionOk);
       setPedometerReady(true);
+      const locOk = await hasLocationPermission();
+      if (alive) setGpsGranted(locOk);
       await refresh();
       // Periodic refresh from Health/HealthConnect — covers steps that came in
       // while the app was backgrounded.
@@ -123,8 +129,35 @@ export default function Today() {
     };
   }, [live, demoMode, pushLiveSteps, pushLiveDistance, addTodaySteps]);
 
-  function onStart() {
+  async function onStart() {
+    // Request perms inline if user skipped onboarding (already onboarded users)
+    if (!demoMode) {
+      if (!motionGranted) {
+        const ok = await requestMotion();
+        setMotionGranted(ok);
+      }
+      if (!gpsGranted && type !== "walk") {
+        // Bike + run especially need GPS for real distance
+        const ok = await requestLocationPermission();
+        setGpsGranted(ok);
+      } else if (!gpsGranted) {
+        // Walk also asks but doesn't block if declined
+        const ok = await requestLocationPermission();
+        setGpsGranted(ok);
+      }
+    }
     startLive(type);
+  }
+
+  async function onGrantPerms() {
+    if (!motionGranted) {
+      const ok = await requestMotion();
+      setMotionGranted(ok);
+    }
+    if (!gpsGranted) {
+      const ok = await requestLocationPermission();
+      setGpsGranted(ok);
+    }
   }
 
   async function onStop() {
@@ -184,6 +217,39 @@ export default function Today() {
       />
 
       <PointCounter steps={todaySteps} points={todayPoints} />
+
+      {!demoMode && (!motionGranted || !gpsGranted) && (
+        <Pressable
+          onPress={onGrantPerms}
+          className="bg-ivory-50 border border-terra-500/40 rounded-2xl overflow-hidden mt-3"
+        >
+          <View className="h-1 bg-terra-500" />
+          <View className="px-4 py-3">
+            <Text
+              className="text-terra-700"
+              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+            >
+              EKSİK İZİN
+            </Text>
+            <Text
+              className="text-navy-900 mt-1"
+              style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+            >
+              {!motionGranted && !gpsGranted
+                ? "Adım sayımı + Konum izni gerekli"
+                : !motionGranted
+                  ? "Adım sayımı izni gerekli"
+                  : "Konum izni gerekli (mesafe için)"}
+            </Text>
+            <Text
+              className="text-steel-500 mt-0.5"
+              style={{ fontFamily: "Inter_500Medium", fontSize: 12 }}
+            >
+              İzin ver · gerçek sensörler devreye girsin →
+            </Text>
+          </View>
+        </Pressable>
+      )}
 
       <SectionTitle sub={sourceLabel}>Aktivite</SectionTitle>
       <ActivityCard
