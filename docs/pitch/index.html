@@ -511,6 +511,56 @@
       letter-spacing: -.01em;
     }
     @media (max-width: 700px) { .spec-list { grid-template-columns: 1fr; } }
+
+    /* Segment cards (04 · Üç pazar) */
+    .segment-card {
+      background: var(--ivory-50); border: 1px solid rgba(12,35,64,.10);
+      border-radius: 24px; padding: 36px 28px 28px; position: relative;
+      overflow: hidden; transition: transform .25s ease;
+    }
+    .segment-card:hover { transform: translateY(-2px); }
+    .segment-card.future { border-style: dashed; border-color: rgba(12,35,64,.18); }
+    .segment-card .card-stripe {
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--navy), var(--terra) 60%, var(--bronze));
+    }
+    .segment-card .card-stripe.dashed {
+      background: repeating-linear-gradient(90deg, var(--steel-400) 0, var(--steel-400) 6px, transparent 6px, transparent 14px);
+    }
+    .segment-card .status-pill {
+      display: inline-block; font-family: var(--font-mono); font-weight: 500;
+      font-size: 9px; letter-spacing: 1.4px;
+      padding: 4px 9px; border-radius: 3px; margin-bottom: 24px;
+    }
+    .segment-card .status-pill.now { background: var(--terra); color: var(--ivory-50); }
+    .segment-card .status-pill.soon { background: transparent; color: var(--steel-500); border: 1px solid rgba(12,35,64,.20); }
+    .segment-card .card-title {
+      font-family: var(--font-sans); font-weight: 700;
+      font-size: 32px; letter-spacing: -.04em; line-height: 1;
+      color: var(--navy); margin-bottom: 8px;
+    }
+    .segment-card .card-tagline {
+      font-size: 14px; color: var(--steel-700); line-height: 1.45;
+      margin-bottom: 22px;
+    }
+    .segment-card .card-list { list-style: none; padding: 0; margin: 0; }
+    .segment-card .card-list li {
+      font-size: 13px; line-height: 1.55;
+      padding: 10px 0; border-top: 1px solid rgba(12,35,64,.06);
+      color: var(--steel-700);
+    }
+    .segment-card .card-list li:first-child { border-top: none; }
+    .segment-card .card-list b {
+      color: var(--navy); font-weight: 600;
+      display: inline-block; min-width: 110px;
+    }
+    .segment-card .card-footer {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid rgba(12,35,64,.06);
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: .8px;
+      color: var(--steel-500);
+    }
+    @media (max-width: 900px) { .segment-card { padding: 28px 22px 22px; } .segment-card .card-title { font-size: 28px; } }
   </style>
 </head>
 <body>
@@ -522,6 +572,7 @@
       <a href="#problem">Sorun</a>
       <a href="#solution">Çözüm</a>
       <a href="#flow">Akış</a>
+      <a href="#segments">3 Pazar</a>
       <a href="#belediye">Belediye</a>
       <a href="#kurumsal">Kurumsal</a>
       <a href="#tech">Teknoloji</a>
@@ -764,12 +815,93 @@
   </div>
 </section>
 
-<!-- ========== FOR BELEDİYELER ========== -->
+<!-- ========== 04 · ÜÇ PAZAR / SEGMENTS ========== -->
+<section id="segments">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">04 · Üç pazar</div>
+      <h2>Mahallede başladı.<br/>Sitede ve şirkette de <span class="accent">aynı</span>.</h2>
+    </div>
+    <div class="meta">
+      <div class="num">3×</div>
+      <div class="num-sub">PAZAR DİKEYİ · TEK MOTOR</div>
+    </div>
+  </div>
+
+  <p class="lead" style="max-width:780px;margin:0 0 48px;font-size:18px;line-height:1.55;color:var(--steel-700)">
+    Aynı puan motoru, aynı KVKK güvencesi, aynı ödül ağı. Sadece
+    <strong>kim ödülü finanse ediyor</strong> ve
+    <strong>kim ligin sınırlarını çiziyor</strong> değişiyor. Mahallede çalışan
+    motor, sitede ve şirkette de aynı kasla hareket ediyor.
+  </p>
+
+  <div class="grid-3">
+    <div class="segment-card current">
+      <div class="card-stripe"></div>
+      <div class="status-pill now">ŞU AN · 2026</div>
+      <div class="card-title">BELEDİYELER</div>
+      <div class="card-tagline">Mahalleler arası vatandaş ligi. Kamu sağlığı + yerel ekonomi devridaim.</div>
+      <ul class="card-list">
+        <li><b>Lig sınırı:</b> ilçe içi 32 mahalle</li>
+        <li><b>Bütçe kaynağı:</b> belediye kültür/sağlık fonu</li>
+        <li><b>Ödül ağı:</b> BELPA, kültür, ulaşım, esnaf</li>
+        <li><b>Pilot:</b> İBB Kadıköy + 4 ilçe</li>
+      </ul>
+      <div class="card-footer">PİLOT 2026 EYLÜL · İLK 6 AY ÜCRETSİZ</div>
+    </div>
+
+    <div class="segment-card future">
+      <div class="card-stripe dashed"></div>
+      <div class="status-pill soon">YAKINDA · 2027 Q1</div>
+      <div class="card-title">SİTELER</div>
+      <div class="card-tagline">Bloklar arası site içi lig. Aidat fonu ödülü kendisi finanse ediyor.</div>
+      <ul class="card-list">
+        <li><b>Lig sınırı:</b> site içi 6–40 blok</li>
+        <li><b>Bütçe kaynağı:</b> aidat fonu + yönetim</li>
+        <li><b>Ödül ağı:</b> ortak alan rezervasyonu, aidat indirimi</li>
+        <li><b>Pazar:</b> Türkiye'de 100K+ site yönetim firması</li>
+      </ul>
+      <div class="card-footer">PİLOT GÖRÜŞMELERİ · 2026 Q4</div>
+    </div>
+
+    <div class="segment-card future">
+      <div class="card-stripe dashed"></div>
+      <div class="status-pill soon">YAKINDA · 2027 Q3</div>
+      <div class="card-title">ŞİRKETLER</div>
+      <div class="card-tagline">Departmanlar arası kurumsal lig. Çalışan refahı bütçesinden finanse ediliyor.</div>
+      <ul class="card-list">
+        <li><b>Lig sınırı:</b> şirket içi 4–100 ekip</li>
+        <li><b>Bütçe kaynağı:</b> İK çalışan refahı kalemi</li>
+        <li><b>Ödül ağı:</b> kafeterya kredisi, sigorta indirimi</li>
+        <li><b>Pazar:</b> Türkiye'de 6.800+ kurumsal müşteri</li>
+      </ul>
+      <div class="card-footer">B2B SATIŞ · 2026 ARALIK</div>
+    </div>
+  </div>
+
+  <div class="hairline" style="margin:72px 0 32px"></div>
+
+  <div style="max-width:780px">
+    <div class="eyebrow terra">Neden tek motor üç pazar?</div>
+    <h3 style="font-family:var(--font-sans);font-weight:700;font-size:clamp(28px,3.5vw,42px);letter-spacing:-.02em;line-height:1.1;margin:12px 0 16px">
+      Hareket etmeyi <span class="display-italic" style="color:var(--terra)">istemek</span> her üçünde aynı kas.
+    </h3>
+    <p style="font-size:16px;line-height:1.6;color:var(--steel-700);margin:0">
+      Mahallendeki komşular. Sitenin başka bloğundakiler. Yan masandaki iş arkadaşın.
+      Üçünde de rekabet ve aidiyet motoru aynı çalışıyor. Biz sadece
+      <strong>kimin lig sınırını çizdiğini</strong> ve
+      <strong>kimin ödülü finanse ettiğini</strong> değiştiriyoruz —
+      teknoloji, KVKK altyapısı ve ödül akışı kalıyor.
+    </p>
+  </div>
+</section>
+
+<!-- ========== 05 · FOR BELEDİYELER ========== -->
 <div class="dark-section" id="belediye">
   <div class="inner">
     <div class="section-header">
       <div>
-        <div class="eyebrow">04 · Belediyeler için</div>
+        <div class="eyebrow">05 · Belediyeler için</div>
         <h2>Bütçeyi <span class="accent">veriyle</span><br/>yönetin.</h2>
       </div>
       <div class="meta">
@@ -874,7 +1006,7 @@
 <section id="kurumsal">
   <div class="section-header">
     <div>
-      <div class="eyebrow">05 · Kurumsal & Çalışan Refahı</div>
+      <div class="eyebrow">06 · Kurumsal & Çalışan Refahı</div>
       <h2>Çalışan sağlığını<br/><span class="accent">ölçülebilir</span> bir bütçeye çevirin.</h2>
     </div>
     <div class="meta">
@@ -981,7 +1113,7 @@
 <section>
   <div class="section-header">
     <div>
-      <div class="eyebrow">06 · Yerel ekonomi</div>
+      <div class="eyebrow">07 · Yerel ekonomi</div>
       <h2>Puan değil, <span class="accent">para</span>.<br/>Mahallene döner.</h2>
     </div>
     <div class="meta">
@@ -1014,7 +1146,7 @@
   <div class="inner">
     <div class="section-header">
       <div>
-        <div class="eyebrow">07 · Teknoloji</div>
+        <div class="eyebrow">08 · Teknoloji</div>
         <h2>Native sensörler.<br/><span class="accent">Anonim</span> veri.</h2>
       </div>
       <div class="meta">
@@ -1138,7 +1270,7 @@
 <section id="numbers">
   <div class="section-header">
     <div>
-      <div class="eyebrow">08 · Yol haritası</div>
+      <div class="eyebrow">09 · Yol haritası</div>
       <h2>İlk yıl, ikinci yıl,<br/><span class="accent">üçüncü yıl</span>.</h2>
     </div>
     <div class="meta">
@@ -1217,7 +1349,7 @@
 <section id="pricing">
   <div class="section-header">
     <div>
-      <div class="eyebrow">09 · Pilot</div>
+      <div class="eyebrow">10 · Pilot</div>
       <h2>İlk 6 ay <span class="accent">bedava</span>.<br/>Sonra konuşuruz.</h2>
     </div>
     <div class="meta">
