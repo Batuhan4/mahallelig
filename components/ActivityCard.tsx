@@ -30,7 +30,7 @@ export function ActivityCard({
         <>
           <Text className="text-ink-500 text-sm">Canlı · {source}</Text>
           <Text className="text-ink-900 text-2xl font-bold">{liveSteps.toLocaleString("tr-TR")} adım · {liveDistanceKm.toFixed(2)} km</Text>
-          <Pressable onPress={onStop} className="rounded-xl bg-danger bg-red-500 mt-3 py-3">
+          <Pressable onPress={onStop} className="rounded-xl bg-red-500 mt-3 py-3">
             <Text className="text-center text-white font-semibold">{tr.today.stopActivity}</Text>
           </Pressable>
         </>

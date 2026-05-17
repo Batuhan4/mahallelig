@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Screen } from "@/components/Screen";
 import { KpiCard } from "@/components/KpiCard";
@@ -22,8 +23,13 @@ export default function Municipality() {
   const top5 = rows.slice(0, 5);
   const low = rows[rows.length - 1];
 
-  const partnerCount = REWARDS.reduce<Record<RewardPartner, number>>((acc, r) => ({ ...acc, [r.partner]: (acc[r.partner] ?? 0) + Math.floor(Math.random() * 20) + 5 }), {} as any);
-  const pieData = Object.entries(partnerCount).map(([partner, count]) => ({ partner, count: count as number }));
+  const pieData = useMemo(() => {
+    const partnerCount = REWARDS.reduce<Record<RewardPartner, number>>(
+      (acc, r) => ({ ...acc, [r.partner]: (acc[r.partner] ?? 0) + Math.floor(Math.random() * 20) + 5 }),
+      {} as Record<RewardPartner, number>
+    );
+    return Object.entries(partnerCount).map(([partner, count]) => ({ partner, count }));
+  }, []);
 
   return (
     <Screen>

@@ -1,5 +1,5 @@
 import { Pressable, Text, View } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import QRCode from "react-native-qrcode-svg";
 import { Screen } from "@/components/Screen";
 import { REWARDS } from "@/constants/seed/rewards";

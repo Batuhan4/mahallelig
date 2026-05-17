@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Animated, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Screen } from "@/components/Screen";
 import { PointCounter } from "@/components/PointCounter";
 import { ActivityCard } from "@/components/ActivityCard";
