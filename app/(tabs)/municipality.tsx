@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import { Screen } from "@/components/Screen";
+import { Screen, LargeTitle, SectionTitle } from "@/components/Screen";
 import { KpiCard } from "@/components/KpiCard";
 import { NeighborhoodHeatmap } from "@/components/NeighborhoodHeatmap";
 import { CategoryPieChart } from "@/components/CategoryPieChart";
+import { Button } from "@/components/Button";
 import { tr } from "@/constants/i18n";
 import { neighborhoodLeaderboard } from "@/services/league";
 import { fireLocal } from "@/services/notifications";
@@ -50,68 +51,236 @@ export default function Municipality() {
 
   return (
     <Screen>
-      <Text className="text-2xl font-bold text-ink-900 dark:text-white py-4">{tr.municipality.title}</Text>
+      <LargeTitle
+        eyebrow="Belediye paneli"
+        title={tr.municipality.title}
+        subtitle="Mahalle sağlık & hareket göstergeleri"
+        trailing={
+          <View className="items-end">
+            <View className="px-2 py-0.5 rounded-sm border border-navy-900/30">
+              <Text
+                className="text-navy-900"
+                style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, letterSpacing: 1.6 }}
+              >
+                İBB · v1
+              </Text>
+            </View>
+          </View>
+        }
+      />
 
-      <View className="flex-row flex-wrap">
+      {/* Headline stat bar */}
+      <View className="bg-navy-900 rounded-2xl overflow-hidden mb-4">
+        <View className="h-1 flex-row">
+          <View className="flex-1 bg-terra-500" />
+          <View className="w-8 bg-bronze-500" />
+        </View>
+        <View className="px-5 py-4">
+          <Text
+            className="text-ivory-100/60"
+            style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.6 }}
+          >
+            TOPLAM HAFTALIK ADIM
+          </Text>
+          <View className="flex-row items-baseline gap-2 mt-1">
+            <Text
+              className="text-ivory-50"
+              style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 36, letterSpacing: -1.2 }}
+            >
+              {(weeklySteps / 1000).toFixed(1)}k
+            </Text>
+            <Text
+              className="text-terra-400"
+              style={{ fontFamily: "Inter_600SemiBold", fontSize: 12 }}
+            >
+              +8% MoW
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View className="flex-row flex-wrap -mx-1">
         <KpiCard label={tr.municipality.activeCitizens} value={activeCitizens.toString()} sub="+12 bu hafta" />
-        <KpiCard label={tr.municipality.weeklySteps} value={(weeklySteps / 1000).toFixed(1) + "k"} sub="+8% MoW" />
-      </View>
-      <View className="flex-row flex-wrap">
         <KpiCard label={tr.municipality.facilityVisits} value={facilityVisits.toString()} sub="+15% MoW" />
+      </View>
+      <View className="flex-row flex-wrap -mx-1">
         <KpiCard label={tr.municipality.redeemed} value={redeemed.toString()} sub="+22% MoW" />
+        <KpiCard label="Aktif Görev" value={missions.length.toString()} sub={missions.length > 0 ? "yayında" : "henüz yok"} tone="accent" />
       </View>
 
+      <SectionTitle sub="32 MAHALLE">Isı haritası</SectionTitle>
       <NeighborhoodHeatmap rows={rows} />
+
+      <SectionTitle sub="REDEEM ANALİTİĞİ">Kategoriler</SectionTitle>
       <CategoryPieChart data={pieData} />
 
-      <View className="bg-white border border-ink-300 rounded-2xl p-3 mt-3">
-        <Text className="text-ink-700 font-semibold mb-2">{tr.municipality.topNeighborhoods}</Text>
-        {top5.map((r) => (
-          <View key={r.nid} className="flex-row justify-between py-1">
-            <Text className="text-ink-900">{r.rank}. {r.name}</Text>
-            <Text className="text-ink-700">{r.weeklyPoints.toLocaleString("tr-TR")}</Text>
+      <SectionTitle sub="TOP 5">Lider mahalleler</SectionTitle>
+      <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl px-4 py-3">
+        {top5.map((r, i) => (
+          <View
+            key={r.nid}
+            className={`flex-row items-center justify-between py-2.5 ${i < top5.length - 1 ? "border-b border-navy-900/8" : ""}`}
+          >
+            <View className="flex-row items-baseline gap-3">
+              <Text
+                className={i === 0 ? "text-terra-500" : "text-steel-500"}
+                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 12, letterSpacing: -0.2 }}
+              >
+                {String(r.rank).padStart(2, "0")}
+              </Text>
+              <View>
+                <Text
+                  className="text-navy-900"
+                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                >
+                  {r.name}
+                </Text>
+                <Text
+                  className="text-steel-500"
+                  style={{ fontFamily: "Inter_500Medium", fontSize: 10, letterSpacing: 0.4 }}
+                >
+                  {r.district.toUpperCase()}
+                </Text>
+              </View>
+            </View>
+            <Text
+              className="text-navy-900"
+              style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 13, letterSpacing: -0.3 }}
+            >
+              {r.weeklyPoints.toLocaleString("tr-TR")}
+            </Text>
           </View>
         ))}
-        <View className="mt-3 rounded-xl bg-amber-100 p-3">
-          <Text className="text-amber-900 font-semibold">⚠️ {tr.municipality.lowAlert(low.name)}</Text>
-          <Pressable onPress={() => setOpen(true)} className="rounded-xl bg-amber-600 mt-2 py-2">
-            <Text className="text-white text-center font-semibold">{tr.municipality.createMission}</Text>
-          </Pressable>
+      </View>
+
+      {/* Low-activity alert */}
+      <View className="bg-ivory-50 border border-terra-500/40 rounded-2xl overflow-hidden mt-4">
+        <View className="h-1 bg-terra-500" />
+        <View className="px-4 py-3.5">
+          <Text
+            className="text-terra-700"
+            style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+          >
+            UYARI · DÜŞÜK AKTİVİTE
+          </Text>
+          <Text
+            className="text-navy-900 mt-1"
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+          >
+            {low.name} mahallesi
+          </Text>
+          <Text
+            className="text-steel-500 mt-0.5 mb-3"
+            style={{ fontFamily: "Inter_500Medium", fontSize: 12 }}
+          >
+            Bu hafta hareket az. Bir görev oluştur, bonus ekle.
+          </Text>
+          <Button label={tr.municipality.createMission} variant="primary" onPress={() => setOpen(true)} />
         </View>
       </View>
 
       {missions.length > 0 && (
-        <View className="bg-white border border-ink-300 rounded-2xl p-3 mt-3">
-          <Text className="text-ink-700 font-semibold mb-2">Oluşturulan görevler</Text>
-          {missions.map((m) => (
-            <View key={m.id} className="py-1">
-              <Text className="text-ink-900">🏁 {m.title}</Text>
-              <Text className="text-ink-500 text-xs">{m.targetNid} · +{m.bonusPoints} bonus</Text>
-            </View>
-          ))}
-        </View>
+        <>
+          <SectionTitle sub={`${missions.length} AKTİF`}>Oluşturulan görevler</SectionTitle>
+          <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl px-4 py-2">
+            {missions.map((m, i) => (
+              <View
+                key={m.id}
+                className={`py-2.5 ${i < missions.length - 1 ? "border-b border-navy-900/8" : ""}`}
+              >
+                <View className="flex-row items-baseline gap-2">
+                  <View className="w-1 h-1 rounded-full bg-terra-500" />
+                  <Text
+                    className="text-navy-900 flex-1"
+                    style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                  >
+                    {m.title}
+                  </Text>
+                  <Text
+                    className="text-terra-500"
+                    style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 12 }}
+                  >
+                    +{m.bonusPoints}
+                  </Text>
+                </View>
+                <Text
+                  className="text-steel-500 ml-3"
+                  style={{ fontFamily: "Inter_500Medium", fontSize: 10, letterSpacing: 0.4 }}
+                >
+                  HEDEF · {m.targetNid.toUpperCase()}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </>
       )}
 
       <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
-        <View className="flex-1 justify-center items-center bg-black/50 px-4">
-          <View className="bg-white rounded-2xl p-4 w-full max-w-md gap-3">
-            <Text className="text-ink-900 text-xl font-bold">Yeni görev — {low.name}</Text>
-            <Text className="text-ink-500 text-xs">Düşük aktiviteyi yükseltmek için görev oluştur.</Text>
-            <View className="gap-1">
-              <Text className="text-ink-700 text-xs">Başlık</Text>
-              <TextInput value={title} onChangeText={setTitle} className="border border-ink-300 rounded-xl px-3 py-2 text-ink-900" />
+        <View className="flex-1 justify-center items-center px-5" style={{ backgroundColor: "rgba(12, 35, 64, 0.55)" }}>
+          <View className="bg-ivory-50 rounded-3xl w-full max-w-md overflow-hidden border border-navy-900/10">
+            <View className="h-1 flex-row">
+              <View className="flex-1 bg-terra-500" />
+              <View className="w-8 bg-bronze-500" />
             </View>
-            <View className="gap-1">
-              <Text className="text-ink-700 text-xs">Bonus puan</Text>
-              <TextInput value={bonus} onChangeText={setBonus} keyboardType="numeric" className="border border-ink-300 rounded-xl px-3 py-2 text-ink-900" />
-            </View>
-            <View className="flex-row gap-2 mt-2">
-              <Pressable onPress={() => setOpen(false)} className="flex-1 bg-ink-300/40 rounded-xl py-3">
-                <Text className="text-ink-900 text-center font-semibold">İptal</Text>
-              </Pressable>
-              <Pressable onPress={submit} className="flex-1 bg-brand-500 rounded-xl py-3">
-                <Text className="text-white text-center font-semibold">Oluştur</Text>
-              </Pressable>
+            <View className="px-5 py-5">
+              <Text
+                className="text-steel-500"
+                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.6 }}
+              >
+                YENİ GÖREV · {low.name.toUpperCase()}
+              </Text>
+              <Text
+                className="text-navy-900 mt-1.5"
+                style={{ fontFamily: "Fraunces_700Bold", fontSize: 22, letterSpacing: -0.8 }}
+              >
+                Mahallene canlandırma görevi
+              </Text>
+              <Text
+                className="text-steel-500 mt-1 mb-4"
+                style={{ fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 17 }}
+              >
+                Düşük aktiviteyi yükseltmek için yerel bir aktivite tetikleyin.
+              </Text>
+
+              <View className="mb-3">
+                <Text
+                  className="text-steel-500 mb-1.5"
+                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                >
+                  BAŞLIK
+                </Text>
+                <TextInput
+                  value={title}
+                  onChangeText={setTitle}
+                  className="border border-navy-900/15 rounded-xl px-3 py-3 text-navy-900 bg-ivory-100/60"
+                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                />
+              </View>
+
+              <View className="mb-4">
+                <Text
+                  className="text-steel-500 mb-1.5"
+                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                >
+                  BONUS PUAN
+                </Text>
+                <TextInput
+                  value={bonus}
+                  onChangeText={setBonus}
+                  keyboardType="numeric"
+                  className="border border-navy-900/15 rounded-xl px-3 py-3 text-navy-900 bg-ivory-100/60"
+                  style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 16, letterSpacing: -0.3 }}
+                />
+              </View>
+
+              <View className="flex-row gap-2">
+                <View className="flex-1">
+                  <Button label="İptal" variant="ghost" onPress={() => setOpen(false)} />
+                </View>
+                <View className="flex-1">
+                  <Button label="Oluştur" variant="primary" onPress={submit} />
+                </View>
+              </View>
             </View>
           </View>
         </View>

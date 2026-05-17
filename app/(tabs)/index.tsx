@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { Screen } from "@/components/Screen";
+import { Screen, LargeTitle, SectionTitle } from "@/components/Screen";
 import { PointCounter } from "@/components/PointCounter";
 import { ActivityCard } from "@/components/ActivityCard";
 import { WeeklyTrendChart } from "@/components/WeeklyTrendChart";
@@ -88,28 +88,33 @@ export default function Today() {
       endedAt: Date.now()
     });
     await backend.recordActivity({
-      aid: `act-${startedAt}`, uid: user.uid, type: ended.type, steps: ended.steps,
-      distanceKm, durationMin: ended.durationMin, points: capped,
-      startedAt, endedAt: Date.now()
+      aid: `act-${startedAt}`,
+      uid: user.uid,
+      type: ended.type,
+      steps: ended.steps,
+      distanceKm,
+      durationMin: ended.durationMin,
+      points: capped,
+      startedAt,
+      endedAt: Date.now()
     });
   }
 
   const nhood = user ? findNeighborhood(user.neighborhoodId) : undefined;
+  const lvl = levelOfUser(user);
 
   return (
     <Screen>
-      <View className="flex-row justify-between items-center pt-4">
-        <View>
-          <Text className="text-ink-500 text-xs">{tr.today.greeting(user?.name ?? "")}</Text>
-          <Text className="text-ink-900 dark:text-white text-xl font-semibold">{nhood?.name ?? ""} Mahallesi</Text>
-        </View>
-        <Badge label={`Lv ${levelOfUser(user)}`} />
-      </View>
+      <LargeTitle
+        eyebrow={tr.today.greeting(user?.name ?? "")}
+        title={nhood?.name ? `${nhood.name}` : "Bugün"}
+        subtitle={nhood?.district ? `${nhood.district} · Mahallesi` : undefined}
+        trailing={<Badge label={`LV ${String(lvl).padStart(2, "0")}`} tone="ghost" mono />}
+      />
 
-      <View className="mt-4">
-        <PointCounter steps={todaySteps} points={todayPoints} />
-      </View>
+      <PointCounter steps={todaySteps} points={todayPoints} />
 
+      <SectionTitle sub={demoMode ? "DEMO MODE" : "CANLI SENSÖR"}>Aktivite</SectionTitle>
       <ActivityCard
         active={!!live}
         type={type}
@@ -121,7 +126,19 @@ export default function Today() {
         liveDistanceKm={live?.distanceKm ?? 0}
       />
 
+      <SectionTitle sub="HAFTALIK">Trend</SectionTitle>
       <WeeklyTrendChart values={trend} labels={DAY_LABELS} />
+
+      <View className="flex-row items-center justify-center mt-6 mb-2 gap-2">
+        <View className="h-px flex-1 bg-navy-900/10" />
+        <Text
+          className="text-steel-400"
+          style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 9, letterSpacing: 1.6 }}
+        >
+          MAHALLELİG · {new Date().getFullYear()} SEZONU
+        </Text>
+        <View className="h-px flex-1 bg-navy-900/10" />
+      </View>
     </Screen>
   );
 }

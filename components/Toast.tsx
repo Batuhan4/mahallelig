@@ -20,16 +20,48 @@ export function ToastHost() {
   return (
     <View
       pointerEvents="none"
-      style={{ position: "absolute", top: 50, left: 0, right: 0, alignItems: "center", zIndex: 9999 }}
+      style={{ position: "absolute", top: 56, left: 0, right: 0, alignItems: "center", zIndex: 9999 }}
     >
       {items.map((m) => (
         <View
           key={m.id}
-          className="bg-ink-900 rounded-2xl px-4 py-3 mb-2 shadow-lg"
-          style={{ maxWidth: 360, width: "92%" }}
+          className="bg-ivory-50 border border-navy-900/15 rounded-2xl mb-2 overflow-hidden"
+          style={{
+            maxWidth: 380,
+            width: "92%",
+            shadowColor: "#0C2340",
+            shadowOpacity: 0.18,
+            shadowRadius: 14,
+            shadowOffset: { width: 0, height: 8 },
+            elevation: 6
+          }}
         >
-          <Text className="text-white font-semibold text-sm">🔔 {m.title}</Text>
-          <Text className="text-white/80 text-xs mt-0.5">{m.body}</Text>
+          <View className="flex-row">
+            <View className="w-1 bg-terra-500" />
+            <View className="flex-1 px-4 py-3">
+              <View className="flex-row items-center gap-1.5 mb-0.5">
+                <View className="w-1 h-1 rounded-full bg-navy-900" />
+                <Text
+                  className="text-navy-900 text-[10px] tracking-widest"
+                  style={{ fontFamily: "Inter_600SemiBold" }}
+                >
+                  BİLDİRİM
+                </Text>
+              </View>
+              <Text
+                className="text-navy-900"
+                style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+              >
+                {m.title}
+              </Text>
+              <Text
+                className="text-steel-500 mt-0.5"
+                style={{ fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 16 }}
+              >
+                {m.body}
+              </Text>
+            </View>
+          </View>
         </View>
       ))}
     </View>

@@ -1,5 +1,5 @@
 import { FlatList, Text, View } from "react-native";
-import { Screen } from "@/components/Screen";
+import { Screen, LargeTitle } from "@/components/Screen";
 import { RewardCard } from "@/components/RewardCard";
 import { REWARDS, type RewardPartner } from "@/constants/seed/rewards";
 import { tr } from "@/constants/i18n";
@@ -10,21 +10,66 @@ const ORDER: RewardPartner[] = ["belpa", "municipal_sports", "culture", "local",
 export default function Market() {
   const user = useUserStore((s) => s.user);
   const points = user?.totalPoints ?? 0;
+
   return (
     <Screen>
-      <Text className="text-2xl font-bold text-ink-900 dark:text-white py-4">{tr.market.title}</Text>
-      {ORDER.map((p) => {
+      <LargeTitle
+        eyebrow="Mahalleli özel"
+        title={tr.market.title}
+        subtitle={`${points.toLocaleString("tr-TR")} P · cüzdan bakiyeniz`}
+        trailing={
+          <View className="items-end">
+            <Text
+              className="text-navy-900"
+              style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 24, letterSpacing: -0.6 }}
+            >
+              {REWARDS.length}
+            </Text>
+            <Text
+              className="text-steel-500"
+              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+            >
+              ÖDÜL
+            </Text>
+          </View>
+        }
+      />
+
+      {ORDER.map((p, idx) => {
         const rows = REWARDS.filter((r) => r.partner === p);
         if (!rows.length) return null;
         return (
-          <View key={p} className="mb-5">
-            <Text className="text-ink-700 font-semibold mb-2">{tr.market.categories[p]}</Text>
+          <View key={p} className="mb-7">
+            <View className="flex-row items-baseline justify-between mb-3">
+              <View className="flex-row items-baseline gap-2">
+                <Text
+                  className="text-steel-400"
+                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+                >
+                  {String(idx + 1).padStart(2, "0")}
+                </Text>
+                <Text
+                  className="text-navy-900"
+                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 20, letterSpacing: -0.4 }}
+                >
+                  {tr.market.categories[p]}
+                </Text>
+              </View>
+              <Text
+                className="text-steel-500"
+                style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 0.8 }}
+              >
+                {rows.length} TEKLİF
+              </Text>
+            </View>
             <FlatList
               horizontal
               data={rows}
               keyExtractor={(r) => r.rid}
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => <RewardCard reward={item} userPoints={points} href={`/reward/${item.rid}`} />}
+              renderItem={({ item }) => (
+                <RewardCard reward={item} userPoints={points} href={`/reward/${item.rid}`} />
+              )}
             />
           </View>
         );

@@ -4,14 +4,15 @@
     "slug": "mahallelig",
     "version": "0.1.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "scheme": "mahallelig",
     "splash": {
-      "backgroundColor": "#0F172A"
+      "backgroundColor": "#F5F0E6"
     },
     "web": {
       "bundler": "metro",
-      "output": "single"
+      "output": "single",
+      "backgroundColor": "#F5F0E6"
     },
     "ios": {
       "supportsTablet": true,
@@ -28,7 +29,8 @@
     "plugins": [
       "expo-router",
       "expo-location",
-      "expo-notifications"
+      "expo-notifications",
+      "expo-splash-screen"
     ],
     "experiments": { "typedRoutes": true }
   }

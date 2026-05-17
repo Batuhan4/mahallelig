@@ -1,7 +1,7 @@
 import { Image, Pressable, Switch, Text, View } from "react-native";
 import { router } from "expo-router";
-import { Screen } from "@/components/Screen";
-import { Badge } from "@/components/Badge";
+import { Screen, LargeTitle, SectionTitle, Hairline } from "@/components/Screen";
+import { Button } from "@/components/Button";
 import { tr } from "@/constants/i18n";
 import { useUserStore, levelOfUser } from "@/store/useUserStore";
 import { useSettingsStore } from "@/store/useSettingsStore";
@@ -10,9 +10,9 @@ import { useActivityStore } from "@/store/useActivityStore";
 import { findNeighborhood } from "@/services/league";
 import { fireLocal, requestNotificationPermission } from "@/services/notifications";
 import { REWARDS } from "@/constants/seed/rewards";
+import { palette } from "@/constants/theme";
 
 const BADGES = ["Mahalle Şampiyonu", "İlk Yürüyüş", "5km Klübü", "Sabah Kuşu", "Bisiklet Dostu"];
-
 const ACTIVITY_ICON = { walk: "🚶", run: "🏃", bike: "🚴" } as const;
 
 function formatAgo(ts: number) {
@@ -34,90 +34,305 @@ export default function Profile() {
   const history = useActivityStore((s) => s.history);
   const nhood = user ? findNeighborhood(user.neighborhoodId) : undefined;
   const avatarSeed = user?.avatarSeed ?? user?.uid ?? "guest";
-  const avatarUri = `https://api.dicebear.com/9.x/avataaars/png?seed=${encodeURIComponent(avatarSeed)}&size=200&radius=50&backgroundColor=eef2ff,e0e7ff,c7d2fe`;
+  const avatarUri = `https://api.dicebear.com/9.x/avataaars/png?seed=${encodeURIComponent(avatarSeed)}&size=200&radius=50&backgroundColor=F5F0E6,ECE3D3,DDD2BD`;
+  const lvl = levelOfUser(user);
 
   function onPushTest() {
-    // Don't await — Chrome's permission prompt blocks the page; just fire toast immediately
-    // and try the Notification API in the background.
     void requestNotificationPermission();
     fireLocal({ title: tr.push.overtakeTitle, body: tr.push.overtakeBody });
   }
 
   return (
     <Screen>
-      <View className="items-center py-6 gap-2">
-        <View className="w-24 h-24 rounded-full overflow-hidden bg-brand-50 items-center justify-center">
-          <Image
-            source={{ uri: avatarUri }}
-            style={{ width: 96, height: 96 }}
-            accessibilityLabel="Avatar"
-          />
+      <LargeTitle eyebrow="Profil" title={user?.name ?? "Misafir"} />
+
+      {/* Hero card */}
+      <View className="bg-ivory-50 border border-navy-900/10 rounded-3xl overflow-hidden mb-4">
+        <View className="h-1 flex-row">
+          <View className="flex-1 bg-navy-900" />
+          <View className="w-6 bg-terra-500" />
+          <View className="w-2 bg-bronze-500" />
         </View>
-        <Text className="text-2xl font-bold text-ink-900 dark:text-white">{user?.name ?? "Misafir"}</Text>
-        <Text className="text-ink-500">{nhood?.name ?? ""} · {nhood?.district ?? ""}</Text>
-        <View className="flex-row gap-2 mt-1">
-          <Badge label={`${(user?.totalPoints ?? 0).toLocaleString("tr-TR")} P`} tone="brand" />
-          <Badge label={`Lv ${levelOfUser(user)}`} tone="accent" />
+        <View className="px-5 py-5 items-center">
+          <View
+            className="rounded-full overflow-hidden"
+            style={{
+              padding: 3,
+              backgroundColor: "white",
+              borderWidth: 2,
+              borderColor: palette.navy900
+            }}
+          >
+            <Image
+              source={{ uri: avatarUri }}
+              style={{ width: 96, height: 96, borderRadius: 48 }}
+              accessibilityLabel="Avatar"
+            />
+          </View>
+          <View
+            className="absolute"
+            style={{ top: 28, right: 36, width: 12, height: 12, borderRadius: 6, backgroundColor: palette.terra500, borderWidth: 2, borderColor: palette.ivory50 }}
+          />
+          <Text
+            className="text-navy-900 mt-3"
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 24, letterSpacing: -0.6 }}
+          >
+            {user?.name ?? "Misafir"}
+          </Text>
+          <Text
+            className="text-steel-500"
+            style={{ fontFamily: "Inter_500Medium", fontSize: 11, letterSpacing: 0.6, marginTop: 2 }}
+          >
+            {(nhood?.name ?? "—").toUpperCase()} · {(nhood?.district ?? "").toUpperCase()}
+          </Text>
+
+          <Hairline className="my-4 w-full" />
+
+          <View className="flex-row w-full">
+            <View className="flex-1 items-center">
+              <Text
+                className="text-navy-900"
+                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+              >
+                {(user?.totalPoints ?? 0).toLocaleString("tr-TR")}
+              </Text>
+              <Text
+                className="text-steel-500 mt-0.5"
+                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              >
+                TOPLAM P
+              </Text>
+            </View>
+            <View className="w-px bg-navy-900/10" />
+            <View className="flex-1 items-center">
+              <Text
+                className="text-navy-900"
+                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+              >
+                Lv {String(lvl).padStart(2, "0")}
+              </Text>
+              <Text
+                className="text-steel-500 mt-0.5"
+                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              >
+                SEVİYE
+              </Text>
+            </View>
+            <View className="w-px bg-navy-900/10" />
+            <View className="flex-1 items-center">
+              <Text
+                className="text-navy-900"
+                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 20, letterSpacing: -0.6 }}
+              >
+                {history.length}
+              </Text>
+              <Text
+                className="text-steel-500 mt-0.5"
+                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              >
+                AKTİVİTE
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
 
-      <Text className="text-ink-700 font-semibold mb-2">{tr.profile.badges}</Text>
-      <View className="flex-row flex-wrap">
+      <SectionTitle sub={`${BADGES.length} ROZET`}>{tr.profile.badges}</SectionTitle>
+      <View className="flex-row flex-wrap gap-2">
         {BADGES.map((b) => (
-          <View key={b} className="bg-white border border-ink-300 rounded-xl px-3 py-2 mr-2 mb-2">
-            <Text className="text-ink-900 text-xs">🏅 {b}</Text>
+          <View
+            key={b}
+            className="bg-ivory-50 border border-navy-900/15 rounded-full px-3 py-1.5 flex-row items-center gap-1.5"
+          >
+            <View className="w-1.5 h-1.5 rounded-full bg-bronze-500" />
+            <Text
+              className="text-navy-900"
+              style={{ fontFamily: "Inter_600SemiBold", fontSize: 11, letterSpacing: 0.2 }}
+            >
+              {b}
+            </Text>
           </View>
         ))}
       </View>
 
-      <Text className="text-ink-700 font-semibold mt-4 mb-2">Aktivite geçmişi</Text>
+      <SectionTitle sub={`${history.length} KAYIT`}>Aktivite geçmişi</SectionTitle>
       {history.length === 0 ? (
-        <Text className="text-ink-500">Henüz aktivite kaydı yok. Bugün ekranından bir aktivite başlat.</Text>
+        <View className="bg-ivory-50 border border-dashed border-navy-900/15 rounded-2xl px-4 py-5">
+          <Text
+            className="text-steel-500"
+            style={{ fontFamily: "Inter_500Medium", fontSize: 12, textAlign: "center" }}
+          >
+            Henüz aktivite kaydı yok. Bugün ekranından bir aktivite başlat.
+          </Text>
+        </View>
       ) : (
-        history.slice(0, 6).map((a) => (
-          <View key={a.aid} className="bg-white border border-ink-300 rounded-xl p-3 mb-2 flex-row justify-between items-center">
-            <View className="flex-row items-center gap-3">
-              <Text className="text-2xl">{ACTIVITY_ICON[a.type]}</Text>
-              <View>
-                <Text className="text-ink-900 font-semibold">
+        <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl px-4 py-2">
+          {history.slice(0, 6).map((a, i, arr) => (
+            <View
+              key={a.aid}
+              className={`flex-row items-center py-3 ${i < arr.length - 1 ? "border-b border-navy-900/8" : ""}`}
+            >
+              <Text className="text-xl mr-3">{ACTIVITY_ICON[a.type]}</Text>
+              <View className="flex-1">
+                <Text
+                  className="text-navy-900"
+                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                >
                   {a.distanceKm.toFixed(2)} km · {a.steps.toLocaleString("tr-TR")} adım
                 </Text>
-                <Text className="text-ink-500 text-xs">{a.durationMin} dk · {formatAgo(a.startedAt)}</Text>
+                <Text
+                  className="text-steel-500"
+                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, letterSpacing: 0.4, marginTop: 1 }}
+                >
+                  {a.durationMin} DK · {formatAgo(a.startedAt).toUpperCase()}
+                </Text>
               </View>
+              <Text
+                className="text-terra-500"
+                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 14 }}
+              >
+                +{a.points}
+              </Text>
             </View>
-            <Text className="text-brand-700 font-bold">+{a.points}</Text>
-          </View>
-        ))
-      )}
-
-      <Text className="text-ink-700 font-semibold mt-4 mb-2">Redeem geçmişi</Text>
-      {redemptions.length === 0 ? (
-        <Text className="text-ink-500">Henüz redeem yok.</Text>
-      ) : (
-        redemptions.map((r) => {
-          const reward = REWARDS.find((x) => x.rid === r.rid);
-          const statusLabel = r.status === "active" ? "🟢 Aktif" : r.status === "used" ? "✓ Kullanıldı" : "⏳ Süresi doldu";
-          return (
-            <View key={r.rdid} className="bg-white border border-ink-300 rounded-xl p-3 mb-2">
-              <Text className="text-ink-900 font-semibold">{reward?.title ?? r.rid}</Text>
-              <Text className="text-ink-500 text-xs">{statusLabel} · {formatAgo(r.createdAt)}</Text>
-            </View>
-          );
-        })
-      )}
-
-      <Text className="text-ink-700 font-semibold mt-4 mb-2">{tr.profile.settings}</Text>
-      <View className="bg-white border border-ink-300 rounded-xl p-3">
-        <View className="flex-row items-center justify-between py-2">
-          <Text className="text-ink-900">{tr.profile.demoMode}</Text>
-          <Switch value={demoMode} onValueChange={toggleDemoMode} />
+          ))}
         </View>
-        <Pressable onPress={onPushTest} className="py-2">
-          <Text className="text-brand-700 font-semibold">🔔 {tr.profile.triggerPush}</Text>
+      )}
+
+      <SectionTitle sub={`${redemptions.length} REDEEM`}>Redeem geçmişi</SectionTitle>
+      {redemptions.length === 0 ? (
+        <View className="bg-ivory-50 border border-dashed border-navy-900/15 rounded-2xl px-4 py-5">
+          <Text
+            className="text-steel-500"
+            style={{ fontFamily: "Inter_500Medium", fontSize: 12, textAlign: "center" }}
+          >
+            Henüz redeem yok.
+          </Text>
+        </View>
+      ) : (
+        <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl px-4 py-2">
+          {redemptions.map((r, i, arr) => {
+            const reward = REWARDS.find((x) => x.rid === r.rid);
+            const tone =
+              r.status === "active" ? { color: "field", label: "AKTİF" } :
+              r.status === "used" ? { color: "navy", label: "KULLANILDI" } :
+              { color: "steel", label: "SÜRESİ DOLDU" };
+            return (
+              <View
+                key={r.rdid}
+                className={`py-3 ${i < arr.length - 1 ? "border-b border-navy-900/8" : ""}`}
+              >
+                <View className="flex-row items-baseline justify-between">
+                  <Text
+                    className="text-navy-900 flex-1 pr-2"
+                    style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+                  >
+                    {reward?.title ?? r.rid}
+                  </Text>
+                  <View className={`flex-row items-center gap-1`}>
+                    <View
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: 3,
+                        backgroundColor:
+                          tone.color === "field" ? palette.field500 :
+                          tone.color === "navy" ? palette.navy900 : palette.steel400
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontFamily: "Inter_600SemiBold",
+                        fontSize: 9,
+                        letterSpacing: 1.2,
+                        color:
+                          tone.color === "field" ? palette.field500 :
+                          tone.color === "navy" ? palette.navy900 : palette.steel400
+                      }}
+                    >
+                      {tone.label}
+                    </Text>
+                  </View>
+                </View>
+                <Text
+                  className="text-steel-500"
+                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, marginTop: 2 }}
+                >
+                  {formatAgo(r.createdAt).toUpperCase()}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      )}
+
+      <SectionTitle>{tr.profile.settings}</SectionTitle>
+      <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl">
+        <View className="flex-row items-center justify-between px-4 py-3.5 border-b border-navy-900/8">
+          <View>
+            <Text
+              className="text-navy-900"
+              style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+            >
+              {tr.profile.demoMode}
+            </Text>
+            <Text
+              className="text-steel-500"
+              style={{ fontFamily: "Inter_500Medium", fontSize: 11 }}
+            >
+              Sahte pedometre akışı
+            </Text>
+          </View>
+          <Switch
+            value={demoMode}
+            onValueChange={toggleDemoMode}
+            trackColor={{ false: palette.ivory300, true: palette.terra500 }}
+            thumbColor={palette.ivory50}
+          />
+        </View>
+        <Pressable onPress={onPushTest} className="px-4 py-3.5 border-b border-navy-900/8 flex-row items-center justify-between">
+          <Text
+            className="text-navy-900"
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+          >
+            🔔  {tr.profile.triggerPush}
+          </Text>
+          <Text className="text-terra-500" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+            GÖNDER →
+          </Text>
         </Pressable>
-        <Pressable onPress={() => router.push("/feed")} className="py-2"><Text className="text-brand-700">📰 Sosyal Feed</Text></Pressable>
-        <Pressable onPress={() => router.push("/business")} className="py-2"><Text className="text-brand-700">🏪 Yerel İşletme Paneli</Text></Pressable>
-        <Pressable onPress={() => { reset(); router.replace("/(onboarding)/welcome"); }} className="py-2"><Text className="text-red-500">↩︎ {tr.profile.signOut}</Text></Pressable>
+        <Pressable onPress={() => router.push("/feed")} className="px-4 py-3.5 border-b border-navy-900/8 flex-row items-center justify-between">
+          <Text
+            className="text-navy-900"
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+          >
+            📰  Sosyal Feed
+          </Text>
+          <Text className="text-steel-400" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+            AÇ →
+          </Text>
+        </Pressable>
+        <Pressable onPress={() => router.push("/business")} className="px-4 py-3.5 flex-row items-center justify-between">
+          <Text
+            className="text-navy-900"
+            style={{ fontFamily: "Fraunces_700Bold", fontSize: 14, letterSpacing: -0.2 }}
+          >
+            🏪  Yerel İşletme Paneli
+          </Text>
+          <Text className="text-steel-400" style={{ fontFamily: "Inter_600SemiBold", fontSize: 11 }}>
+            AÇ →
+          </Text>
+        </Pressable>
+      </View>
+
+      <View className="mt-4">
+        <Button
+          label={tr.profile.signOut}
+          variant="danger"
+          onPress={() => {
+            reset();
+            router.replace("/(onboarding)/welcome");
+          }}
+        />
       </View>
     </Screen>
   );
