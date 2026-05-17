@@ -1,5 +1,4 @@
-import { FlatList, ScrollView, Text, View } from "react-native";
-import { router } from "expo-router";
+import { FlatList, Text, View } from "react-native";
 import { Screen } from "@/components/Screen";
 import { RewardCard } from "@/components/RewardCard";
 import { REWARDS, type RewardPartner } from "@/constants/seed/rewards";
@@ -25,7 +24,7 @@ export default function Market() {
               data={rows}
               keyExtractor={(r) => r.rid}
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => <RewardCard reward={item} userPoints={points} onPress={() => router.push(`/reward/${item.rid}`)} />}
+              renderItem={({ item }) => <RewardCard reward={item} userPoints={points} href={`/reward/${item.rid}`} />}
             />
           </View>
         );
