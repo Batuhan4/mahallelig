@@ -239,13 +239,13 @@ export default function Today() {
           <View className="px-4 py-3">
             <Text
               className="text-terra-700"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               EKSİK İZİN
             </Text>
             <Text
               className="text-navy-900 mt-1"
-              style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+              style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
             >
               {!motionGranted && !gpsGranted
                 ? "Adım sayımı + Konum izni gerekli"
@@ -255,7 +255,7 @@ export default function Today() {
             </Text>
             <Text
               className="text-steel-500 mt-0.5"
-              style={{ fontFamily: "Inter_500Medium", fontSize: 12 }}
+              style={{ fontFamily: "System", fontWeight: "500", fontSize: 12 }}
             >
               İzin ver · gerçek sensörler devreye girsin →
             </Text>
@@ -297,7 +297,7 @@ export default function Today() {
         <View className="h-px flex-1 bg-navy-900/10" />
         <Text
           className="text-steel-400"
-          style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 9, letterSpacing: 1.6 }}
+          style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 9, letterSpacing: 1.6 }}
         >
           MAHALLELİG · {new Date().getFullYear()} SEZONU
         </Text>

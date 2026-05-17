@@ -39,7 +39,7 @@ export default function RootLayout() {
             presentation: "modal",
             headerShown: true,
             headerStyle: { backgroundColor: palette.ivory100 },
-            headerTitleStyle: { fontFamily: "Fraunces_700Bold", color: palette.navy900 },
+            headerTitleStyle: { fontFamily: "System", fontWeight: "700", color: palette.navy900 },
             headerTintColor: palette.terra500,
             title: "Ödül"
           }}
@@ -50,7 +50,7 @@ export default function RootLayout() {
             presentation: "modal",
             headerShown: true,
             headerStyle: { backgroundColor: palette.ivory100 },
-            headerTitleStyle: { fontFamily: "Fraunces_700Bold", color: palette.navy900 },
+            headerTitleStyle: { fontFamily: "System", fontWeight: "700", color: palette.navy900 },
             headerTintColor: palette.terra500,
             title: "Sosyal Feed"
           }}
@@ -61,7 +61,7 @@ export default function RootLayout() {
             presentation: "modal",
             headerShown: true,
             headerStyle: { backgroundColor: palette.ivory100 },
-            headerTitleStyle: { fontFamily: "Fraunces_700Bold", color: palette.navy900 },
+            headerTitleStyle: { fontFamily: "System", fontWeight: "700", color: palette.navy900 },
             headerTintColor: palette.terra500,
             title: "Yerel İşletme"
           }}

@@ -19,7 +19,7 @@ export function RewardCard({ reward, userPoints, href }: { reward: Reward; userP
           <View className="absolute left-3 bottom-2">
             <Text
               className="text-ivory-100/70"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               {tr.market.categories[reward.partner].toUpperCase()}
             </Text>
@@ -28,14 +28,14 @@ export function RewardCard({ reward, userPoints, href }: { reward: Reward; userP
         <View className="p-3.5">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
             numberOfLines={1}
           >
             {reward.title}
           </Text>
           <Text
             className="text-steel-500 mt-1"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 16 }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, lineHeight: 16 }}
             numberOfLines={2}
           >
             {reward.description}
@@ -44,10 +44,10 @@ export function RewardCard({ reward, userPoints, href }: { reward: Reward; userP
           <View className="flex-row justify-between items-center">
             <Text
               className="text-navy-900"
-              style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+              style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
             >
               {reward.cost.toLocaleString("tr-TR")}
-              <Text className="text-steel-400" style={{ fontFamily: "Inter_500Medium", fontSize: 10, letterSpacing: 0.6 }}>
+              <Text className="text-steel-400" style={{ fontFamily: "System", fontWeight: "500", fontSize: 10, letterSpacing: 0.6 }}>
                 {"  P"}
               </Text>
             </Text>
@@ -55,7 +55,7 @@ export function RewardCard({ reward, userPoints, href }: { reward: Reward; userP
               <View className={`w-1.5 h-1.5 rounded-full ${enough ? "bg-field-500" : "bg-terra-500"}`} />
               <Text
                 className={enough ? "text-field-500" : "text-terra-700"}
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 0.6 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 0.6 }}
               >
                 {enough
                   ? tr.market.enoughPoints.toUpperCase()

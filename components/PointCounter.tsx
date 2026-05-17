@@ -12,14 +12,14 @@ export function PointCounter({ steps, points }: { steps: number; points: number 
           <View className="w-1.5 h-1.5 rounded-full bg-terra-500" />
           <Text
             className="text-ivory-100/70"
-            style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+            style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
           >
             BUGÜN · ADIM
           </Text>
         </View>
         <Text
           className="text-ivory-50"
-          style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 52, letterSpacing: -2.2, lineHeight: 56 }}
+          style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 52, letterSpacing: -2.2, lineHeight: 56 }}
         >
           {steps.toLocaleString("tr-TR")}
         </Text>
@@ -28,20 +28,20 @@ export function PointCounter({ steps, points }: { steps: number; points: number 
           <View>
             <Text
               className="text-ivory-100/60"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               MAHALLEPUAN
             </Text>
             <View className="flex-row items-baseline gap-1 mt-0.5">
               <Text
                 className="text-terra-400"
-                style={{ fontFamily: "Fraunces_700Bold", fontSize: 22, letterSpacing: -0.6 }}
+                style={{ fontFamily: "System", fontWeight: "700", fontSize: 22, letterSpacing: -0.6 }}
               >
                 +{points.toLocaleString("tr-TR")}
               </Text>
               <Text
                 className="text-ivory-100/50"
-                style={{ fontFamily: "Inter_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+                style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
               >
                 P
               </Text>
@@ -50,13 +50,13 @@ export function PointCounter({ steps, points }: { steps: number; points: number 
           <View className="items-end">
             <Text
               className="text-ivory-100/60"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               GÜNLÜK HEDEF
             </Text>
             <Text
               className="text-ivory-50 mt-0.5"
-              style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 12, letterSpacing: 0.4 }}
+              style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 12, letterSpacing: 0.4 }}
             >
               {steps.toLocaleString("tr-TR")} / 10.000
             </Text>

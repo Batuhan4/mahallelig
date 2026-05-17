@@ -23,13 +23,13 @@ export default function Business() {
         <View className="px-4 py-4">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 18, letterSpacing: -0.4 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 18, letterSpacing: -0.4 }}
           >
             Mehmet Usta · Filtre kahve
           </Text>
           <Text
             className="text-steel-500 mt-1"
-            style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+            style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
           >
             42 KEZ TERCİH EDİLDİ
           </Text>

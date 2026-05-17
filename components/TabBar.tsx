@@ -139,7 +139,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarP
                   <Text
                     style={{
                       color: "#FAF7EF",
-                      fontFamily: "Inter_600SemiBold",
+                      fontFamily: "System", fontWeight: "600",
                       fontSize: 12,
                       letterSpacing: 0.2
                     }}

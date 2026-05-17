@@ -21,13 +21,13 @@ export default function Market() {
           <View className="items-end">
             <Text
               className="text-navy-900"
-              style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 24, letterSpacing: -0.6 }}
+              style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 24, letterSpacing: -0.6 }}
             >
               {REWARDS.length}
             </Text>
             <Text
               className="text-steel-500"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               ÖDÜL
             </Text>
@@ -44,20 +44,20 @@ export default function Market() {
               <View className="flex-row items-baseline gap-2">
                 <Text
                   className="text-steel-400"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
                 >
                   {String(idx + 1).padStart(2, "0")}
                 </Text>
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 20, letterSpacing: -0.4 }}
+                  style={{ fontFamily: "System", fontWeight: "700", fontSize: 20, letterSpacing: -0.4 }}
                 >
                   {tr.market.categories[p]}
                 </Text>
               </View>
               <Text
                 className="text-steel-500"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 0.8 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 0.8 }}
               >
                 {rows.length} TEKLİF
               </Text>

@@ -11,7 +11,7 @@ export function CategoryPieChart({ data }: { data: { partner: string; count: num
     <View className="bg-ivory-50 border border-navy-900/10 rounded-2xl p-4 mt-3">
       <Text
         className="text-navy-900 mb-3"
-        style={{ fontFamily: "Fraunces_700Bold", fontSize: 16, letterSpacing: -0.3 }}
+        style={{ fontFamily: "System", fontWeight: "700", fontSize: 16, letterSpacing: -0.3 }}
       >
         Tercih edilen kategoriler
       </Text>
@@ -59,14 +59,14 @@ export function CategoryPieChart({ data }: { data: { partner: string; count: num
                 />
                 <Text
                   className="text-navy-900 ml-2 flex-1"
-                  style={{ fontFamily: "Inter_500Medium", fontSize: 11 }}
+                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 11 }}
                   numberOfLines={1}
                 >
                   {label}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11 }}
                 >
                   {pct}%
                 </Text>

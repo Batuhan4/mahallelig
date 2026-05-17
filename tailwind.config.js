@@ -54,13 +54,17 @@ module.exports = {
         }
       },
       fontFamily: {
-        display: ["Fraunces_700Bold", "Georgia", "serif"],
-        "display-italic": ["Fraunces_400Italic", "Georgia", "serif"],
-        sans: ["Inter_500Medium", "system-ui", "sans-serif"],
-        semibold: ["Inter_600SemiBold", "system-ui", "sans-serif"],
-        bold: ["Inter_700Bold", "system-ui", "sans-serif"],
-        mono: ["IBMPlexMono_500Medium", "Menlo", "monospace"],
-        "mono-bold": ["IBMPlexMono_700Bold", "Menlo", "monospace"]
+        // Tüm tipografi → iOS'ta San Francisco Pro (System), Android'de Roboto.
+        // display/sans/semibold/bold ayırımı korundu ki mevcut sınıflar kırılmasın;
+        // hepsi aynı sistem ailesine bağlanır, ağırlığı `font-medium`/`font-bold`
+        // gibi Tailwind ağırlık sınıfları ile veya inline `fontWeight` ile verilir.
+        display: ["System"],
+        "display-italic": ["System"],
+        sans: ["System"],
+        semibold: ["System"],
+        bold: ["System"],
+        mono: ["Menlo"],
+        "mono-bold": ["Menlo"]
       },
       letterSpacing: {
         tightest: "-0.04em",

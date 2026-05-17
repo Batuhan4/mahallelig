@@ -67,7 +67,7 @@ function EyebrowText({ children }: { children: ReactNode }) {
   return (
     <Text
       className="text-steel-500 text-[10px] tracking-widest"
-      style={{ fontFamily: "Inter_600SemiBold" }}
+      style={{ fontFamily: "System", fontWeight: "600" }}
     >
       {String(children).toUpperCase()}
     </Text>
@@ -78,7 +78,7 @@ function TitleText({ children }: { children: ReactNode }) {
   return (
     <Text
       className="text-navy-900 text-4xl"
-      style={{ fontFamily: "Fraunces_700Bold", letterSpacing: -1.2, lineHeight: 40 }}
+      style={{ fontFamily: "System", fontWeight: "700", letterSpacing: -1.2, lineHeight: 40 }}
     >
       {children}
     </Text>
@@ -87,7 +87,7 @@ function TitleText({ children }: { children: ReactNode }) {
 
 function SubtitleText({ children }: { children: ReactNode }) {
   return (
-    <Text className="text-steel-500 mt-1" style={{ fontFamily: "Inter_500Medium", fontSize: 13 }}>
+    <Text className="text-steel-500 mt-1" style={{ fontFamily: "System", fontWeight: "500", fontSize: 13 }}>
       {children}
     </Text>
   );
@@ -99,12 +99,12 @@ export function SectionTitle({ children, sub }: { children: ReactNode; sub?: str
     <View className="flex-row items-baseline justify-between mt-6 mb-3">
       <Text
         className="text-navy-900"
-        style={{ fontFamily: "Fraunces_700Bold", fontSize: 18, letterSpacing: -0.4 }}
+        style={{ fontFamily: "System", fontWeight: "700", fontSize: 18, letterSpacing: -0.4 }}
       >
         {children}
       </Text>
       {sub && (
-        <Text className="text-steel-500" style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11 }}>
+        <Text className="text-steel-500" style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11 }}>
           {sub}
         </Text>
       )}

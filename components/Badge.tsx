@@ -24,7 +24,11 @@ export function Badge({
     <View className={`${s.bg} border ${s.border} rounded-full px-2.5 py-1`}>
       <Text
         className={`${s.text} text-[11px]`}
-        style={{ fontFamily: mono ? "IBMPlexMono_500Medium" : "Inter_600SemiBold", letterSpacing: 0.4 }}
+        style={{
+          fontFamily: mono ? "Menlo" : "System",
+          fontWeight: mono ? "500" : "600",
+          letterSpacing: 0.4
+        }}
       >
         {label}
       </Text>

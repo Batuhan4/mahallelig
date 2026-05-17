@@ -12,13 +12,13 @@ export function WeeklyTrendChart({ values, labels }: { values: number[]; labels:
       <View className="flex-row items-baseline justify-between mb-3">
         <Text
           className="text-navy-900"
-          style={{ fontFamily: "Fraunces_700Bold", fontSize: 16, letterSpacing: -0.3 }}
+          style={{ fontFamily: "System", fontWeight: "700", fontSize: 16, letterSpacing: -0.3 }}
         >
           Son 7 gün
         </Text>
         <Text
           className="text-steel-500"
-          style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, letterSpacing: 0.6 }}
+          style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 10, letterSpacing: 0.6 }}
         >
           {max.toLocaleString("tr-TR")} max
         </Text>
@@ -47,7 +47,8 @@ export function WeeklyTrendChart({ values, labels }: { values: number[]; labels:
             x={i * (barW + 10) + 5 + barW / 2}
             y={height + 17}
             fontSize={9}
-            fontFamily="Inter_500Medium"
+            fontFamily="System"
+            fontWeight="500"
             fill={palette.steel500}
             textAnchor="middle"
             letterSpacing={1}

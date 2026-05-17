@@ -36,7 +36,7 @@ export function ActivityCard({
       <View className="flex-row items-center justify-between mb-3">
         <Text
           className="text-steel-500"
-          style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+          style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
         >
           AKTİVİTE TÜRÜ
         </Text>
@@ -45,7 +45,7 @@ export function ActivityCard({
             <View className="w-1.5 h-1.5 rounded-full bg-terra-500" />
             <Text
               className="text-terra-700"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
             >
               CANLI
             </Text>
@@ -65,7 +65,7 @@ export function ActivityCard({
             >
               <Text
                 className={`text-center ${isActive ? "text-ivory-50" : "text-navy-900"}`}
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 13 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 13 }}
               >
                 {ICON[t]}  {LABEL[t]}
               </Text>
@@ -78,7 +78,7 @@ export function ActivityCard({
         <View>
           <Text
             className="text-steel-500"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 11, letterSpacing: 0.6 }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, letterSpacing: 0.6 }}
           >
             KAYNAK · {source.toUpperCase()}
           </Text>
@@ -88,20 +88,20 @@ export function ActivityCard({
               <View className="flex-row items-baseline gap-2 mt-1.5">
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 40, letterSpacing: -1.6 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 40, letterSpacing: -1.6 }}
                 >
                   {liveDistanceKm.toFixed(2)}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "Inter_500Medium", fontSize: 14, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 14, letterSpacing: 0.4 }}
                 >
                   km
                 </Text>
               </View>
               <Text
                 className="text-steel-500 mb-3 mt-0.5"
-                style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11 }}
+                style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11 }}
               >
                 GPS · pedalla
               </Text>
@@ -111,20 +111,20 @@ export function ActivityCard({
               <View className="flex-row items-baseline gap-2 mt-1.5 mb-1">
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 36, letterSpacing: -1.4 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 36, letterSpacing: -1.4 }}
                 >
                   {Math.round(liveAltitudeM / 3)}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "Inter_500Medium", fontSize: 12, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, letterSpacing: 0.4 }}
                 >
                   kat · {liveAltitudeM.toFixed(1)} m
                 </Text>
               </View>
               <Text
                 className="text-steel-500 mb-3"
-                style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 12 }}
+                style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 12 }}
               >
                 {liveSteps.toLocaleString("tr-TR")} adım
               </Text>
@@ -134,20 +134,20 @@ export function ActivityCard({
               <View className="flex-row items-baseline gap-2 mt-1.5 mb-1">
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 36, letterSpacing: -1.4 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 36, letterSpacing: -1.4 }}
                 >
                   {liveSteps.toLocaleString("tr-TR")}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "Inter_500Medium", fontSize: 12, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, letterSpacing: 0.4 }}
                 >
                   adım
                 </Text>
               </View>
               <Text
                 className="text-steel-500 mb-3"
-                style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 12 }}
+                style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 12 }}
               >
                 {liveDistanceKm.toFixed(2)} km
               </Text>

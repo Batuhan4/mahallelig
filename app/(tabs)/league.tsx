@@ -37,19 +37,19 @@ export default function League() {
           <View className="items-end">
             <Text
               className="text-terra-500"
-              style={{ fontFamily: "Fraunces_700Bold", fontSize: 28, letterSpacing: -1, lineHeight: 30 }}
+              style={{ fontFamily: "System", fontWeight: "700", fontSize: 28, letterSpacing: -1, lineHeight: 30 }}
             >
               {yourNhoodRow ? String(yourNhoodRow.rank).padStart(2, "0") : "—"}
               <Text
                 className="text-steel-400"
-                style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 14 }}
+                style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 14 }}
               >
                 /{String(outsideRows.length).padStart(2, "0")}
               </Text>
             </Text>
             <Text
               className="text-steel-500"
-              style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+              style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
             >
               SIRA
             </Text>
@@ -66,7 +66,7 @@ export default function League() {
               <View className="w-1 h-1 rounded-full bg-terra-500" />
               <Text
                 className="text-terra-700"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
               >
                 BELEDİYE GÖREVİ
               </Text>
@@ -75,13 +75,13 @@ export default function League() {
               <>
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+                  style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
                 >
                   {activeMission.title}
                 </Text>
                 <Text
                   className="text-steel-500 mt-0.5"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
                 >
                   +{activeMission.bonusPoints} BONUS · {c.days} GÜN
                 </Text>
@@ -90,13 +90,13 @@ export default function League() {
               <>
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+                  style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
                 >
                   {tr.league.weeklyMission}
                 </Text>
                 <Text
                   className="text-steel-500 mt-0.5"
-                  style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
                 >
                   {tr.league.seasonCountdown(c.days, c.hours).toUpperCase()}
                 </Text>
@@ -120,7 +120,7 @@ export default function League() {
                 {isActive && <View className="w-1 h-1 rounded-full bg-terra-500" />}
                 <Text
                   className={isActive ? "text-ivory-50" : "text-navy-900/70"}
-                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 12, letterSpacing: 0.2 }}
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 12, letterSpacing: 0.2 }}
                 >
                   {t === "inside" ? tr.league.tabInside : tr.league.tabOutside}
                 </Text>

@@ -22,13 +22,13 @@ export function NeighborhoodHeatmap({ rows }: { rows: LeagueRow[] }) {
       <View className="flex-row items-baseline justify-between mb-3">
         <Text
           className="text-navy-900"
-          style={{ fontFamily: "Fraunces_700Bold", fontSize: 16, letterSpacing: -0.3 }}
+          style={{ fontFamily: "System", fontWeight: "700", fontSize: 16, letterSpacing: -0.3 }}
         >
           Mahalle ısı haritası
         </Text>
         <Text
           className="text-steel-500"
-          style={{ fontFamily: "IBMPlexMono_500Medium", fontSize: 10, letterSpacing: 0.6 }}
+          style={{ fontFamily: "Menlo", fontWeight: "500", fontSize: 10, letterSpacing: 0.6 }}
         >
           {rows.length} mahalle
         </Text>
@@ -53,7 +53,7 @@ export function NeighborhoodHeatmap({ rows }: { rows: LeagueRow[] }) {
       <View className="flex-row items-center mt-3 gap-1.5">
         <Text
           className="text-steel-500"
-          style={{ fontFamily: "Inter_500Medium", fontSize: 9, letterSpacing: 0.8 }}
+          style={{ fontFamily: "System", fontWeight: "500", fontSize: 9, letterSpacing: 0.8 }}
         >
           AZ
         </Text>
@@ -62,7 +62,7 @@ export function NeighborhoodHeatmap({ rows }: { rows: LeagueRow[] }) {
         ))}
         <Text
           className="text-steel-500"
-          style={{ fontFamily: "Inter_500Medium", fontSize: 9, letterSpacing: 0.8 }}
+          style={{ fontFamily: "System", fontWeight: "500", fontSize: 9, letterSpacing: 0.8 }}
         >
           ÇOK
         </Text>

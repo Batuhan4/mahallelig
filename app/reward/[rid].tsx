@@ -40,7 +40,7 @@ export default function RewardDetail() {
         <View className="py-10 items-center">
           <Text
             className="text-navy-900"
-            style={{ fontFamily: "Fraunces_700Bold", fontSize: 18 }}
+            style={{ fontFamily: "System", fontWeight: "700", fontSize: 18 }}
           >
             Bu ödül bulunamadı.
           </Text>
@@ -98,7 +98,7 @@ export default function RewardDetail() {
             <View className="absolute top-3 left-4">
               <Text
                 className="text-ivory-100/70"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
               >
                 {tr.market.categories[reward.partner].toUpperCase()}
               </Text>
@@ -114,20 +114,20 @@ export default function RewardDetail() {
           <View className="flex-row items-start justify-between gap-3">
             <Text
               className="text-navy-900 flex-1"
-              style={{ fontFamily: "Fraunces_700Bold", fontSize: 26, letterSpacing: -1, lineHeight: 28 }}
+              style={{ fontFamily: "System", fontWeight: "700", fontSize: 26, letterSpacing: -1, lineHeight: 28 }}
             >
               {reward.title}
             </Text>
             <View className="items-end">
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 22, letterSpacing: -0.6 }}
+                style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 22, letterSpacing: -0.6 }}
               >
                 {reward.cost.toLocaleString("tr-TR")}
               </Text>
               <Text
                 className="text-steel-500"
-                style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.4 }}
+                style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.4 }}
               >
                 PUAN
               </Text>
@@ -135,7 +135,7 @@ export default function RewardDetail() {
           </View>
           <Text
             className="text-steel-500 mt-2"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 13, lineHeight: 18 }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 13, lineHeight: 18 }}
           >
             {reward.description}
           </Text>
@@ -147,7 +147,7 @@ export default function RewardDetail() {
             <View className="w-1 h-1 rounded-full bg-steel-400" />
             <Text
               className="text-steel-500 flex-1"
-              style={{ fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 17 }}
+              style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, lineHeight: 17 }}
             >
               {reward.termsTr}
             </Text>
@@ -168,14 +168,14 @@ export default function RewardDetail() {
                 <View className="w-1 h-1 rounded-full bg-terra-500" />
                 <Text
                   className="text-terra-700"
-                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 9, letterSpacing: 1.6 }}
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 9, letterSpacing: 1.6 }}
                 >
                   AKTİF KOD
                 </Text>
               </View>
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "Fraunces_700Bold", fontSize: 18, letterSpacing: -0.4 }}
+                style={{ fontFamily: "System", fontWeight: "700", fontSize: 18, letterSpacing: -0.4 }}
               >
                 {tr.reward.qrTitle}
               </Text>
@@ -190,19 +190,19 @@ export default function RewardDetail() {
               <View className="flex-row items-center gap-2 mt-4">
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.4 }}
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.4 }}
                 >
                   GEÇERLİ
                 </Text>
                 <Text
                   className="text-navy-900"
-                  style={{ fontFamily: "IBMPlexMono_700Bold", fontSize: 22, letterSpacing: -0.6 }}
+                  style={{ fontFamily: "Menlo", fontWeight: "700", fontSize: 22, letterSpacing: -0.6 }}
                 >
                   {String(ttlMin).padStart(2, "0")}:{String(ttlSec).padStart(2, "0")}
                 </Text>
                 <Text
                   className="text-steel-500"
-                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.4 }}
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.4 }}
                 >
                   / {REDEMPTION_TTL_MIN} DK
                 </Text>
@@ -218,24 +218,24 @@ export default function RewardDetail() {
                 className="w-20 h-20 rounded-full items-center justify-center"
                 style={{ backgroundColor: palette.field500 }}
               >
-                <Text className="text-ivory-50" style={{ fontFamily: "Fraunces_700Bold", fontSize: 44 }}>✓</Text>
+                <Text className="text-ivory-50" style={{ fontFamily: "System", fontWeight: "700", fontSize: 44 }}>✓</Text>
               </View>
               <Text
                 className="text-navy-900 mt-4"
-                style={{ fontFamily: "Fraunces_700Bold", fontSize: 26, letterSpacing: -1 }}
+                style={{ fontFamily: "System", fontWeight: "700", fontSize: 26, letterSpacing: -1 }}
               >
                 {tr.reward.used}
               </Text>
               <Text
                 className="text-steel-500 mt-1"
-                style={{ fontFamily: "Inter_500Medium", fontSize: 12 }}
+                style={{ fontFamily: "System", fontWeight: "500", fontSize: 12 }}
               >
                 {reward.title}
               </Text>
               <View className="mt-4 px-3 py-1.5 rounded-sm border border-field-500/40">
                 <Text
                   className="text-field-500"
-                  style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+                  style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
                 >
                   KASİYER DOĞRULADI
                 </Text>
@@ -252,7 +252,7 @@ export default function RewardDetail() {
           />
           <Text
             className="text-steel-400 text-center mt-3"
-            style={{ fontFamily: "Inter_500Medium", fontSize: 11, letterSpacing: 0.4 }}
+            style={{ fontFamily: "System", fontWeight: "500", fontSize: 11, letterSpacing: 0.4 }}
           >
             Onayla → QR ode, kasiyere göster, kullan.
           </Text>

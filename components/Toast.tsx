@@ -43,20 +43,20 @@ export function ToastHost() {
                 <View className="w-1 h-1 rounded-full bg-navy-900" />
                 <Text
                   className="text-navy-900 text-[10px] tracking-widest"
-                  style={{ fontFamily: "Inter_600SemiBold" }}
+                  style={{ fontFamily: "System", fontWeight: "600" }}
                 >
                   BİLDİRİM
                 </Text>
               </View>
               <Text
                 className="text-navy-900"
-                style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}
+                style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}
               >
                 {m.title}
               </Text>
               <Text
                 className="text-steel-500 mt-0.5"
-                style={{ fontFamily: "Inter_500Medium", fontSize: 12, lineHeight: 16 }}
+                style={{ fontFamily: "System", fontWeight: "500", fontSize: 12, lineHeight: 16 }}
               >
                 {m.body}
               </Text>

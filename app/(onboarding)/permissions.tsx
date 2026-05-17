@@ -33,21 +33,21 @@ function PermissionRow({
         className="w-10 h-10 rounded-full items-center justify-center mr-3"
         style={{ backgroundColor: granted ? palette.field500 : palette.ivory200 }}
       >
-        <Text style={{ fontFamily: "Fraunces_700Bold", fontSize: 20, color: granted ? palette.ivory50 : palette.navy900 }}>
+        <Text style={{ fontFamily: "System", fontWeight: "700", fontSize: 20, color: granted ? palette.ivory50 : palette.navy900 }}>
           {granted ? "✓" : "·"}
         </Text>
       </View>
       <View className="flex-1">
-        <Text className="text-navy-900" style={{ fontFamily: "Fraunces_700Bold", fontSize: 15, letterSpacing: -0.3 }}>
+        <Text className="text-navy-900" style={{ fontFamily: "System", fontWeight: "700", fontSize: 15, letterSpacing: -0.3 }}>
           {label}
         </Text>
-        <Text className="text-steel-500" style={{ fontFamily: "Inter_500Medium", fontSize: 12 }}>
+        <Text className="text-steel-500" style={{ fontFamily: "System", fontWeight: "500", fontSize: 12 }}>
           {desc}
         </Text>
       </View>
       <Text
         style={{
-          fontFamily: "Inter_600SemiBold",
+          fontFamily: "System", fontWeight: "600",
           fontSize: 10,
           letterSpacing: 1.4,
           color: granted ? palette.field500 : palette.terra500
@@ -81,20 +81,20 @@ export default function Permissions() {
           <View className="w-1.5 h-1.5 rounded-full bg-terra-500" />
           <Text
             className="text-steel-500"
-            style={{ fontFamily: "Inter_600SemiBold", fontSize: 10, letterSpacing: 1.6 }}
+            style={{ fontFamily: "System", fontWeight: "600", fontSize: 10, letterSpacing: 1.6 }}
           >
             KAYIT · 3 / 3
           </Text>
         </View>
         <Text
           className="text-navy-900"
-          style={{ fontFamily: "Fraunces_700Bold", fontSize: 30, letterSpacing: -1.2, lineHeight: 32 }}
+          style={{ fontFamily: "System", fontWeight: "700", fontSize: 30, letterSpacing: -1.2, lineHeight: 32 }}
         >
           {tr.onboarding.permissionsTitle}
         </Text>
         <Text
           className="text-steel-500 mt-2"
-          style={{ fontFamily: "Inter_500Medium", fontSize: 14, lineHeight: 20 }}
+          style={{ fontFamily: "System", fontWeight: "500", fontSize: 14, lineHeight: 20 }}
         >
           {tr.onboarding.permissionsBody}
         </Text>
@@ -128,7 +128,7 @@ export default function Permissions() {
         <Button label={tr.onboarding.finish} variant="primary" onPress={finish} />
         <Text
           className="text-steel-400 text-center mt-3"
-          style={{ fontFamily: "Inter_500Medium", fontSize: 11 }}
+          style={{ fontFamily: "System", fontWeight: "500", fontSize: 11 }}
         >
           İzinleri sonra her zaman ayarlardan değiştirebilirsin.
         </Text>

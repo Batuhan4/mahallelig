@@ -66,20 +66,23 @@ export const partnerColors: Record<string, string> = {
   transport: palette.navy500
 };
 
-// Typography presets — refer to Tailwind font-* class names
+// Typography presets — Tailwind sınıf yardımcıları.
+// Tüm sans/display sınıfları artık iOS'ta San Francisco Pro'yu (System) işaret eder;
+// ağırlık `font-medium`/`font-semibold`/`font-bold` ile verilir.
+// Mono ailesi Menlo (iOS) / Roboto Mono (Android) sistem mono'suna çözülür.
 export const type = {
-  displayHero: "font-display text-[44px] leading-[44px] tracking-tightest",
-  displayLg: "font-display text-3xl leading-[34px] tracking-tighter",
-  displayMd: "font-display text-2xl leading-[28px] tracking-tighter",
-  displaySm: "font-display text-xl leading-6 tracking-tight",
+  displayHero: "font-display font-bold text-[44px] leading-[44px] tracking-tightest",
+  displayLg: "font-display font-bold text-3xl leading-[34px] tracking-tighter",
+  displayMd: "font-display font-bold text-2xl leading-[28px] tracking-tighter",
+  displaySm: "font-display font-bold text-xl leading-6 tracking-tight",
 
   bodyLg: "font-sans text-base leading-6",
   body: "font-sans text-sm leading-5",
   bodySm: "font-sans text-xs leading-4",
 
-  label: "font-semibold text-xs uppercase tracking-widest",
+  label: "font-sans font-semibold text-xs uppercase tracking-widest",
 
-  monoHero: "font-mono-bold text-[40px] leading-[44px] tracking-tighter",
+  monoHero: "font-mono font-bold text-[40px] leading-[44px] tracking-tighter",
   monoLg: "font-mono text-2xl leading-7",
   mono: "font-mono text-sm leading-5"
 } as const;

@@ -38,7 +38,7 @@ export function Button({
       <Text
         className={`${v.text}`}
         style={{
-          fontFamily: "Inter_600SemiBold",
+          fontFamily: "System", fontWeight: "600",
           fontSize: small ? 13 : 15,
           letterSpacing: 0.2
         }}
