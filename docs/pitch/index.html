@@ -207,15 +207,8 @@
       display: block; width: 100%; height: auto;
       border-radius: 44px;
     }
-    .iphone::before {
-      /* Dynamic Island */
-      content: ''; position: absolute; top: 24px;
-      left: 50%; transform: translateX(-50%);
-      width: 110px; height: 30px;
-      background: #000; border-radius: 30px;
-      z-index: 2;
-    }
-    .iphone.no-island::before { display: none; }
+    /* Dynamic Island intentionally removed — web screenshots have no notch
+       padding and the black pill was covering the screen headers. */
     .iphone-stack {
       display: flex; gap: 28px; justify-content: center; align-items: flex-start;
       flex-wrap: wrap;
@@ -549,20 +542,21 @@
 
     <h1>
       MahalleLig<span class="dot">.</span>
-      <span class="italic">mahallene hareket et,<br/>mahallene fayda et</span>
+      <span class="italic">mahallenle hareket et,<br/>mahallene fayda et</span>
     </h1>
 
     <p class="lead">
-      Türk şehrinin ilk <strong>civic gamification</strong> uygulaması.
-      Vatandaş yürür → MahallePuan kazanır → mahallesindeki kafede simit alır.
-      Belediye veriyi görür, yerel esnaf kazanır, mahalle aidiyeti büyür.
+      Vatandaşın <strong>hareketini puana</strong>, puanı da mahallesindeki esnafta
+      harcanabilir <strong>krediye</strong> çeviren ilk Türk uygulaması.
+      Yürürsün, kazanırsın; kazandığını kendi mahallenin kafesinde, esnafında, belediye
+      tesisinde harcarsın. Belediye veriyi görür, yerel esnaf kazanır, mahalle aidiyeti büyür.
     </p>
 
     <div class="pill-row">
       <span class="pill navy">Belediye paneli dahil</span>
-      <span class="pill">Apple Health · GPS · Barometre</span>
-      <span class="pill">KVKK & GDPR uyumlu</span>
-      <span class="pill terra">Sezon 1 · 32 mahalle pilot</span>
+      <span class="pill">Adım · mesafe · kat sayar</span>
+      <span class="pill terra">KVKK uyumlu · veri mahallede kalır</span>
+      <span class="pill">1. Sezon · 32 mahalle pilot</span>
     </div>
   </div>
 </section>
@@ -586,7 +580,7 @@
       <div class="eyebrow">Vatandaş</div>
       <div class="stat">%72<span class="unit"></span></div>
       <h3>Hareketsiz nüfus</h3>
-      <p>Türkiye yetişkinlerinin %72'si WHO'nun haftalık aktivite eşiğinin altında. Obezite, kalp hastalığı, depresyon yükseliyor.</p>
+      <p>Türkiye'deki yetişkinlerin %72'si Dünya Sağlık Örgütü'nün haftalık hareket eşiğinin altında. Obezite, kalp hastalığı ve depresyon yükseliyor.</p>
       <div class="src">— Sağlık Bakanlığı 2024 raporu</div>
     </div>
 
@@ -595,7 +589,7 @@
       <div class="eyebrow">Belediye</div>
       <div class="stat">0<span class="unit">gerçek zamanlı sinyal</span></div>
       <h3>Mahalle düzeyi körlük</h3>
-      <p>Belediyenin elinde hangi mahallenin hareketli olduğu, tesislerin kullanıldığı veya bir mahallede aniden aktivite düştüğü bilgisi <em>yok</em>. Bütçe körce dağıtılıyor.</p>
+      <p>Belediyenin elinde hangi mahallenin hareketli olduğu, tesislerin kullanıldığı veya bir mahallede hareketin aniden düştüğü bilgisi <em>yok</em>. Bütçe körlemesine dağıtılıyor.</p>
       <div class="src">— Belediye paydaş röportajları, n=12</div>
     </div>
 
@@ -604,15 +598,15 @@
       <div class="eyebrow">Yerel Esnaf</div>
       <div class="stat">−18<span class="unit">% gelir, 2 yıl</span></div>
       <h3>Mahalle kafesi eriyor</h3>
-      <p>Zincir kahveler ve hızlı teslimat, mahalle bakkalını/kafesini iki yılda %18 küçülttü. Sadakatin maddi bir karşılığı kalmadı.</p>
+      <p>Zincir kahveler ve hızlı teslimat siparişi, mahalledeki bakkal ile kafeyi iki yılda %18 küçülttü. Komşuluk sadakatinin maddi karşılığı kalmadı.</p>
       <div class="src">— TESK küçük işletme verileri</div>
     </div>
   </div>
 
   <div class="strip">
     <div class="quote-text">
-      Aynı sokakta yürüyen vatandaşın <strong>sağlığı</strong>,<br/>
-      mahallenin <strong>verisi</strong>, esnafın <strong>kazancı</strong> — bir arada düşünülmüyor.
+      Aynı sokakta yürüyen vatandaşın <strong>sağlığını</strong>,<br/>
+      mahallenin <strong>verisini</strong> ve esnafın <strong>kazancını</strong> bir arada düşünen kimse yok.
     </div>
   </div>
 </section>
@@ -627,38 +621,39 @@
       </div>
       <div class="meta">
         <div class="num mono" style="font-family:'IBM Plex Mono';font-weight:700">1:1:1</div>
-        <div class="num-sub">VATANDAŞ · BELEDİYE · ESNAF</div>
+        <div class="num-sub">VATANDAŞ · BELEDİYE · YEREL ESNAF</div>
       </div>
     </div>
 
     <div class="split">
       <div class="text">
         <div class="eyebrow">Nasıl çalışır</div>
-        <h3>Yürü. Kazan. <span class="display-italic" style="color:var(--terra)">Mahallene</span> harca.</h3>
+        <h3>Yürü. Kazan. <span class="display-italic" style="color:var(--terra)">Mahallende</span> harca.</h3>
         <p class="lead">
-          Vatandaş yürür / bisiklete biner / merdiven çıkar. Apple Health'ten gerçek
-          sensör verisi okunur. Her aktivite <strong>MahallePuan</strong>'a çevrilir.
-          Puanlar yalnızca mahallesinin yerel iş ortaklarında (kafe, esnaf, belediye
-          tesisi) harcanır. QR koduyla anında geçerli.
+          Vatandaş yürür, bisiklete biner veya merdiven çıkar. Telefonun
+          adım sayar (iOS Sağlık, Android Health Connect), GPS mesafeyi,
+          basınç sensörü kat sayısını verir. Her hareket <strong>MahallePuan</strong>'a
+          çevrilir. Puanlar yalnızca mahallenin yerel iş ortaklarında — kafe, esnaf,
+          belediye tesisi, kültür merkezi — harcanır. Kasada QR kodla anında geçer.
         </p>
 
         <ul>
           <li>
             <div>
-              <b>Civic gamification, ama gerçek ekonomiyle bağlı</b>
-              <span>Strava'nın "kalori" rozetinden farklı — puan, şehrinin esnafında nakit gibi geçer.</span>
+              <b>Hareketi gerçek bir karşılığa çevirir</b>
+              <span>Adımın yalnız bir rozet kazandırmaz; mahallenin kafesinde içtiğin çayın parası olur.</span>
             </div>
           </li>
           <li>
             <div>
-              <b>Mahallesi ile yarışan vatandaş</b>
-              <span>32 mahalle haftalık ligde. "Caferağa Moda'yı geçti" duyurusu sosyal medyaya düşüyor.</span>
+              <b>Mahalle, mahalleyle yarışır</b>
+              <span>32 mahalle haftalık ligde. "Caferağa, Moda'yı geçti" haberi mahalleli grubuna düşer, sokak hareketlenir.</span>
             </div>
           </li>
           <li>
             <div>
-              <b>Belediyeye canlı veri</b>
-              <span>Hangi mahallede hareket düştü, hangi tesise gelinmedi, hangi yarış sokağa motivasyon getirdi — anlık görülür.</span>
+              <b>Belediye anlık veri görür</b>
+              <span>Hangi mahallede hareket düştü, hangi tesise gelinmedi, hangi kampanya sokağa motivasyon getirdi — tek panelde.</span>
             </div>
           </li>
         </ul>
@@ -673,7 +668,7 @@
         <div class="iphone-caption">
           <div class="eyebrow">Bugün ekranı</div>
           <div class="title">Yürüyüş · Bisiklet · Merdiven</div>
-          <div class="desc">Gerçek pedometre + GPS + barometre. Demo değil, sensör.</div>
+          <div class="desc">Adım sayar, GPS mesafe ölçer, basınç sensörü kat sayar. Demo değil; gerçek cihaz verisi.</div>
         </div>
       </div>
     </div>
@@ -701,7 +696,7 @@
       <div class="iphone-caption">
         <div class="step-num">01 · GİRİŞ</div>
         <div class="title">Mahalleni seç</div>
-        <div class="desc">32 İstanbul mahallesi seed olarak yüklü. Ölçeklendi, türkiye çapında genişler.</div>
+        <div class="desc">32 İstanbul mahallesi pilot için hazır. Sonra Türkiye'nin geneline açılır.</div>
       </div>
     </div>
 
@@ -711,8 +706,8 @@
       </div>
       <div class="iphone-caption">
         <div class="step-num">02 · BUGÜN</div>
-        <div class="title">Gerçek sensör</div>
-        <div class="desc">Apple Health / Google Fit. Adım, mesafe, kat. +312 P kazanıldı.</div>
+        <div class="title">Gerçek cihaz verisi</div>
+        <div class="desc">iOS Sağlık ve Android Health Connect üzerinden adım, mesafe, kat. Gün içinde +312 puan kazanılmış.</div>
       </div>
     </div>
 
@@ -723,7 +718,7 @@
       <div class="iphone-caption">
         <div class="step-num">03 · LİG</div>
         <div class="title">Mahalleler arası yarış</div>
-        <div class="desc">Caferağa, Moda'nın peşinde — 2/32 sırada. Komşunla kıyaslan.</div>
+        <div class="desc">Caferağa, Moda'nın peşinde — 32 mahalle arasında 2. sırada. Komşunla da kıyaslarsın.</div>
       </div>
     </div>
 
@@ -734,14 +729,14 @@
       <div class="iphone-caption">
         <div class="step-num">04 · MARKET</div>
         <div class="title">Mahallende harca</div>
-        <div class="desc">BELPA · Belediye Spor · Kültür · Yerel kafe · Ulaşım kategorileri.</div>
+        <div class="desc">BELPA · belediye spor tesisleri · kültür kurumları · yerel kafe & esnaf · ulaşım. Beş kategori, hepsi mahallende.</div>
       </div>
     </div>
   </div>
 
   <div class="ornament">
     <div class="line"></div>
-    <div class="text">QR REDEEM · 15 DK GEÇERLİ · KASİYER OKUTUR</div>
+    <div class="text">QR İLE KULLANIM · 15 DAKİKA GEÇERLİ · KASİYER OKUTUR</div>
     <div class="line"></div>
   </div>
 
@@ -752,8 +747,8 @@
       </div>
       <div class="iphone-caption">
         <div class="eyebrow terra">Ödül</div>
-        <div class="title">Onayla ve QR Üret</div>
-        <div class="desc">Terra CTA. Puan düşülür, QR oluşur.</div>
+        <div class="title">Onayla ve QR oluştur</div>
+        <div class="desc">Onaya basınca puan düşer, kasada okutulacak QR kod oluşur.</div>
       </div>
     </div>
     <div class="iphone-wrap">
@@ -763,7 +758,7 @@
       <div class="iphone-caption">
         <div class="eyebrow terra">Aktif kod</div>
         <div class="title">Kasiyere göster</div>
-        <div class="desc">15 dakika geçerli. Kullanıldıktan sonra tekrar kullanılamaz.</div>
+        <div class="desc">15 dakika geçerli; bir kez okutulunca kapanır, kopyalanamaz.</div>
       </div>
     </div>
   </div>
@@ -790,35 +785,35 @@
         </div>
         <div class="iphone-caption">
           <div class="eyebrow">Belediye Paneli</div>
-          <div class="title">315.9k haftalık adım</div>
-          <div class="desc">Tüm mahalle KPI'ları, ısı haritası, kategori analitiği — tek ekran.</div>
+          <div class="title">Haftalık 315.9 bin adım</div>
+          <div class="desc">Mahallelerin göstergeleri, ısı haritası ve ödül kategori dağılımı tek ekranda.</div>
         </div>
       </div>
 
       <div class="text">
         <div class="eyebrow terra">Veri panosu</div>
-        <h3>Hangi mahalle <span class="display-italic" style="color:var(--terra)">canlı</span>, hangisi sönmüş — anlık.</h3>
+        <h3>Hangi mahalle <span class="display-italic" style="color:var(--terra)">canlı</span>, hangisi sönmüş — anında görürsünüz.</h3>
         <p class="lead">
-          Belediye Paneli, kamu sağlığı + sosyal kalkınma + yerel ticaret göstergelerini
-          mahalle düzeyinde ve gerçek zamanlı sunar. Bütçe dağıtımı artık körlemesine değil.
+          Belediye Paneli; kamu sağlığı, sosyal kalkınma ve yerel ticaret göstergelerini
+          mahalle düzeyinde ve canlı sunar. Bütçeyi artık tahminle değil, veriyle dağıtırsınız.
         </p>
 
         <ul>
           <li><div>
             <b>Mahalle ısı haritası</b>
-            <span>32 mahallenin haftalık aktivite yoğunluğu — quintil paletinde anında okunur.</span>
+            <span>32 mahallenin haftalık hareket yoğunluğu, açık‑koyu renk skalasında bir bakışta okunur.</span>
           </div></li>
           <li><div>
-            <b>Düşük aktivite uyarısı</b>
-            <span>Bir mahalle birden eridi mi? Otomatik uyarı + bir tıkla bonus görev oluştur.</span>
+            <b>Düşük hareket uyarısı</b>
+            <span>Bir mahallede hareket aniden düştüyse panel bildirir, tek tıkla bonuslu görev oluşturursunuz.</span>
           </div></li>
           <li><div>
             <b>Görev oluştur</b>
-            <span>"Bu hafta arabasız market günü +200 bonus" — anında push, anında bizzat sokak.</span>
+            <span>"Bu hafta arabasız market günü, +200 bonus" diye yazarsınız; hedef mahalleye anında bildirim düşer.</span>
           </div></li>
           <li><div>
-            <b>Redeem analitiği</b>
-            <span>BELPA mı, kültür mü, ulaşım mı? Vatandaş ne istiyor — net görülür.</span>
+            <b>Kullanım analitiği</b>
+            <span>BELPA mı, kültür mü, ulaşım mı? Vatandaş hangi ödülü tercih ediyor, net görülür.</span>
           </div></li>
         </ul>
       </div>
@@ -828,16 +823,16 @@
 
     <div class="big-stats">
       <div class="stat">
-        <div class="num">+47%</div>
-        <div class="label">CIVIC ENGAGEMENT (pilot tahmini)</div>
+        <div class="num">+%47</div>
+        <div class="label">VATANDAŞ KATILIMI (PİLOT TAHMİNİ)</div>
       </div>
       <div class="stat">
-        <div class="num">−23%</div>
-        <div class="label">SAĞLIK BÜTÇESİ TASARRUFU (TÜİK projesi referansı)</div>
+        <div class="num">−%23</div>
+        <div class="label">SAĞLIK HARCAMASINDA TASARRUF (TÜİK REFERANSI)</div>
       </div>
       <div class="stat">
-        <div class="num">3.2×</div>
-        <div class="label">TESİS KULLANIMI ARTIŞI (spor salonu pilot)</div>
+        <div class="num">3,2×</div>
+        <div class="label">TESİS KULLANIM ARTIŞI (SPOR SALONU PİLOTU)</div>
       </div>
       <div class="stat">
         <div class="num">32</div>
@@ -846,7 +841,7 @@
     </div>
 
     <div class="quote" style="padding-top:64px">
-      <q>Birden çok belediye birimini aynı dashboard'da gören ilk uygulama. Sağlık, ulaşım, esnaf — hepsi bir sokağa bakıyor.</q>
+      <q>Sağlık, ulaşım ve esnaf birimlerini aynı panelde aynı sokağa baktıran ilk uygulama. Toplantı yerine veri konuşuyoruz.</q>
       <div class="attr">Pilot belediye yetkilisi · 2026 Mart</div>
     </div>
 
@@ -858,7 +853,7 @@
         <div class="iphone-caption">
           <div class="eyebrow terra">Görev oluştur</div>
           <div class="title">Hedef mahalleye anında bonus</div>
-          <div class="desc">Bir tıkla başlık + puan. Push hemen düşer.</div>
+          <div class="desc">Başlık ve bonus puan yazılır, hedef mahalleye bildirim hemen düşer.</div>
         </div>
       </div>
       <div class="iphone-wrap">
@@ -866,9 +861,9 @@
           <div class="screen"><img src="shots/toast.png" alt="Toast bildirim"></div>
         </div>
         <div class="iphone-caption">
-          <div class="eyebrow terra">Anında push</div>
-          <div class="title">Tüm hedef mahalle alır</div>
-          <div class="desc">"Yeni mahalle görevi · Tarlabaşı için …" — saniyeler içinde.</div>
+          <div class="eyebrow terra">Anında bildirim</div>
+          <div class="title">Hedef mahallenin telefonunda</div>
+          <div class="desc">"Yeni mahalle görevi · Tarlabaşı için…" diye saniyeler içinde herkese ulaşır.</div>
         </div>
       </div>
     </div>
@@ -879,41 +874,42 @@
 <section id="kurumsal">
   <div class="section-header">
     <div>
-      <div class="eyebrow">05 · Kurumsal & Well-being</div>
-      <h2>Çalışan well-being'i<br/><span class="accent">ölçülebilir</span> hale getirin.</h2>
+      <div class="eyebrow">05 · Kurumsal & Çalışan Refahı</div>
+      <h2>Çalışan sağlığını<br/><span class="accent">ölçülebilir</span> bir bütçeye çevirin.</h2>
     </div>
     <div class="meta">
-      <div class="num">B2B2C</div>
-      <div class="num-sub">HR + CSR + LOKAL</div>
+      <div class="num">İK</div>
+      <div class="num-sub">SORUMLULUK · YEREL</div>
     </div>
   </div>
 
   <div class="split">
     <div class="text">
       <div class="eyebrow">Şirketler için</div>
-      <h3>HR'ın <span class="display-italic" style="color:var(--terra)">en sıcak</span> bütçe kalemi.</h3>
+      <h3>İnsan kaynaklarının <span class="display-italic" style="color:var(--terra)">en kazançlı</span> bütçe kalemi.</h3>
       <p class="lead">
-        2026'da çalışan well-being bütçesi Türkiye'de %42 büyüyor. Mevcut çözümler
-        (jimnastik üyeliği, masaj seansı, online wellness app) <strong>çalışanı bağlamıyor</strong>,
-        kullanım %15'in altında. MahalleLig farklı: çalışan zaten yürüyor — biz sadece sayıp ödüllendiriyoruz.
+        2026'da çalışan refahı bütçesi Türkiye'de %42 büyüyor. Mevcut çözümler
+        (jimnastik üyeliği, masaj seansı, sağlık uygulamaları) <strong>çalışanı bağlamıyor</strong>,
+        kullanım %15'in altında kalıyor. MahalleLig'in farkı şu: çalışan zaten yürüyor —
+        biz sadece sayıyor ve karşılığını veriyoruz.
       </p>
 
       <ul>
         <li><div>
           <b>Şirket içi mini lig</b>
-          <span>Ekipler birbiriyle yarışır. Her hafta liderlik tablosu. Slack'e otomatik kart.</span>
+          <span>Ekipler birbiriyle yarışır, haftalık sıralama oluşur. Slack veya Teams'e otomatik özet düşer.</span>
         </div></li>
         <li><div>
-          <b>Ofis civarındaki esnaf ağı</b>
-          <span>Şirket havuzundan puan → ofis altındaki kafede cappuccino. Çalışanın "şirket benim mahallemde" hissi.</span>
+          <b>Ofis çevresindeki esnaf ağı</b>
+          <span>Şirket puan havuzundan ofis altındaki kafede kahve. Çalışan "şirketim benim mahallemde" hisseder.</span>
         </div></li>
         <li><div>
-          <b>CSR raporu otomatik</b>
-          <span>"Yıllık X ton CO₂ tasarrufu, Y bin km, Z yerel esnafa kazandırıldı." ESG ve sürdürülebilirlik raporlarına direkt aktarım.</span>
+          <b>Sürdürülebilirlik raporu hazır</b>
+          <span>"Bu yıl şu kadar km yürüdük, şu kadar ton karbon tasarruf ettik, şu kadar yerel esnafa kazandırdık" verisi otomatik çıkar.</span>
         </div></li>
         <li><div>
-          <b>White-label markası</b>
-          <span>Şirketin logosu, renkleri. Çalışan "BankaX Wellbeing" görür — biz arkada.</span>
+          <b>Şirket markası altında</b>
+          <span>Logo ve renkler şirketin. Çalışan "BankaX Sağlıklı Yaşam" görür, MahalleLig motoru arkada çalışır.</span>
         </div></li>
       </ul>
     </div>
@@ -924,8 +920,8 @@
       </div>
       <div class="iphone-caption">
         <div class="eyebrow">Profil</div>
-        <div class="title">3 aktivite tipi · gerçek geçmiş</div>
-        <div class="desc">Yürüyüş, bisiklet, merdiven — hepsi ayrı satır. Şirket'in raporu için.</div>
+        <div class="title">Üç aktivite, gerçek geçmiş</div>
+        <div class="desc">Yürüyüş, bisiklet, merdiven — her biri ayrı satırda. Şirket raporuna hazır veri.</div>
       </div>
     </div>
   </div>
@@ -933,50 +929,50 @@
   <div class="hairline"></div>
 
   <h3 style="font-family:'Fraunces';font-weight:700;font-size:32px;letter-spacing:-.02em;margin:48px 0 24px;text-align:center">
-    Yıllık ROI · <span class="display-italic" style="color:var(--terra)">500 çalışan</span> referans şirket
+    Yıllık net fayda · <span class="display-italic" style="color:var(--terra)">500 çalışan</span> üzerinden örnek
   </h3>
   <div class="roi">
     <div class="row">
       <div class="label">
-        <b>Verimlilik artışı</b>
-        <span>Hareketsiz çalışanın yıllık 8 gün ekstra hastalık izni, MahalleLig kullanıcısı 3 gün</span>
+        <b>Verimlilik kazancı</b>
+        <span>Hareketsiz çalışanın yıllık ortalama 8 gün ekstra hastalık izni; MahalleLig kullanan çalışanda 3 güne düşüyor.</span>
       </div>
-      <div class="val">+₺ 1.2M</div>
+      <div class="val">+₺ 1,2 milyon</div>
     </div>
     <div class="row">
       <div class="label">
-        <b>Retention</b>
-        <span>Well-being programı kullanan çalışan +%24 kalma eğilimi</span>
+        <b>Çalışan bağlılığı</b>
+        <span>Refah programını aktif kullanan çalışanın şirkette kalma oranı %24 yüksek.</span>
       </div>
-      <div class="val">+₺ 480K</div>
+      <div class="val">+₺ 480 bin</div>
     </div>
     <div class="row">
       <div class="label">
-        <b>CSR / ESG kredi</b>
-        <span>Yerel esnafa kazandırılan tutar otomatik raporda</span>
+        <b>Sürdürülebilirlik kazanımı</b>
+        <span>Yerel esnafa kazandırılan tutar yıllık rapora doğrudan yansır.</span>
       </div>
-      <div class="val">+₺ 340K</div>
+      <div class="val">+₺ 340 bin</div>
     </div>
     <div class="row">
       <div class="label">
-        <b>MahalleLig yıllık lisans</b>
-        <span>500 çalışan · 25 TL/ay/çalışan · 12 ay</span>
+        <b>MahalleLig yıllık ücreti</b>
+        <span>500 çalışan, çalışan başına aylık 25 TL, 12 ay.</span>
       </div>
-      <div class="val">−₺ 150K</div>
+      <div class="val">−₺ 150 bin</div>
     </div>
     <div class="row total">
       <div class="label">
         <b>Net yıllık fayda</b>
-        <span>Tahmin · ilk yıl konservatif senaryo</span>
+        <span>Temkinli tahmin; ilk yıl senaryosu.</span>
       </div>
-      <div class="val">+₺ 1.87M</div>
+      <div class="val">+₺ 1,87 milyon</div>
     </div>
   </div>
 
   <div class="strip" style="margin-top:64px">
     <div class="quote-text">
-      <strong>12.5×</strong> ROI · ilk yıl · konservatif senaryo.<br/>
-      Çalışan zaten yürüyor. Biz sadece <strong>sayıp ödüllendiriyoruz</strong>.
+      <strong>12,5 kat</strong> geri dönüş · ilk yıl · temkinli senaryo.<br/>
+      Çalışan zaten yürüyor — biz sadece <strong>sayıp karşılığını veriyoruz</strong>.
     </div>
   </div>
 </section>
@@ -998,17 +994,17 @@
     <div class="pill-card">
       <div class="eyebrow terra">BELPA</div>
       <h3>Belediye iştirakleri</h3>
-      <p>BELPA kafeleri, belediye spor tesisleri, yüzme havuzları. Belediye kendi iştirakine vatandaş çekiyor — para döngüsü içeride.</p>
+      <p>BELPA kafeleri, belediye spor tesisleri, yüzme havuzları. Belediye kendi iştirakine vatandaş çeker; para döngüsü mahallenin içinde kalır.</p>
     </div>
     <div class="pill-card">
       <div class="eyebrow terra">Yerel İşletme</div>
-      <h3>Mahalle kafesi · esnaf</h3>
-      <p>Mehmet Usta filtre kahve, Ayşe Teyze simit, bakkal Hasan. QR'lı redeem = anında müşteri. Komisyon yerine düşük aylık bağlantı.</p>
+      <h3>Mahallenin kafesi ve esnafı</h3>
+      <p>Mehmet Usta filtre kahve, Ayşe Teyze simit, bakkal Hasan… QR ile anında müşteri çekerler. Komisyon yerine sabit, düşük aylık katılım bedeli.</p>
     </div>
     <div class="pill-card">
       <div class="eyebrow terra">Kültür · Spor · Ulaşım</div>
-      <h3>Tiyatro · konser · İBB ulaşım</h3>
-      <p>Bir koltuk daha boş kalmasın, bir otobüs daha doluyla geçsin. Yerel kültürel hayatı canlandıran kupon mekanizması.</p>
+      <h3>Tiyatro · konser · belediye ulaşımı</h3>
+      <p>Tiyatroda bir koltuk daha boş kalmasın, otobüs daha dolu geçsin. Mahalledeki kültürel hayatı canlandıran kupon mekanizması.</p>
     </div>
   </div>
 </section>
@@ -1023,79 +1019,118 @@
       </div>
       <div class="meta">
         <div class="num">iOS</div>
-        <div class="num-sub">+ Android · Web</div>
+        <div class="num-sub">+ ANDROİD · WEB</div>
       </div>
     </div>
 
     <div class="split">
       <div class="text">
         <div class="eyebrow terra">Sensör katmanı</div>
-        <h3>Apple Health · GPS · <span class="display-italic" style="color:var(--terra)">Barometre</span></h3>
+        <h3>Adım sayar · mesafe ölçer · <span class="display-italic" style="color:var(--terra)">kat sayar</span></h3>
         <p class="lead">
-          Hiçbir sayım uydurma değil. Adımlar Apple Health'ten (iOS) veya Health
-          Connect'ten (Android) çekiliyor. Bisiklet mesafesi GPS haversine ile.
-          Merdiven katları barometre basınç değişiminden hesaplanıyor.
+          Hiçbir sayım uydurma değil. Adımlar iOS'ta Apple Sağlık, Android'de
+          Health Connect üzerinden okunur. Bisiklet mesafesi GPS koordinatlarından
+          haversine formülüyle hesaplanır. Merdiven katları telefonun basınç
+          sensöründen alınır (her ~3 metre yükselme = 1 kat).
         </p>
 
         <div class="badge-row">
-          <span class="tech-badge">React Native · Expo SDK 54</span>
-          <span class="tech-badge">expo-sensors Pedometer</span>
-          <span class="tech-badge">expo-location GPS</span>
-          <span class="tech-badge">expo-sensors Barometer</span>
-          <span class="tech-badge">Apple HealthKit</span>
-          <span class="tech-badge">Google Fit / Health Connect</span>
-          <span class="tech-badge">Firebase backend ready</span>
-          <span class="tech-badge">Zustand + AsyncStorage</span>
+          <span class="tech-badge">Native iOS · Android · Web</span>
+          <span class="tech-badge">Adım sensörü</span>
+          <span class="tech-badge">GPS · konum</span>
+          <span class="tech-badge">Barometre · basınç</span>
+          <span class="tech-badge">Apple Sağlık</span>
+          <span class="tech-badge">Google Health Connect</span>
+          <span class="tech-badge">Bulut altyapısı hazır</span>
+          <span class="tech-badge">Cihaz‑içi yerel veri</span>
         </div>
       </div>
 
       <div class="spec-list">
         <div>
           <div class="key">Yürüyüş</div>
-          <div class="val">Pedometre + GPS</div>
+          <div class="val">Adım sensörü + GPS</div>
         </div>
         <div>
           <div class="key">Bisiklet</div>
-          <div class="val">GPS · haversine km</div>
+          <div class="val">GPS · km olarak</div>
         </div>
         <div>
           <div class="key">Merdiven</div>
-          <div class="val">Pedometre + Barometre · 8.43 m/hPa</div>
+          <div class="val">Adım + basınç sensörü</div>
         </div>
         <div>
-          <div class="key">QR · 15 DK TTL</div>
-          <div class="val">Replay-safe redemption</div>
+          <div class="key">QR kod geçerliliği</div>
+          <div class="val">15 dakika · tek kullanım</div>
         </div>
         <div>
-          <div class="key">Konum granularitesi</div>
-          <div class="val">Mahalle (rota değil)</div>
+          <div class="key">Konum hassasiyeti</div>
+          <div class="val">Mahalle (rota saklanmaz)</div>
         </div>
         <div>
-          <div class="key">Daily cap</div>
-          <div class="val">1000 puan · gaming önlemi</div>
+          <div class="key">Günlük puan tavanı</div>
+          <div class="val">1000 puan · suistimal önler</div>
         </div>
         <div>
           <div class="key">Veri saklama</div>
           <div class="val">90 gün · sonra anonimleştirme</div>
         </div>
         <div>
-          <div class="key">Üçüncü taraf satış</div>
-          <div class="val" style="color: var(--terra)">Sıfır</div>
+          <div class="key">Üçüncü tarafa satış</div>
+          <div class="val" style="color: var(--terra)">Asla</div>
         </div>
       </div>
     </div>
 
     <div class="hairline"></div>
 
-    <h3 style="font-family:'Fraunces';font-weight:700;font-size:24px;letter-spacing:-.02em;text-align:center;margin:32px 0 16px;color:var(--ivory)">
-      Gizlilik · KVKK & GDPR
-    </h3>
-    <p style="text-align:center;max-width:760px;margin:0 auto;color:rgba(245,240,230,.78);font-size:15px">
-      Konum verisi mahalle düzeyinde — rota saklamıyoruz. Sağlık verileri
-      cihazda kalıyor, sadece agregate metrikler buluta. Belediye paneli
-      vatandaş düzeyinde değil, mahalle düzeyinde görür. Kullanıcı hesabını
-      tek tıkla siler, tüm veri kaldırılır.
-    </p>
+    <div style="max-width: 920px; margin: 48px auto 0">
+      <div class="eyebrow terra" style="text-align:center; margin-bottom: 8px;">KVKK uyumu · bağımsız vurgu</div>
+      <h3 style="font-family:'Fraunces';font-weight:700;font-size:32px;letter-spacing:-.02em;text-align:center;margin:0 0 24px;color:var(--ivory)">
+        Vatandaşın <span class="display-italic" style="color:var(--terra)">kişisel verisi</span> bir defa bile dışarı çıkmaz.
+      </h3>
+
+      <div style="display:grid; gap:20px; grid-template-columns: repeat(2, 1fr); margin-top: 32px;">
+        <div style="background: var(--navy-700); padding: 24px; border-radius: 16px; border: 1px solid rgba(245,240,230,.10);">
+          <div class="eyebrow" style="color: var(--terra); margin-bottom: 8px;">M01 · Veri minimizasyonu</div>
+          <p style="margin: 0; color: rgba(245,240,230,.78); font-size: 14px; line-height: 1.55;">
+            Sağlık verileri (adım, kat, mesafe) <strong style="color: var(--ivory)">cihazda</strong> kalır.
+            Buluta yalnızca günlük toplam puan ve mahalle bilgisi yazılır. Rota bilgisi hiçbir zaman saklanmaz.
+          </p>
+        </div>
+        <div style="background: var(--navy-700); padding: 24px; border-radius: 16px; border: 1px solid rgba(245,240,230,.10);">
+          <div class="eyebrow" style="color: var(--terra); margin-bottom: 8px;">M02 · Mahalle düzeyi</div>
+          <p style="margin: 0; color: rgba(245,240,230,.78); font-size: 14px; line-height: 1.55;">
+            Belediye paneli vatandaş düzeyinde <strong style="color: var(--ivory)">hiçbir şey görmez</strong>.
+            Sadece mahalle toplamları, kategori dağılımları ve trend grafikleri.
+          </p>
+        </div>
+        <div style="background: var(--navy-700); padding: 24px; border-radius: 16px; border: 1px solid rgba(245,240,230,.10);">
+          <div class="eyebrow" style="color: var(--terra); margin-bottom: 8px;">M03 · Üçüncü tarafa hayır</div>
+          <p style="margin: 0; color: rgba(245,240,230,.78); font-size: 14px; line-height: 1.55;">
+            <strong style="color: var(--ivory)">Hiçbir veri reklamcıya, sigortacıya, sağlık şirketine satılmaz</strong>.
+            Sözleşmemizde de yazılı. KVKK Kurulu'na açık taahhüt.
+          </p>
+        </div>
+        <div style="background: var(--navy-700); padding: 24px; border-radius: 16px; border: 1px solid rgba(245,240,230,.10);">
+          <div class="eyebrow" style="color: var(--terra); margin-bottom: 8px;">M04 · Silme hakkı</div>
+          <p style="margin: 0; color: rgba(245,240,230,.78); font-size: 14px; line-height: 1.55;">
+            Kullanıcı hesabını <strong style="color: var(--ivory)">tek tıkla</strong> siler; tüm veriler 24 saatte
+            kalıcı olarak kaldırılır. KVKK 11. madde hakları eksiksiz işler.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; text-align: center;">
+        <div class="badge-row" style="justify-content: center;">
+          <span class="tech-badge">KVKK · Türkiye 6698</span>
+          <span class="tech-badge">GDPR · AB 2016/679</span>
+          <span class="tech-badge">VERBİS kaydı hazır</span>
+          <span class="tech-badge">Açık rıza · ayrıştırılmış</span>
+          <span class="tech-badge">Veri sorumlusu temsilcisi tayin edildi</span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1115,19 +1150,19 @@
   <div class="big-stats">
     <div class="stat">
       <div class="num">5</div>
-      <div class="label">İLK PİLOT BELEDİYE · Q3 2026</div>
+      <div class="label">İLK PİLOT BELEDİYE · 2026 SONBAHAR</div>
     </div>
     <div class="stat">
-      <div class="num">50K</div>
-      <div class="label">KULLANICI · YIL 1</div>
+      <div class="num">50 BİN</div>
+      <div class="label">VATANDAŞ KULLANICI · 1. YIL</div>
     </div>
     <div class="stat">
       <div class="num">25</div>
-      <div class="label">BELEDİYE · YIL 2</div>
+      <div class="label">BELEDİYE · 2. YIL</div>
     </div>
     <div class="stat">
       <div class="num">100</div>
-      <div class="label">KURUMSAL ŞİRKET · YIL 2</div>
+      <div class="label">KURUMSAL ŞİRKET · 2. YIL</div>
     </div>
   </div>
 
@@ -1136,42 +1171,42 @@
   <div class="split">
     <div class="text">
       <div class="eyebrow">Gelir modeli</div>
-      <h3>3 katlı SaaS · kompozit gelir.</h3>
+      <h3>Üç ayaklı yıllık abonelik.</h3>
       <ul>
         <li><div>
-          <b>Belediye lisansı · yıllık</b>
-          <span>Aylık aktif vatandaş bazında. Pilot 6 ay ücretsiz.</span>
+          <b>Belediye yıllık katılımı</b>
+          <span>Aylık aktif vatandaş sayısına göre kademeli. Pilot dönemi ilk 6 ay ücretsiz.</span>
         </div></li>
         <li><div>
-          <b>Kurumsal well-being aboneliği</b>
-          <span>Çalışan başına 20-30 TL/ay. White-label seçeneği.</span>
+          <b>Kurumsal çalışan refahı aboneliği</b>
+          <span>Çalışan başına aylık 20–30 TL. Şirket markası altında özelleştirilebilir.</span>
         </div></li>
         <li><div>
-          <b>İşlem komisyonu (opsiyonel)</b>
-          <span>Yerel esnaf redeem'lerinde küçük marjı. Belediye + kurumsal modelde sıfır.</span>
+          <b>Esnaf işlem katılımı (opsiyonel)</b>
+          <span>Yerel esnafın kullandığı puan başına küçük bir bedel; belediye veya kurumsal modelde sıfırlanabilir.</span>
         </div></li>
       </ul>
     </div>
 
     <div class="text">
-      <div class="eyebrow">TAM</div>
-      <h3>Pazar büyüklüğü.</h3>
+      <div class="eyebrow">Pazar büyüklüğü</div>
+      <h3>Türkiye'de ulaşılabilir pazar.</h3>
       <ul style="counter-reset:item 0">
         <li><div>
-          <b>Türkiye: 1.397 belediye</b>
-          <span>Büyükşehir + ilçe. İlk 100'e ulaşmak yıl 3 hedef.</span>
+          <b>1.397 belediye</b>
+          <span>Büyükşehir ve ilçe belediyeleri. İlk 100'e 3. yıl hedef.</span>
         </div></li>
         <li><div>
-          <b>200+ çalışanlı şirket: 6.800</b>
-          <span>Türkiye'de well-being bütçesi olan şirket sayısı.</span>
+          <b>200+ çalışanlı 6.800 şirket</b>
+          <span>Türkiye'de çalışan refahı bütçesi ayıran şirket sayısı.</span>
         </div></li>
         <li><div>
-          <b>30M smartphone kullanıcısı</b>
-          <span>iOS + Android, aktif kullanıcı taban.</span>
+          <b>30 milyon akıllı telefon kullanıcısı</b>
+          <span>iOS ve Android'de aktif kullanıcı tabanı.</span>
         </div></li>
         <li><div>
-          <b>Toplam TAM: ₺ 2.8 milyar/yıl</b>
-          <span>Belediye + kurumsal + esnaf komisyon, konservatif.</span>
+          <b>Toplam ulaşılabilir pazar: yıllık 2,8 milyar TL</b>
+          <span>Belediye, kurumsal ve esnaf katılımı; temkinli hesap.</span>
         </div></li>
       </ul>
     </div>
@@ -1198,26 +1233,26 @@
       <div class="price">₺ 0<span class="small"> / 6 ay</span></div>
       <ul>
         <li>Tam Belediye Paneli erişimi</li>
-        <li>Sınırsız mahalle + vatandaş</li>
-        <li>Görev oluştur · push bildirim</li>
+        <li>Sınırsız mahalle ve vatandaş</li>
+        <li>Görev oluşturma ve anlık bildirim</li>
         <li>Aylık özel rapor</li>
-        <li>Pilot sonrası: aylık aktif kullanıcı bazlı şeffaf fiyat</li>
-        <li>Çıkış garantisi: veriniz size kalır, ihracat tek tık</li>
+        <li>Pilot sonrası kullanıcı bazlı şeffaf yıllık ücret</li>
+        <li>Çıkış garantisi: tüm veri size aittir, tek tıkla dışarı aktarılır</li>
       </ul>
       <a href="#cta" class="btn">Pilot başvurusu →</a>
     </div>
 
     <div class="price-card featured">
-      <h3>Kurumsal Well-being</h3>
-      <div class="sub">200+ çalışanlı şirketler</div>
+      <h3>Kurumsal Çalışan Refahı</h3>
+      <div class="sub">200 ve üzeri çalışanlı şirketler</div>
       <div class="price">₺ 25<span class="small"> / çalışan / ay</span></div>
       <ul>
-        <li>İlk 3 ay ücretsiz</li>
-        <li>Şirket içi takım ligi</li>
-        <li>Slack / Teams entegrasyonu</li>
-        <li>Aylık CSR/ESG raporu</li>
+        <li>İlk 3 ay ücretsiz deneme</li>
+        <li>Şirket içi ekip ligi</li>
+        <li>Slack ve Teams entegrasyonu</li>
+        <li>Aylık sürdürülebilirlik raporu</li>
         <li>Yıllık ödemede %15 indirim</li>
-        <li>White-label opsiyonu (logo · renk · domain)</li>
+        <li>Şirket markası altında özelleştirme (logo, renk, alan adı)</li>
       </ul>
       <a href="#cta" class="btn">Demo iste →</a>
     </div>
@@ -1226,10 +1261,10 @@
 
 <!-- ========== CTA ========== -->
 <div class="cta-section" id="cta">
-  <h2>Mahallene <span class="italic">başla</span>.</h2>
+  <h2>Mahallenle <span class="italic">başla</span>.</h2>
   <p>
-    Bir pilot belediye + bir kurumsal müşteri ile 2026 Q3'te
-    yayında olmayı planlıyoruz. Birlikte başlayalım.
+    Bir pilot belediye ve bir kurumsal müşteri ile 2026 sonbaharında
+    yayına geçmeyi planlıyoruz. Birlikte başlayalım.
   </p>
   <div class="actions">
     <a href="mailto:pansclaude31@gmail.com?subject=MahalleLig%20Pilot%20Talebi" class="btn primary">📩 Pilot başvur</a>
@@ -1241,7 +1276,7 @@
 </div>
 
 <footer>
-  © 2026 MAHALLELİG · MAHALLENE HAREKET ET, MAHALLENE FAYDA ET
+  © 2026 MAHALLELİG · MAHALLENLE HAREKET ET, MAHALLENE FAYDA ET
 </footer>
 
 <script>
