@@ -6,9 +6,12 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "scheme": "mahallelig",
-    "newArchEnabled": false,
     "splash": {
       "backgroundColor": "#0F172A"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
     },
     "ios": {
       "supportsTablet": true,
