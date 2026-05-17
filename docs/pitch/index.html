@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MahalleLig — Belediye & Kurumsal Sunum</title>
+  <!-- Print render için: Inter & IBM Plex Mono SF Pro / SF Mono'nun yakın eşleri. -->
+  <!-- Yalnızca print medya'da yüklenir, canlı sitede etkisiz. -->
+  <link rel="stylesheet" media="print"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
   <style>
     :root {
       /* Sistem font yığınları — iOS/Mac'te San Francisco Pro, Windows'ta Segoe UI, vs. */
@@ -511,6 +515,82 @@
       letter-spacing: -.01em;
     }
     @media (max-width: 700px) { .spec-list { grid-template-columns: 1fr; } }
+
+    /* ===== PRINT / PDF ===== */
+    @media print {
+      @page { size: A4; margin: 10mm 12mm; }
+
+      /* Inter SF Pro'nun en yakın yer tutucusu — sadece print için override */
+      :root {
+        --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+        --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+      }
+
+      html, body { background: var(--ivory); print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      body { font-size: 13px; line-height: 1.5; }
+
+      nav.deck-nav { display: none !important; }
+
+      section, .dark-section, .cta-section {
+        page-break-before: always;
+        min-height: auto !important;
+        padding: 24px 0 16px !important;
+      }
+      #cover { page-break-before: avoid; padding-top: 0 !important; }
+
+      /* Animations off */
+      * {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      /* Hero — print için biraz daha mütevazi */
+      .hero h1 { font-size: 80px !important; line-height: .94 !important; }
+      .hero .lead { font-size: 16px !important; }
+      .section-header h2 { font-size: 40px !important; }
+      .display, .hero h1, h2, h3 { -webkit-print-color-adjust: exact; }
+
+      /* iPhone frames — print için biraz küçült */
+      .iphone { max-width: 220px !important; }
+      .iphone-stack { gap: 16px !important; }
+      .iphone-stack .iphone { max-width: 200px !important; }
+      .walkthrough .iphone-wrap .iphone { max-width: 180px !important; }
+
+      /* Video → poster image fallback */
+      video { display: none !important; }
+      .video-print-fallback {
+        display: block !important;
+        background: var(--ivory);
+        border-radius: 44px;
+        overflow: hidden;
+      }
+      .video-print-fallback img { width: 100%; display: block; }
+      .video-print-fallback .play-overlay {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.95); font-size: 60px;
+        pointer-events: none;
+        text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      }
+
+      /* CTA — temiz görünsün */
+      .cta-section .actions { display: none; }
+      .cta-section .contact { font-size: 11px !important; }
+
+      footer { font-size: 10px; padding: 12px 0; }
+
+      /* Yatay ı­şı tablosu/grid'ler daralt */
+      .grid-3 { gap: 12px !important; }
+      .big-stats { gap: 12px !important; }
+
+      /* Link'leri inline (URL'i belirgin yapma) */
+      a { color: inherit; text-decoration: none; }
+    }
+
+    /* Print-only fallback (var-default gizli; print CSS göstersin) */
+    .video-print-fallback { display: none; position: relative; }
 
     /* Segment cards (04 · Üç pazar) */
     .segment-card {
@@ -1445,6 +1525,11 @@
             <source src="media/demo.mp4" type="video/mp4">
             Tarayıcın video oynatmayı desteklemiyor.
           </video>
+          <!-- PDF / print için video yerine poster image + link gösterilir -->
+          <div class="video-print-fallback">
+            <img src="media/demo-poster.jpg" alt="MahalleLig demo video — 2 dakika 36 saniye">
+            <div class="play-overlay">▶</div>
+          </div>
         </div>
       </div>
       <div class="iphone-caption" style="max-width:380px">
